@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tinyntpclient_0',['TinyNTPClient',['../class_tiny_n_t_p_client.html',1,'TinyNTPClient&lt; UDPAPI &gt;'],['../class_tiny_n_t_p_client.html#ab865daad5449752f7b7393b0cc912a2c',1,'TinyNTPClient::TinyNTPClient()'],['../index.html',1,'TinyNTPClient']]],
+  ['tinyntpclient_0',['TinyNTPClient',['../class_tiny_n_t_p_client.html',1,'TinyNTPClient&lt; UDPAPI &gt;'],['../class_tiny_n_t_p_client.html#aea7c0468607f7c32af0e2a9687af6a06',1,'TinyNTPClient::TinyNTPClient()'],['../index.html',1,'TinyNTPClient']]],
   ['tinyntpclient_2eh_1',['TinyNTPClient.h',['../_tiny_n_t_p_client_8h.html',1,'']]],
   ['tinyntpservers_2eh_2',['TinyNTPServers.h',['../_tiny_n_t_p_servers_8h.html',1,'']]],
   ['tinytimezone_3',['TinyTimeZone',['../class_tiny_time_zone.html',1,'TinyTimeZone'],['../class_tiny_time_zone.html#aa281ea97c5a4e7d4ace7b53c86c265d9',1,'TinyTimeZone::TinyTimeZone()']]],
