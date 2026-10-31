@@ -34,6 +34,7 @@ I recommend to use git because you can easily update to the latest version just 
 
 - [Class Documentation](https://pschatzmann.github.io/TinyNTPClient/annotated.html) 
 - [Example Sketch](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino)
+- [UDP Stacks](https://github.com/pschatzmann/TinyNTPClient/wiki/UDP-Stacks): the supported networking stacks (WiFi, Ethernet, GSM, ...)
 - [Time Zones](https://github.com/pschatzmann/TinyNTPClient/wiki/Time-Zones): fixed offset, POSIX TZ strings and the `TZ_*` defines
 
 
