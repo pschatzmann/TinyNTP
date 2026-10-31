@@ -6,6 +6,19 @@
 TinyNTPClient<WiFiUDP> ntp("82.197.188.130", 123, 1000);
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
+int updateInterval = 60;
+
+void updateNTPTime(){
+  if (updateInterval-- <= 0){ 
+    Serial.println("Updating NTP time...");
+    if (!ntp.update()) {
+      Serial.println("NTP update failed");
+    }
+    Serial.print("Correction factor: ");
+    Serial.println(ntp.getMillisCorrectionFactor(), 12);
+    updateInterval = 60; // reset update interval
+  }
+}
 
 void connectToWiFi() {
   Serial.print("Connecting to WiFi");
@@ -30,10 +43,12 @@ void setup() {
 
   // Set time offset to +1 hour (e.g., for CET timezone) 
   ntp.setTimeOffsetHours(1); 
-
 }
 
-void loop() {  
+void loop() {
+  // Update NTP time every 60 seconds
+  updateNTPTime();
+
   if (ntp) {
     auto currentTime = ntp.getTimeSec();
     auto tm = ntp.getTm();

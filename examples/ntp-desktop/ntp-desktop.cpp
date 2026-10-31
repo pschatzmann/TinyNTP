@@ -4,7 +4,7 @@
 
 #include "TinyNTPClient.h"
 
-TinyNTPClient<WiFiUDP> ntp;
+TinyNTPClient<WiFiUDP> ntp("82.197.188.130");
 
 void setup() {
   if (!ntp.begin()) {

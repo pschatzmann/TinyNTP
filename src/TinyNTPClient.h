@@ -12,6 +12,9 @@
 #include <cstdio>
 #include <ctime>
 
+#include "TinyTimeZone.h"
+#include "TinyTimeZoneDB.h"
+
 /**
  * @class TinyNTPClient
  * @brief A Network Time Protocol (NTP) client for retrieving the current
@@ -48,7 +51,12 @@ class TinyNTPClient {
   void end() {
     _timeOffsetSeconds = 0;
     _lastNtpTime = 0;
+    _lastNtpTimeMs = 0;
     _lastUpdateMillis = 0;
+    _baselineNtpTime = 0;
+    _baselineNtpTimeMs = 0;
+    _baselineUpdateMillis = 0;
+    _millisCorrectionFactor = 1.0;
     _udp.stop();
   }
 
@@ -69,11 +77,14 @@ class TinyNTPClient {
     if (_lastUpdateMillis == 0) {
       return 0;  // Time not yet initialized
     }
-    // Calculate ms since last update
-    uint32_t ms_since_update = ::millis() - _lastUpdateMillis;
-    // Return last NTP time in ms plus elapsed ms, plus offset
+    // Calculate ms since last update with correction factor applied
+    uint32_t raw_ms_since_update = ::millis() - _lastUpdateMillis;
+    uint64_t corrected_ms_since_update = static_cast<uint64_t>(
+        static_cast<double>(raw_ms_since_update) * _millisCorrectionFactor);
+    // Return last NTP time in ms plus corrected elapsed ms, plus offset
     return (static_cast<uint64_t>(_lastNtpTime) * 1000ULL) +
-           static_cast<uint64_t>(ms_since_update) +
+           _lastNtpTimeMs +
+           corrected_ms_since_update +
            static_cast<uint64_t>(_timeOffsetSeconds) * 1000ULL;
   }
 
@@ -107,6 +118,38 @@ class TinyNTPClient {
   void setTimeOffsetHours(long hours) { _timeOffsetSeconds = hours * 3600; }
 
   /**
+   * @brief Set the time zone with a POSIX TZ string, e.g.
+   * "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich. Summer/winter time is
+   * handled by getLocalTm(). Do not combine with setTimeOffsetSeconds().
+   * @param tz POSIX TZ string.
+   * @return true if the string was valid.
+   */
+  bool setTimeZone(const char* tz) { return _timeZone.setTimeZone(tz); }
+
+  /**
+   * @brief Get the current local time according to setTimeZone(). If no valid
+   * time zone was set, this is the same as getTm().
+   * @return std::tm structure with the local time; tm_isdst is set during
+   * summer time.
+   */
+  std::tm getLocalTm() { return _timeZone.toLocal(getTimeSec()); }
+
+  /**
+   * @brief Get the name of the active time zone (e.g. "CET" or "CEST").
+   */
+  const char* getTimeZoneName() {
+    return _timeZone.name(getTimeSec());
+  }
+
+  /**
+   * @brief Get the millis() correction factor.
+   * @return Correction factor (real_time / millis_time). A value of 1.0 means
+   * no correction. Values > 1.0 mean millis() runs slower than real time,
+   * values < 1.0 mean millis() runs faster than real time.
+   */
+  double getMillisCorrectionFactor() const { return _millisCorrectionFactor; }
+
+  /**
    * @brief Set the NTP server address and port.
    * @param server NTP server hostname or IP address.
    * @param port NTP server port (default: 123).
@@ -132,6 +175,19 @@ class TinyNTPClient {
   UDPAPI& getUDP() { return _udp; }
 
  protected:
+  /**
+   * @brief Get uncorrected time in seconds (without millis correction factor).
+   * Used internally during NTP exchange to avoid circular dependency.
+   * Returns UTC time without timezone offset.
+   */
+  uint32_t getUncorrectedTimeSec() {
+    if (_lastUpdateMillis == 0) {
+      return 0;
+    }
+    uint32_t raw_ms_since_update = ::millis() - _lastUpdateMillis;
+    return _lastNtpTime + (raw_ms_since_update / 1000);
+  }
+
   /**
    * @brief Structure representing an NTP packet (RFC 5905, 48 bytes)
    */
@@ -166,14 +222,26 @@ class TinyNTPClient {
   const char* _server;
   /** NTP server port. */
   int _port;
+  /** Time zone rules from a POSIX TZ string. */
+  TinyTimeZone _timeZone;
   /** Time offset in seconds (for timezone adjustment). */
   long _timeOffsetSeconds = 0;
   /** Last received NTP time (seconds since Unix epoch). */
   uint32_t _lastNtpTime = 0;
+  /** Last received NTP time fraction (milliseconds part, 0-999). */
+  uint32_t _lastNtpTimeMs = 0;
   /** Milliseconds when the last NTP update was received. */
   uint32_t _lastUpdateMillis = 0;
+  /** Initial baseline NTP time (seconds) for correction factor calculation. */
+  uint32_t _baselineNtpTime = 0;
+  /** Initial baseline NTP time fraction (milliseconds). */
+  uint32_t _baselineNtpTimeMs = 0;
+  /** Initial baseline millis() value for correction factor calculation. */
+  uint32_t _baselineUpdateMillis = 0;
   /** Timeout for NTP response in milliseconds. */
   uint32_t _timeoutMs = 0;
+  /** Correction factor for millis() drift (real_time / millis_time). */
+  double _millisCorrectionFactor = 1.0;
 
   constexpr bool isLittleEndian() {
     unsigned int x = 1;
@@ -204,6 +272,18 @@ class TinyNTPClient {
    */
   inline uint32_t l_ntohl(uint32_t netlong) {
     return isLittleEndian() ? swap32(netlong) : netlong;
+  }
+
+  /**
+   * @brief Convert NTP fractional timestamp to milliseconds.
+   * NTP fractions are in units of 2^-32 seconds, so we need to convert to ms.
+   * @param fraction NTP fractional part (32-bit).
+   * @return Milliseconds (0-999).
+   */
+  inline uint32_t ntpFractionToMs(uint32_t fraction) {
+    // Convert from 2^-32 seconds to milliseconds
+    // fraction / 2^32 * 1000 = fraction * 1000 / 2^32
+    return (uint32_t)(((uint64_t)fraction * 1000ULL) >> 32);
   }
 
   /**
@@ -276,25 +356,60 @@ class TinyNTPClient {
       uint32_t originate = l_ntohl(response.origTm_s);
       uint32_t receive = l_ntohl(response.rxTm_s);
       uint32_t transmit = l_ntohl(response.txTm_s);
+      uint32_t transmit_f = l_ntohl(response.txTm_f);
       // log("NTP: originate=%u, receive=%u, transmit=%u\n", originate, receive,
       // transmit);
-      uint32_t t3_unix = getTimeSec();
+      uint32_t t3_unix = getUncorrectedTimeSec();
       uint32_t t3_ntp = t3_unix + 2208988800UL;
       long offset =
           ((long)(receive - originate) + (long)(transmit - t3_ntp)) / 2;
-      _lastNtpTime = transmit - 2208988800UL + offset;
+      uint32_t newNtpTime = transmit - 2208988800UL + offset;
+      uint32_t newNtpTimeMs = ntpFractionToMs(transmit_f);
+      
+      // Establish baseline on first update, calculate correction factor on subsequent updates
+      if (_baselineUpdateMillis == 0) {
+        // First update: establish baseline for correction factor calculation
+        _baselineNtpTime = newNtpTime;
+        _baselineNtpTimeMs = newNtpTimeMs;
+        _baselineUpdateMillis = t3_millis;
+      } else {
+        // Calculate correction factor based on cumulative drift since baseline
+        uint32_t raw_millis_elapsed = t3_millis - _baselineUpdateMillis;
+        // Calculate actual time elapsed according to NTP (with millisecond precision)
+        uint64_t actual_time_elapsed_ms = 
+            ((uint64_t)(newNtpTime - _baselineNtpTime) * 1000ULL) + 
+            newNtpTimeMs - _baselineNtpTimeMs;
+        
+        // Only update correction factor if enough time has elapsed (at least 10 seconds)
+        // This avoids division by zero and ensures meaningful calibration
+        if (raw_millis_elapsed >= 10000 && actual_time_elapsed_ms >= 10000) {
+          _millisCorrectionFactor = static_cast<double>(actual_time_elapsed_ms) / 
+                                   static_cast<double>(raw_millis_elapsed);
+          // log("NTP: correction factor = %.6f (actual=%llu ms, millis=%u ms from baseline)\n",
+          //     _millisCorrectionFactor, actual_time_elapsed_ms, raw_millis_elapsed);
+        } else {
+          // log("NTP: skipping correction factor update - insufficient time from baseline (actual=%llu ms, millis=%u ms)\n",
+          //     actual_time_elapsed_ms, raw_millis_elapsed);
+        }
+      }
+      
+      _lastNtpTime = newNtpTime;
+      _lastNtpTimeMs = newNtpTimeMs;
       _lastUpdateMillis = t3_millis;
-      // log("NTP: _lastNtpTime=%u, _lastUpdateMillis=%u\n", _lastNtpTime,
-      // _lastUpdateMillis);
     } else {
-      // Only use server transmit timestamp
+      // Only use server transmit timestamp (first update without RTC)
       uint32_t transmit = l_ntohl(response.txTm_s);
-      // log("NTP: raw transmit=%u (0x%08X), converted=%u\n", response.txTm_s,
-      // response.txTm_s, transmit);
+      uint32_t transmit_f = l_ntohl(response.txTm_f);
       _lastNtpTime = transmit - 2208988800UL;
+      _lastNtpTimeMs = ntpFractionToMs(transmit_f);
       _lastUpdateMillis = t3_millis;
-      // log("NTP: _lastNtpTime=%u, _lastUpdateMillis=%u, t3_millis=%u\n",
-      // _lastNtpTime, _lastUpdateMillis, t3_millis);
+      
+      // Establish baseline if not yet set
+      if (_baselineUpdateMillis == 0) {
+        _baselineNtpTime = _lastNtpTime;
+        _baselineNtpTimeMs = _lastNtpTimeMs;
+        _baselineUpdateMillis = t3_millis;
+      }
     }
     return true;
   }
@@ -316,9 +431,9 @@ class TinyNTPClient {
    * @return true if the update was successful, false otherwise.
    */
   bool updateWithRTC() {
-    // Use system clock for transmit timestamp
-    uint32_t t0_unix = getTimeSec();           // seconds since 1970
-    uint32_t t0_ntp = t0_unix + 2208988800UL;  // seconds since 1900
+    // Use system clock for transmit timestamp (uncorrected to avoid circular dependency)
+    uint32_t t0_unix = getUncorrectedTimeSec();  // seconds since 1970
+    uint32_t t0_ntp = t0_unix + 2208988800UL;     // seconds since 1900
     return ntpExchange(t0_ntp);
   }
 
