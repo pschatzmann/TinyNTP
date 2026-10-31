@@ -33,7 +33,7 @@ class TinyNTPClient {
    * @param server NTP server hostname or IP address.
    * @param port NTP server port (default: 123).
    */
-  TinyNTPClient(const char* server = "pool.ntp.org", int port = 123,
+  TinyNTPClient(const char* server = NTP_HOST_POOL, int port = 123,
                 uint32_t timeoutMs = 6000)
       : _server(server), _port(port), _timeoutMs(timeoutMs) {}
 
