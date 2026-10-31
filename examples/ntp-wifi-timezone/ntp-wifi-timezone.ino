@@ -7,10 +7,9 @@
 TinyNTPClient<WiFiUDP> ntp("82.197.188.130", 123, 1000);
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
-// POSIX TZ string for Europe/Zurich:
-// CET-1CEST,M3.5.0,M10.5.0/3 = UTC+1, DST (UTC+2) from the last Sunday in
-// March 02:00 to the last Sunday in October 03:00
-const char* tzString = "CET-1CEST,M3.5.0,M10.5.0/3";
+// POSIX TZ string for Europe/Zurich (CET-1CEST,M3.5.0,M10.5.0/3). All IANA
+// zones are available as TZ_* defines, e.g. TZ_AMERICA_NEW_YORK
+const char* tzString = TZ_EUROPE_ZURICH;
 int updateInterval = 60;
 
 void updateNTPTime() {

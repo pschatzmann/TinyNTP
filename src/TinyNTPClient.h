@@ -13,7 +13,7 @@
 #include <ctime>
 
 #include "TinyTimeZone.h"
-#include "TinyTimeZoneDB.h"
+#include "TinyTimeZones.h"
 
 /**
  * @class TinyNTPClient

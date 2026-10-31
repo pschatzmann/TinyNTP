@@ -13,7 +13,7 @@ A minimal, header-only Network Time Protocol (NTP) client for Arduino and compat
 - Header-only, easy to integrate
 - Supports a fixed timezone offset
 - Local time incl. summer/winter time from a POSIX TZ string (own parser, no `tzset()` needed)
-- Optional city dictionary (e.g. `Europe/Zurich`)
+- `TZ_*` defines for all IANA time zones (e.g. `TZ_EUROPE_ZURICH`)
 - Works with any UDP API (WiFiUDP, EthernetUDP, etc.)
 - Returns time as seconds, milliseconds, or `std::tm` struct
 - cmake support
@@ -34,7 +34,7 @@ I recommend to use git because you can easily update to the latest version just 
 
 - [Class Documentation](https://pschatzmann.github.io/TinyNTPClient/annotated.html) 
 - [Example Sketch](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino)
-- [Time Zones](https://github.com/pschatzmann/TinyNTPClient/wiki/Time-Zones): fixed offset, POSIX TZ strings and the city dictionary
+- [Time Zones](https://github.com/pschatzmann/TinyNTPClient/wiki/Time-Zones): fixed offset, POSIX TZ strings and the `TZ_*` defines
 
 
 ## License
