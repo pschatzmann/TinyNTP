@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['license_0',['License',['../index.html#autotoc_md8',1,'']]]
+  ['tinyntpclient_0',['TinyNTPClient',['../index.html',1,'']]]
 ];
