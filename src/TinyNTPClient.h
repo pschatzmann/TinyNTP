@@ -12,8 +12,8 @@
 #include <cstdio>
 #include <ctime>
 
-#include "TinyTimeZone.h"
-#include "TinyTimeZones.h"
+#include "TinyNTPClient/TinyTimeZone.h"
+#include "TinyNTPClient/TinyTimeZones.h"
 
 /**
  * @class TinyNTPClient

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates src/TinyTimeZones.h from posix_tz_db (MIT License).
+"""Generates src/TinyNTPClient/TinyTimeZones.h from posix_tz_db (MIT License).
 
 Usage: tools/generate_timezones.py [zones.json | URL]
 Default source: https://raw.githubusercontent.com/nayarsystems/posix_tz_db/master/zones.json
@@ -11,7 +11,7 @@ import sys
 import urllib.request
 
 URL = "https://raw.githubusercontent.com/nayarsystems/posix_tz_db/master/zones.json"
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "TinyTimeZones.h")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "TinyNTPClient", "TinyTimeZones.h")
 
 
 def macro_name(iana):
