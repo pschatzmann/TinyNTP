@@ -11,6 +11,7 @@ A minimal, header-only Network Time Protocol (NTP) client for Arduino and compat
 - Retrieves accurate UTC time from NTP servers
 - Minimal resource usage, suitable for embedded/IoT
 - Header-only, easy to integrate
+- `NTP_IP_*` / `NTP_HOST_*` defines for well known public NTP servers
 - Supports a fixed timezone offset
 - Local time incl. summer/winter time from a POSIX TZ string (own parser, no `tzset()` needed)
 - `TZ_*` defines for all IANA time zones (e.g. `TZ_EUROPE_ZURICH`)
