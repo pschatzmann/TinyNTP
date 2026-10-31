@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['offsetseconds_0',['offsetSeconds',['../class_tiny_time_zone.html#a1b82ce501713523382d06cbbf40f5d91',1,'TinyTimeZone']]],
-  ['operator_20bool_1',['operator bool',['../class_tiny_n_t_p_client.html#a98f414a88273fc5e600a133a93ad56d0',1,'TinyNTPClient']]],
-  ['operator_5b_5d_2',['operator[]',['../class_tiny_time_zone_d_b.html#acc1067fc42f5cd8e3f915a628ae7b242',1,'TinyTimeZoneDB']]]
+  ['parsename_0',['parseName',['../class_tiny_time_zone.html#af1a098f2ec5eb7551d6342cef2daffed',1,'TinyTimeZone']]],
+  ['parserule_1',['parseRule',['../class_tiny_time_zone.html#a0c1ba0867ee04b395dc2b8a9de8f0912',1,'TinyTimeZone']]],
+  ['parsetime_2',['parseTime',['../class_tiny_time_zone.html#a13116951587b9eb25c7f3bdad5023e03',1,'TinyTimeZone']]]
 ];

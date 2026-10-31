@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['millis_0',['millis',['../class_tiny_n_t_p_client.html#a8076f453f0ad2e40ab1a6c8444d7ffbf',1,'TinyNTPClient']]]
+  ['offsetseconds_0',['offsetSeconds',['../class_tiny_time_zone.html#a1b82ce501713523382d06cbbf40f5d91',1,'TinyTimeZone']]],
+  ['operator_20bool_1',['operator bool',['../class_tiny_n_t_p_client.html#a98f414a88273fc5e600a133a93ad56d0',1,'TinyNTPClient']]]
 ];

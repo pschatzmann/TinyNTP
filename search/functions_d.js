@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['parsename_0',['parseName',['../class_tiny_time_zone.html#af1a098f2ec5eb7551d6342cef2daffed',1,'TinyTimeZone']]],
-  ['parserule_1',['parseRule',['../class_tiny_time_zone.html#a0c1ba0867ee04b395dc2b8a9de8f0912',1,'TinyTimeZone']]],
-  ['parsetime_2',['parseTime',['../class_tiny_time_zone.html#a13116951587b9eb25c7f3bdad5023e03',1,'TinyTimeZone']]]
+  ['tinyntpclient_0',['TinyNTPClient',['../class_tiny_n_t_p_client.html#ab865daad5449752f7b7393b0cc912a2c',1,'TinyNTPClient']]],
+  ['tinytimezone_1',['TinyTimeZone',['../class_tiny_time_zone.html#aa281ea97c5a4e7d4ace7b53c86c265d9',1,'TinyTimeZone']]],
+  ['tolocal_2',['toLocal',['../class_tiny_time_zone.html#a2dbc4e4085ad84cb2dd6c94e6379d50c',1,'TinyTimeZone']]],
+  ['transition_3',['transition',['../class_tiny_time_zone.html#a7dd5ea923bc5c6c7446ccd339fd31885',1,'TinyTimeZone']]]
 ];

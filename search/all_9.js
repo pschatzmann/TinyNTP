@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['in_20arduino_0',['Installation in Arduino',['../index.html#autotoc_md2',1,'']]],
-  ['installation_20in_20arduino_1',['Installation in Arduino',['../index.html#autotoc_md2',1,'']]],
-  ['isdst_2',['isDst',['../class_tiny_time_zone.html#ae9b22a3431cb00126b587ac7b30ba0d2',1,'TinyTimeZone']]],
-  ['isvalid_3',['isValid',['../class_tiny_time_zone.html#abf57edfbcbdaf370c9658991f44b5e40',1,'TinyTimeZone']]]
+  ['l_5fhtonl_0',['l_htonl',['../class_tiny_n_t_p_client.html#a495ad2bdbc0e90be0e3bbb947364ff8d',1,'TinyNTPClient']]],
+  ['l_5fntohl_1',['l_ntohl',['../class_tiny_n_t_p_client.html#ab7f6b3e5014c1fa7ceda21826d099470',1,'TinyNTPClient']]],
+  ['license_2',['License',['../index.html#autotoc_md4',1,'']]],
+  ['log_3',['log',['../class_tiny_n_t_p_client.html#a5a978d100e9879cc1c52b185665a4590',1,'TinyNTPClient']]]
 ];

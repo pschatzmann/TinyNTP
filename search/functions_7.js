@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hasdst_0',['hasDst',['../class_tiny_time_zone.html#a90318a6074b2dea70a9ec74905c4e861',1,'TinyTimeZone']]]
+  ['l_5fhtonl_0',['l_htonl',['../class_tiny_n_t_p_client.html#a495ad2bdbc0e90be0e3bbb947364ff8d',1,'TinyNTPClient']]],
+  ['l_5fntohl_1',['l_ntohl',['../class_tiny_n_t_p_client.html#ab7f6b3e5014c1fa7ceda21826d099470',1,'TinyNTPClient']]],
+  ['log_2',['log',['../class_tiny_n_t_p_client.html#a5a978d100e9879cc1c52b185665a4590',1,'TinyNTPClient']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['l_5fhtonl_0',['l_htonl',['../class_tiny_n_t_p_client.html#a495ad2bdbc0e90be0e3bbb947364ff8d',1,'TinyNTPClient']]],
-  ['l_5fntohl_1',['l_ntohl',['../class_tiny_n_t_p_client.html#ab7f6b3e5014c1fa7ceda21826d099470',1,'TinyNTPClient']]],
-  ['log_2',['log',['../class_tiny_n_t_p_client.html#a5a978d100e9879cc1c52b185665a4590',1,'TinyNTPClient']]]
+  ['name_0',['name',['../class_tiny_time_zone.html#ae8c85065f7b34893770c35ba98c4ca4e',1,'TinyTimeZone']]],
+  ['ntpexchange_1',['ntpExchange',['../class_tiny_n_t_p_client.html#a2da35f2dfd1c9916b5f594d0319376f1',1,'TinyNTPClient']]],
+  ['ntpfractiontoms_2',['ntpFractionToMs',['../class_tiny_n_t_p_client.html#a55bca9f46be0923339c68e9daf7b8800',1,'TinyNTPClient']]]
 ];

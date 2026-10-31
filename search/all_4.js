@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['daysfromcivil_0',['daysFromCivil',['../class_tiny_time_zone.html#a8a36206f3089ffa11f7ae278c8439282',1,'TinyTimeZone']]],
-  ['documentaion_1',['Documentaion',['../index.html#autotoc_md3',1,'']]]
+  ['end_0',['end',['../class_tiny_n_t_p_client.html#a980f17894fb2bf4f1beeaadec87c4f42',1,'TinyNTPClient']]]
 ];

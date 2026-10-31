@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['offsetseconds_0',['offsetSeconds',['../class_tiny_time_zone.html#a1b82ce501713523382d06cbbf40f5d91',1,'TinyTimeZone']]],
-  ['operator_20bool_1',['operator bool',['../class_tiny_n_t_p_client.html#a98f414a88273fc5e600a133a93ad56d0',1,'TinyNTPClient']]],
-  ['operator_5b_5d_2',['operator[]',['../class_tiny_time_zone_d_b.html#acc1067fc42f5cd8e3f915a628ae7b242',1,'TinyTimeZoneDB']]]
+  ['setserver_0',['setServer',['../class_tiny_n_t_p_client.html#abe7174e6ac966f533aba09d5973d18ef',1,'TinyNTPClient']]],
+  ['settimeoffsethours_1',['setTimeOffsetHours',['../class_tiny_n_t_p_client.html#aca6d6fdf5427090d49de0912eeb7df45',1,'TinyNTPClient']]],
+  ['settimeoffsetseconds_2',['setTimeOffsetSeconds',['../class_tiny_n_t_p_client.html#ae9243f4898861eab112a970fb363cf03',1,'TinyNTPClient']]],
+  ['settimezone_3',['setTimeZone',['../class_tiny_n_t_p_client.html#a78d8795837f9af984b647c93aa65c1cd',1,'TinyNTPClient::setTimeZone()'],['../class_tiny_time_zone.html#aaf2bf767228da8a44afcc2395af4d65d',1,'TinyTimeZone::setTimeZone()']]]
 ];
