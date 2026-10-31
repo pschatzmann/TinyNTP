@@ -68,7 +68,7 @@ ntp.setTimeZone(timeZones.find("Europe/Zurich"));  // "Zurich" works as well
 
 ## Documentaion
 
-- [TinyNTPClient](https://pschatzmann.github.io/TinyNTPClient/html/class_tiny_n_t_p_client.html) class
+- [Class Documentation](https://pschatzmann.github.io/TinyNTPClient/annotated.html) 
 - [Example Sketch](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino)
 - [Example Sketch with POSIX TZ string](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-timezone/ntp-wifi-timezone.ino)
 - [Example Sketch with city dictionary](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-city/ntp-wifi-city.ino)
