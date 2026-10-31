@@ -27,6 +27,13 @@ class TinyTimeZone {
   TinyTimeZone() = default;
 
   /**
+   * @brief Construct and parse a POSIX TZ string. Use isValid() to check if
+   * the string was valid.
+   * @param tz The TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3".
+   */
+  explicit TinyTimeZone(const char* tz) { setTimeZone(tz); }
+
+  /**
    * @brief Parse a POSIX TZ string.
    * @param tz The TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3".
    * @return true if the string was valid. On failure UTC is used.
