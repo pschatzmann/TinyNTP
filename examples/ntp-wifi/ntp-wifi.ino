@@ -3,7 +3,7 @@
 #include <WiFiUdp.h>
 #include "TinyNTPClient.h"
 
-TinyNTPClient<WiFiUDP> ntp("82.197.188.130", 123, 1000);
+TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1, 123, 1000);
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
 int updateInterval = 60;

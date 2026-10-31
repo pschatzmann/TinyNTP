@@ -4,7 +4,7 @@
 
 #include "TinyNTPClient.h"
 
-TinyNTPClient<WiFiUDP> ntp("82.197.188.130");
+TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1);
 
 void setup() {
   if (!ntp.begin()) {
