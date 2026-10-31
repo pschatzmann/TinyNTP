@@ -3,7 +3,7 @@ var searchData=
   ['time_20zones_0',['Time Zones',['../index.html#autotoc_md3',1,'']]],
   ['tinyntpclient_1',['TinyNTPClient',['../class_tiny_n_t_p_client.html',1,'TinyNTPClient&lt; UDPAPI &gt;'],['../class_tiny_n_t_p_client.html#ab865daad5449752f7b7393b0cc912a2c',1,'TinyNTPClient::TinyNTPClient()'],['../index.html',1,'TinyNTPClient']]],
   ['tinyntpclient_2eh_2',['TinyNTPClient.h',['../_tiny_n_t_p_client_8h.html',1,'']]],
-  ['tinytimezone_3',['TinyTimeZone',['../class_tiny_time_zone.html',1,'']]],
+  ['tinytimezone_3',['TinyTimeZone',['../class_tiny_time_zone.html',1,'TinyTimeZone'],['../class_tiny_time_zone.html#aa281ea97c5a4e7d4ace7b53c86c265d9',1,'TinyTimeZone::TinyTimeZone()']]],
   ['tinytimezone_2eh_4',['TinyTimeZone.h',['../_tiny_time_zone_8h.html',1,'']]],
   ['tinytimezonedb_5',['TinyTimeZoneDB',['../class_tiny_time_zone_d_b.html',1,'TinyTimeZoneDB'],['../class_tiny_time_zone_d_b.html#ada14a2af581070dee1e7f9785bead81e',1,'TinyTimeZoneDB::TinyTimeZoneDB(const TinyTimeZoneEntry(&amp;entries)[N])'],['../class_tiny_time_zone_d_b.html#ac265274a7b08fad5aa6eedaee49e81c6',1,'TinyTimeZoneDB::TinyTimeZoneDB(const TinyTimeZoneEntry *entries, size_t size)']]],
   ['tinytimezonedb_2eh_6',['TinyTimeZoneDB.h',['../_tiny_time_zone_d_b_8h.html',1,'']]],
