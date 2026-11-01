@@ -4,6 +4,8 @@
 //   tinyntp [options] [server]     query a server and show the time
 //   tinyntp serve [options]        serve the time of this computer
 //   tinyntp set [options] device   set the time of a TinyNTPServer
+//   tinyntp tz [name]              the time zone of this computer, or the POSIX
+//                                  TZ string of a zone (Europe/Zurich)
 //
 // (main() is in main.cpp.)
 //
@@ -16,7 +18,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 #include <iostream>
+#include <string>
+#include <vector>
 
 // The Arduino API for the desktop (millis(), delay(), Serial, EthernetUDP) comes
 // from the Arduino emulator
@@ -24,6 +29,7 @@
 #include "EthernetUdp.h"
 
 #include "TinyNTP.h"
+#include "zones.h"
 
 static bool verbose = false;
 
@@ -42,22 +48,34 @@ static const char* usage =
     "  tinyntp serve [options]      serve the time of this computer\n"
     "  tinyntp set [options] <device>\n"
     "                               set the time of a device that runs a\n"
-    "                               TinyNTPServer with enableTimeSetting()\n"    "\n"
+    "                               TinyNTPServer with enableTimeSetting()\n"
+    "  tinyntp tz                   the time zone of this computer and its\n"
+    "                               POSIX TZ string\n"
+    "  tinyntp tz <name>            the POSIX TZ string of a time zone, e.g.\n"
+    "                               Europe/Zurich or just zurich\n"
+    "  tinyntp tz -l [text]         list the time zones (that contain the text)\n"
+    "\n"
     "Options:\n"
     "  -p <port>      port of the server (default: 123)\n"
     "  -t <ms>        time to wait for the response (default: 3000)\n"
-    "  -z <tz>        POSIX TZ string to show the local time, e.g.\n"
-    "                 \"CET-1CEST,M3.5.0,M10.5.0/3\" (Europe/Zurich)\n"
+    "  -z <tz>        show the local time: a POSIX TZ string, e.g.\n"
+    "                 \"CET-1CEST,M3.5.0,M10.5.0/3\", the name of a time zone\n"
+    "                 (Europe/Zurich, zurich) or 'local' (this computer)\n"
     "  -s <stratum>   serve: the stratum that is reported (default: 3)\n"
     "  -k <secret>    set: the shared secret of the device (or use the\n"
-    "                 environment variable TINYNTP_KEY: not visible in ps)\n"    "  -v             show diagnostic messages\n"
+    "                 environment variable TINYNTP_KEY: not visible in ps)\n"
+    "  -l             tz: list the time zones\n"
+    "  -v             show diagnostic messages\n"
     "  -h             show this help\n"
     "\n"
     "The server is a host name or an IPv4 address (default: pool.ntp.org).\n"
     "'serve' needs the right to use the port (123: run it as root, or use -p).\n"
     "It serves the clock of this computer: make sure that it is synchronized.\n"
     "'set' sends the clock of this computer, corrected by half of the round trip\n"
-    "time. The device accepts it only with the right secret (HMAC-SHA256).\n";
+    "time. The device accepts it only with the right secret (HMAC-SHA256).\n"
+    "The names of the time zones are the IANA names. The POSIX TZ string of the\n"
+    "time zone of this computer is read from the zoneinfo files (Linux, macOS) and\n"
+    "checked against the local time of this computer.\n";
 
 static volatile sig_atomic_t stopRequested = 0;
 static void onSignal(int) { stopRequested = 1; }
@@ -71,11 +89,19 @@ static void printTime(const char* label, const std::tm& tm, uint64_t ms,
 
 static int runQuery(const char* server, int port, uint32_t timeoutMs,
                     const char* tz) {
+  std::string zone;
+  if (tz != nullptr) {
+    std::string error;
+    if (!resolveZone(tz, zone, error)) {
+      fprintf(stderr, "%s\n", error.c_str());
+      return 2;
+    }
+  }
   TinyNTPClient<EthernetUDP> ntp(server, port, timeoutMs);
   // an unprivileged local port: port 123 is used by the system or needs root
   ntp.setLocalPort(49152 + getpid() % 16000);
-  if (tz != nullptr && !ntp.setTimeZone(tz)) {
-    fprintf(stderr, "invalid time zone string: %s\n", tz);
+  if (tz != nullptr && !ntp.setTimeZone(zone.c_str())) {
+    fprintf(stderr, "invalid time zone string: %s\n", zone.c_str());
     return 2;
   }
   if (!ntp.begin()) {
@@ -197,6 +223,80 @@ static int runSet(const char* device, int port, uint32_t timeoutMs,
   return 3;
 }
 
+static void printNow(const std::string& tz) {
+  tiny_ntp::TinyTimeZone z(tz.c_str());
+  time_t now = time(nullptr);
+  std::tm local = z.toLocal(now);
+  printf("%-12s %04d-%02d-%02d %02d:%02d:%02d %s%s\n", "now:", local.tm_year + 1900,
+         local.tm_mon + 1, local.tm_mday, local.tm_hour, local.tm_min,
+         local.tm_sec, z.name(now), local.tm_isdst > 0 ? " (summer time)" : "");
+}
+
+static void printSameRules(const std::vector<std::string>& names) {
+  if (names.empty()) return;
+  std::string text;
+  for (size_t i = 0; i < names.size() && i < 6; i++) {
+    text += (i ? ", " : "") + names[i];
+  }
+  if (names.size() > 6) text += ", ... (" + std::to_string(names.size() - 6) + " more)";
+  printf("%-12s %s\n", "same rules:", text.c_str());
+}
+
+/// tinyntp tz: the time zone of this computer
+static int runLocalZone() {
+  LocalZone z = findLocalZone();
+  if (z.tz.empty()) {
+    fprintf(stderr, "cannot find the time zone of this computer\n");
+    return 1;
+  }
+  if (z.name.empty()) {
+    printf("%-12s %s\n", "zone:", "unknown");
+  } else {
+    printf("%-12s %s  (from %s)\n", "zone:", z.name.c_str(), z.nameFrom.c_str());
+  }
+  printf("%-12s %s  (from %s)\n", "TZ string:", z.tz.c_str(), z.tzFrom.c_str());
+  printSameRules(z.sameRules);
+  printNow(z.tz);
+  if (z.differences == 0) {
+    printf("%-12s same local time as this computer for the next 9 years (%d times compared)\n", "check:", z.samples);
+  } else {
+    printf("%-12s DIFFERENT from the local time of this computer in %d of %d times "
+           "in the next 9 years\n",
+           "check:", z.differences, z.samples);
+  }
+  if (!z.tableTz.empty()) {
+    printf("%-12s the table of the library has another string for this zone: %s\n"
+           "             (the rules of the zone have changed, or the zoneinfo files of this "
+           "computer are older than the table:\n"
+           "             the string above is the one that this computer uses)\n",
+           "note:", z.tableTz.c_str());
+  }
+  return z.differences == 0 ? 0 : 1;
+}
+
+/// tinyntp tz <name> and tinyntp tz -l [text]
+static int runZoneQuery(const std::string& text, bool list) {
+  std::vector<Zone> zones = findZones(text);
+  if (zones.empty()) {
+    fprintf(stderr, "unknown time zone: %s (list them with: tinyntp tz -l)\n", text.c_str());
+    return 1;
+  }
+  if (list || zones.size() > 1) {
+    for (const Zone& z : zones) printf("%-34s %s\n", z.name.c_str(), z.tz.c_str());
+    if (!list) fprintf(stderr, "%zu time zones match: use one of the names\n", zones.size());
+    return list ? 0 : 1;
+  }
+  printf("%-12s %s\n", "zone:", zones[0].name.c_str());
+  printf("%-12s %s\n", "TZ string:", zones[0].tz.c_str());
+  std::vector<std::string> same;
+  for (const Zone& z : findZones("")) {
+    if (z.tz == zones[0].tz && z.name != zones[0].name) same.push_back(z.name);
+  }
+  printSameRules(same);
+  printNow(zones[0].tz);
+  return 0;
+}
+
 static int runServe(int port, int stratum) {
   TinySystemTimeSource source;
   TinyNTPServer<EthernetUDP> server;
@@ -224,7 +324,7 @@ static int runServe(int port, int stratum) {
 }
 
 int tinyntp_main(int argc, char** argv) {
-  bool serve = false, set = false, haveServer = false;
+  bool serve = false, set = false, haveServer = false, zoneMode = false, list = false;
   const char* key = getenv("TINYNTP_KEY");
   const char* server = "pool.ntp.org";
   const char* tz = nullptr;
@@ -257,6 +357,10 @@ int tinyntp_main(int argc, char** argv) {
       key = value();
     } else if (!strcmp(a, "serve")) {
       serve = true;
+    } else if (!strcmp(a, "tz") && !zoneMode) {
+      zoneMode = true;
+    } else if (!strcmp(a, "-l")) {
+      list = true;
     } else if (!strcmp(a, "set")) {
       set = true;
     } else if (a[0] == '-') {
@@ -273,6 +377,10 @@ int tinyntp_main(int argc, char** argv) {
       timeoutMs == 0) {
     fprintf(stderr, "invalid option value\n\n%s", usage);
     return 2;
+  }
+  if (zoneMode) {
+    return (haveServer || list) ? runZoneQuery(haveServer ? server : "", list)
+                                : runLocalZone();
   }
   if (set) {
     if (key == nullptr || key[0] == 0) {

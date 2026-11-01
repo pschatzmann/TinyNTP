@@ -24,7 +24,7 @@ A minimal, header-only Network Time Protocol (NTP) client and server for Arduino
 - `TinyNTPServer` serves the time to the devices in your network, from the NTP client, the system time (`TinySystemTimeSource`), or an RTC or GPS (`TinyClockTimeSource`); your own sources derive from `TinyTimeSource`
 
 **General**
-- `tinyntp`: command line tool for the desktop to query an NTP server, serve the time of your computer or set the time of a device (authenticated with HMAC-SHA256)
+- `tinyntp`: command line tool for the desktop to query an NTP server, serve the time of your computer, set the time of a device (authenticated with HMAC-SHA256) and find the POSIX TZ string of a time zone or of your computer
 - Header-only, easy to integrate
 - cmake support
 

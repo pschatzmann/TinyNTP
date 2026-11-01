@@ -3,7 +3,8 @@
 a TinyNTPServer (test_device). The messages that set the time are implemented
 here a second time with python's hashlib/hmac, independent of the library.
 
-Usage: test_tool.py <tinyntp> <test_device>"""
+Usage: test_tool.py <tinyntp> <test_device> [test name ...]
+(with test names only these tests are run, e.g. test_zone_lookup)"""
 import hashlib, hmac, os, re, socket, struct, subprocess, sys, time
 
 TOOL, DEVICE = sys.argv[1], sys.argv[2]
@@ -23,7 +24,11 @@ def check(name, ok, detail=""):
 def run(*args, env=None, timeout=20):
     e = dict(os.environ)
     e.pop("TINYNTP_KEY", None)
-    e.update(env or {})
+    for k, v in (env or {}).items():
+        if v is None:
+            e.pop(k, None)   # None: the variable must not be set
+        else:
+            e[k] = v
     p = subprocess.run([TOOL, *args], capture_output=True, text=True, env=e, timeout=timeout)
     return p.returncode, p.stdout, p.stderr
 
@@ -61,7 +66,9 @@ def test_help_and_options():
     rc, out, err = run("-p", "70000")
     check("invalid port -> exit 2", rc == 2)
     rc, out, err = run("-z", "garbage", "127.0.0.1")
-    check("invalid time zone -> exit 2", rc == 2 and "invalid time zone" in err)
+    check("invalid time zone -> exit 2", rc == 2 and "unknown time zone" in err)
+    rc, out, err = run("-z", "argentina", "127.0.0.1")
+    check("time zone that is not unique -> exit 2", rc == 2 and "not unique" in err)
 
 
 def test_query_a_server():
@@ -82,6 +89,13 @@ def test_query_a_server():
     check("query: clock offset is small", off is not None and abs(float(off[1])) < 0.1, out)
     rc, out, err = run("127.0.0.1", "-p", str(port), "-z", "JST-9")
     check("query: time zone without summer time", "JST" in out and "summer time" not in out, out)
+    for z in ("Europe/Zurich", "zurich", "EUROPE/ZURICH"):
+        rc, out, err = run("127.0.0.1", "-p", str(port), "-z", z)
+        check("query: -z with the name %s" % z, rc == 0 and re.search(r"local:\s+.* (CET|CEST)", out) is not None, (rc, out, err))
+    rc, out, err = run("127.0.0.1", "-p", str(port), "-z", "Asia/Kolkata")
+    check("query: -z Asia/Kolkata shows IST", rc == 0 and " IST" in out, out)
+    rc, out, err = run("127.0.0.1", "-p", str(port), "-z", "local", env={"TZ": "Asia/Tokyo"} if HAVE_ZONEINFO else {"TZ": "JST-9"})
+    check("query: -z local uses the time zone of this computer", rc == 0 and " JST" in out, (rc, out, err))
     p.wait()
 
 
@@ -148,6 +162,77 @@ def test_serve():
 
 
 # ---- the protocol, implemented independently in python -----------------------
+# ---- time zones: look up a zone, find the zone of this computer ---------------
+def table_from_header():
+    """The zones of src/TinyNTP/TinyTimeZones.h: {IANA name: POSIX string}"""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "TinyNTP", "TinyTimeZones.h")
+    zones = {}
+    for line in open(path):
+        m = re.match(r'#define TZ_[A-Z0-9_]+\s+"([^"]*)"\s+// (\S+)', line)
+        if m:
+            zones[m[2]] = m[1]
+    return zones
+
+
+def test_zone_lookup():
+    rc, out, err = run("tz", "Europe/Zurich")
+    check("tz <name>: exit 0 and the string", rc == 0 and "CET-1CEST,M3.5.0,M10.5.0/3" in out and "zone:        Europe/Zurich" in out, (rc, out, err))
+    check("tz <name>: shows the time in the zone", re.search(r"now:\s+\d{4}-\d\d-\d\d \d\d:\d\d:\d\d (CET|CEST)", out) is not None, out)
+    check("tz <name>: shows zones with the same rules", "same rules:" in out and "Europe/Berlin" in out, out)
+    for text, expected in (("zurich", "Europe/Zurich"), ("EUROPE/zurich", "Europe/Zurich"),
+                           ("new york", "America/New_York"), ("Kolkata", "Asia/Kolkata"),
+                           ("Buenos_Aires", "America/Argentina/Buenos_Aires"),
+                           # a city that is a part of other names: the city wins
+                           ("Bahia", "America/Bahia"), ("dawson", "America/Dawson"), ("omsk", "Asia/Omsk"),
+                           ("Etc/GMT", "Etc/GMT")):
+        rc, out, err = run("tz", text)
+        check("tz %r finds %s" % (text, expected), rc == 0 and ("zone:        " + expected) in out, (rc, out, err))
+    rc, out, err = run("tz", "Asia/Kolkata")
+    check("tz Asia/Kolkata: IST-5:30", "IST-5:30" in out)
+    rc, out, err = run("tz", "nowhere")
+    check("tz <unknown> -> exit 1", rc == 1 and "unknown time zone" in err, (rc, err))
+    rc, out, err = run("tz", "argentina")
+    check("tz <part of several names> lists them, exit 1", rc == 1 and out.count("America/Argentina/") >= 10 and "match" in err, (rc, err))
+    rc, out, err = run("tz", "-l")
+    lines = [l for l in out.splitlines() if l.strip()]
+    check("tz -l lists 461 zones", rc == 0 and len(lines) == 461, len(lines))
+    rc, out, err = run("tz", "-l", "kolkata")
+    check("tz -l <text> filters", rc == 0 and out.split() == ["Asia/Kolkata", "IST-5:30"], out)
+    # the table of the tool is the same as the defines of the library
+    listed = {l.split()[0]: l.split()[1] for l in lines}
+    header = table_from_header()
+    check("the table of the tool equals the TZ_* defines (%d zones)" % len(header), listed == header,
+          (set(listed.items()) ^ set(header.items())))
+
+
+ZONEINFO = ("/usr/share/zoneinfo", "/usr/lib/zoneinfo", "/var/db/timezone/zoneinfo")
+HAVE_ZONEINFO = any(os.path.exists(os.path.join(d, "Europe/Zurich")) for d in ZONEINFO)
+
+
+def test_local_zone():
+    if HAVE_ZONEINFO:
+        for name, tz in (("Europe/Zurich", "CET-1CEST,M3.5.0,M10.5.0/3"), ("America/New_York", "EST5EDT,M3.2.0,M11.1.0"),
+                         ("Asia/Kolkata", "IST-5:30"), ("Australia/Sydney", "AEST-10AEDT,M10.1.0,M4.1.0/3"),
+                         ("Pacific/Auckland", "NZST-12NZDT,M9.5.0,M4.1.0/3"), ("UTC", "UTC0"),
+                         (":Europe/London", "GMT0BST,M3.5.0/1,M10.5.0")):
+            rc, out, err = run("tz", env={"TZ": name})
+            shown = name.lstrip(":")
+            check("tz with TZ=%s: zone and string" % name, rc == 0 and ("zone:        " + shown) in out and tz in out, (rc, out, err))
+            check("tz with TZ=%s: the string is read from the zoneinfo file" % name, "from the zoneinfo file" in out, out)
+            check("tz with TZ=%s: the check passes" % name, "same local time as this computer" in out, out)
+    else:
+        print("[SKIP] no zoneinfo files on this computer: the zone names are not tested")
+    rc, out, err = run("tz", env={"TZ": "CET-1CEST,M3.5.0,M10.5.0/3"})
+    check("tz with a POSIX string in TZ", rc == 0 and "zone:        unknown" in out and "from the TZ variable" in out and "CET-1CEST,M3.5.0,M10.5.0/3" in out, (rc, out, err))
+    rc, out, err = run("tz", env={"TZ": "XYZ-3:30XYZS,M2.2.0,M9.1.0/4"})
+    check("tz with a POSIX string that is not in the table", rc == 0 and "XYZ-3:30XYZS,M2.2.0,M9.1.0/4" in out and "same rules" not in out, (rc, out, err))
+    rc, out, err = run("tz", env={"TZ": "Nowhere/Land"})
+    check("tz with a name that nobody knows: found by comparing with the table",
+          rc == 0 and "zone:        unknown" in out and "comparing the local time with the table" in out and "same local time" in out, (rc, out, err))
+    rc, out, err = run("tz", env={"TZ": None})
+    check("tz without TZ: the zone of this computer", rc == 0 and "TZ string:" in out and "same local time" in out, (rc, out, err))
+
+
 KEY = b"topsecret"
 
 
@@ -227,8 +312,11 @@ def test_protocol_attacks():
     p.terminate()
 
 
-for t in (test_help_and_options, test_query_a_server, test_query_failures,
-          test_set_with_the_tool, test_set_failures, test_serve, test_protocol_attacks):
+TESTS = (test_help_and_options, test_zone_lookup, test_local_zone, test_query_a_server, test_query_failures,
+         test_set_with_the_tool, test_set_failures, test_serve, test_protocol_attacks)
+for t in TESTS:
+    if len(sys.argv) > 3 and t.__name__ not in sys.argv[3:]:
+        continue
     print("--", t.__name__)
     t()
 print("tool: %d checks, %d failed" % (checks, failed))
