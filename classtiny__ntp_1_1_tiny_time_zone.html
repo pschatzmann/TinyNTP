@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: TinyTimeZone Class Reference</title>
+<title>TinyNTPClient: tiny_ntp::TinyTimeZone Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,6 +68,10 @@ $(function() {
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_time_zone.html">TinyTimeZone</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
@@ -77,8 +81,8 @@ $(function() {
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="class_tiny_time_zone-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">TinyTimeZone Class Reference</div></div>
+<a href="classtiny__ntp_1_1_tiny_time_zone-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tiny_ntp::TinyTimeZone Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -89,72 +93,72 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:Rule" id="r_Rule"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a></td></tr>
+<tr class="memitem:Rule" id="r_Rule"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa281ea97c5a4e7d4ace7b53c86c265d9" id="r_aa281ea97c5a4e7d4ace7b53c86c265d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa281ea97c5a4e7d4ace7b53c86c265d9">TinyTimeZone</a> (const char *tz)</td></tr>
-<tr class="memdesc:aa281ea97c5a4e7d4ace7b53c86c265d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct and parse a POSIX TZ string. Use <a class="el" href="#abf57edfbcbdaf370c9658991f44b5e40" title="Returns true if a TZ string was successfully parsed.">isValid()</a> to check if the string was valid.  <br /></td></tr>
-<tr class="memitem:a90318a6074b2dea70a9ec74905c4e861" id="r_a90318a6074b2dea70a9ec74905c4e861"><td class="memItemLeft" align="right" valign="top"><a id="a90318a6074b2dea70a9ec74905c4e861" name="a90318a6074b2dea70a9ec74905c4e861"></a>
+<tr class="memitem:a9adc59e4115c5405ef8fd5810719cd3b" id="r_a9adc59e4115c5405ef8fd5810719cd3b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9adc59e4115c5405ef8fd5810719cd3b">TinyTimeZone</a> (const char *tz)</td></tr>
+<tr class="memdesc:a9adc59e4115c5405ef8fd5810719cd3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct and parse a POSIX TZ string. Use <a class="el" href="#acc54efbcf0be377926c043c35969d590" title="Returns true if a TZ string was successfully parsed.">isValid()</a> to check if the string was valid.  <br /></td></tr>
+<tr class="memitem:afa133a042d024e58f79647d108488888" id="r_afa133a042d024e58f79647d108488888"><td class="memItemLeft" align="right" valign="top"><a id="afa133a042d024e58f79647d108488888" name="afa133a042d024e58f79647d108488888"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDst</b> () const</td></tr>
-<tr class="memdesc:a90318a6074b2dea70a9ec74905c4e861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time zone has summer time rules. <br /></td></tr>
-<tr class="memitem:ae9b22a3431cb00126b587ac7b30ba0d2" id="r_ae9b22a3431cb00126b587ac7b30ba0d2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9b22a3431cb00126b587ac7b30ba0d2">isDst</a> (int64_t utc) const</td></tr>
-<tr class="memdesc:ae9b22a3431cb00126b587ac7b30ba0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if summer time is active at the given UTC time.  <br /></td></tr>
-<tr class="memitem:abf57edfbcbdaf370c9658991f44b5e40" id="r_abf57edfbcbdaf370c9658991f44b5e40"><td class="memItemLeft" align="right" valign="top"><a id="abf57edfbcbdaf370c9658991f44b5e40" name="abf57edfbcbdaf370c9658991f44b5e40"></a>
+<tr class="memdesc:afa133a042d024e58f79647d108488888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time zone has summer time rules. <br /></td></tr>
+<tr class="memitem:a13aa52b678187e2e8b2cc2b3b5db7666" id="r_a13aa52b678187e2e8b2cc2b3b5db7666"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13aa52b678187e2e8b2cc2b3b5db7666">isDst</a> (int64_t utc) const</td></tr>
+<tr class="memdesc:a13aa52b678187e2e8b2cc2b3b5db7666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if summer time is active at the given UTC time.  <br /></td></tr>
+<tr class="memitem:acc54efbcf0be377926c043c35969d590" id="r_acc54efbcf0be377926c043c35969d590"><td class="memItemLeft" align="right" valign="top"><a id="acc54efbcf0be377926c043c35969d590" name="acc54efbcf0be377926c043c35969d590"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isValid</b> () const</td></tr>
-<tr class="memdesc:abf57edfbcbdaf370c9658991f44b5e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if a TZ string was successfully parsed. <br /></td></tr>
-<tr class="memitem:ae8c85065f7b34893770c35ba98c4ca4e" id="r_ae8c85065f7b34893770c35ba98c4ca4e"><td class="memItemLeft" align="right" valign="top"><a id="ae8c85065f7b34893770c35ba98c4ca4e" name="ae8c85065f7b34893770c35ba98c4ca4e"></a>
+<tr class="memdesc:acc54efbcf0be377926c043c35969d590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if a TZ string was successfully parsed. <br /></td></tr>
+<tr class="memitem:a653395d529b78f612cf0555a25879ad4" id="r_a653395d529b78f612cf0555a25879ad4"><td class="memItemLeft" align="right" valign="top"><a id="a653395d529b78f612cf0555a25879ad4" name="a653395d529b78f612cf0555a25879ad4"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (int64_t utc) const</td></tr>
-<tr class="memdesc:ae8c85065f7b34893770c35ba98c4ca4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the zone that applies at the given UTC time. <br /></td></tr>
-<tr class="memitem:a1b82ce501713523382d06cbbf40f5d91" id="r_a1b82ce501713523382d06cbbf40f5d91"><td class="memItemLeft" align="right" valign="top"><a id="a1b82ce501713523382d06cbbf40f5d91" name="a1b82ce501713523382d06cbbf40f5d91"></a>
+<tr class="memdesc:a653395d529b78f612cf0555a25879ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the zone that applies at the given UTC time. <br /></td></tr>
+<tr class="memitem:ae96e4ef9d2b27a437697677b87eba690" id="r_ae96e4ef9d2b27a437697677b87eba690"><td class="memItemLeft" align="right" valign="top"><a id="ae96e4ef9d2b27a437697677b87eba690" name="ae96e4ef9d2b27a437697677b87eba690"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>offsetSeconds</b> (int64_t utc) const</td></tr>
-<tr class="memdesc:a1b82ce501713523382d06cbbf40f5d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the offset to UTC in seconds (positive is east of UTC) that applies at the given UTC time. <br /></td></tr>
-<tr class="memitem:aaf2bf767228da8a44afcc2395af4d65d" id="r_aaf2bf767228da8a44afcc2395af4d65d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf2bf767228da8a44afcc2395af4d65d">setTimeZone</a> (const char *tz)</td></tr>
-<tr class="memdesc:aaf2bf767228da8a44afcc2395af4d65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a POSIX TZ string.  <br /></td></tr>
-<tr class="memitem:a2dbc4e4085ad84cb2dd6c94e6379d50c" id="r_a2dbc4e4085ad84cb2dd6c94e6379d50c"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dbc4e4085ad84cb2dd6c94e6379d50c">toLocal</a> (int64_t utc) const</td></tr>
-<tr class="memdesc:a2dbc4e4085ad84cb2dd6c94e6379d50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTC to local time.  <br /></td></tr>
+<tr class="memdesc:ae96e4ef9d2b27a437697677b87eba690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the offset to UTC in seconds (positive is east of UTC) that applies at the given UTC time. <br /></td></tr>
+<tr class="memitem:aeaec07dffc9e3c793db9f5d9fe7c6783" id="r_aeaec07dffc9e3c793db9f5d9fe7c6783"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaec07dffc9e3c793db9f5d9fe7c6783">setTimeZone</a> (const char *tz)</td></tr>
+<tr class="memdesc:aeaec07dffc9e3c793db9f5d9fe7c6783"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a POSIX TZ string.  <br /></td></tr>
+<tr class="memitem:a56cf5abc7ee850f1d0596f19954443ed" id="r_a56cf5abc7ee850f1d0596f19954443ed"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56cf5abc7ee850f1d0596f19954443ed">toLocal</a> (int64_t utc) const</td></tr>
+<tr class="memdesc:a56cf5abc7ee850f1d0596f19954443ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTC to local time.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a35cbbf3da6c332d74b712eac92bc751c" id="r_a35cbbf3da6c332d74b712eac92bc751c"><td class="memItemLeft" align="right" valign="top"><a id="a35cbbf3da6c332d74b712eac92bc751c" name="a35cbbf3da6c332d74b712eac92bc751c"></a>
+<tr class="memitem:a27ce7a3b04998c131e6c1c03d723b40d" id="r_a27ce7a3b04998c131e6c1c03d723b40d"><td class="memItemLeft" align="right" valign="top"><a id="a27ce7a3b04998c131e6c1c03d723b40d" name="a27ce7a3b04998c131e6c1c03d723b40d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-static-methods" class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a8a36206f3089ffa11f7ae278c8439282" id="r_a8a36206f3089ffa11f7ae278c8439282"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a36206f3089ffa11f7ae278c8439282">daysFromCivil</a> (int y, int m, int d)</td></tr>
-<tr class="memitem:aece433bf5ec2da906fe4d919c7cb9cda" id="r_aece433bf5ec2da906fe4d919c7cb9cda"><td class="memItemLeft" align="right" valign="top"><a id="aece433bf5ec2da906fe4d919c7cb9cda" name="aece433bf5ec2da906fe4d919c7cb9cda"></a>
+<tr class="memitem:a11ed50de28eccc798d20648f0a519c83" id="r_a11ed50de28eccc798d20648f0a519c83"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11ed50de28eccc798d20648f0a519c83">daysFromCivil</a> (int y, int m, int d)</td></tr>
+<tr class="memitem:a2e7ccf4763304b6a2a479fe859914683" id="r_a2e7ccf4763304b6a2a479fe859914683"><td class="memItemLeft" align="right" valign="top"><a id="a2e7ccf4763304b6a2a479fe859914683" name="a2e7ccf4763304b6a2a479fe859914683"></a>
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>daysInMonth</b> (int y, int m)</td></tr>
-<tr class="memitem:a204fea48f5a86791b9f11ebadf2194c8" id="r_a204fea48f5a86791b9f11ebadf2194c8"><td class="memItemLeft" align="right" valign="top"><a id="a204fea48f5a86791b9f11ebadf2194c8" name="a204fea48f5a86791b9f11ebadf2194c8"></a>
+<tr class="memitem:a6ac545f1d676ac3764da9cc41cbe8ce5" id="r_a6ac545f1d676ac3764da9cc41cbe8ce5"><td class="memItemLeft" align="right" valign="top"><a id="a6ac545f1d676ac3764da9cc41cbe8ce5" name="a6ac545f1d676ac3764da9cc41cbe8ce5"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAlpha</b> (char c)</td></tr>
-<tr class="memitem:a17d9ebfc4e936ec1ae577532775fdecb" id="r_a17d9ebfc4e936ec1ae577532775fdecb"><td class="memItemLeft" align="right" valign="top"><a id="a17d9ebfc4e936ec1ae577532775fdecb" name="a17d9ebfc4e936ec1ae577532775fdecb"></a>
+<tr class="memitem:a48aa0da31797c787ace529d3ae4767c8" id="r_a48aa0da31797c787ace529d3ae4767c8"><td class="memItemLeft" align="right" valign="top"><a id="a48aa0da31797c787ace529d3ae4767c8" name="a48aa0da31797c787ace529d3ae4767c8"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isDigit</b> (char c)</td></tr>
-<tr class="memitem:a46b2d05a02a9cc9680ec05c9da558eca" id="r_a46b2d05a02a9cc9680ec05c9da558eca"><td class="memItemLeft" align="right" valign="top"><a id="a46b2d05a02a9cc9680ec05c9da558eca" name="a46b2d05a02a9cc9680ec05c9da558eca"></a>
+<tr class="memitem:a7c5511aab67e51d56b4776f9e1923b18" id="r_a7c5511aab67e51d56b4776f9e1923b18"><td class="memItemLeft" align="right" valign="top"><a id="a7c5511aab67e51d56b4776f9e1923b18" name="a7c5511aab67e51d56b4776f9e1923b18"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLeap</b> (int y)</td></tr>
-<tr class="memitem:a80e1d49015e0e8ae0d2df77c5c82982c" id="r_a80e1d49015e0e8ae0d2df77c5c82982c"><td class="memItemLeft" align="right" valign="top"><a id="a80e1d49015e0e8ae0d2df77c5c82982c" name="a80e1d49015e0e8ae0d2df77c5c82982c"></a>
+<tr class="memitem:a98112f41ca5a7f6b8fb2b0c628a091d0" id="r_a98112f41ca5a7f6b8fb2b0c628a091d0"><td class="memItemLeft" align="right" valign="top"><a id="a98112f41ca5a7f6b8fb2b0c628a091d0" name="a98112f41ca5a7f6b8fb2b0c628a091d0"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>parseInt</b> (const char *&amp;p, int &amp;value)</td></tr>
-<tr class="memitem:af1a098f2ec5eb7551d6342cef2daffed" id="r_af1a098f2ec5eb7551d6342cef2daffed"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a098f2ec5eb7551d6342cef2daffed">parseName</a> (const char *&amp;p, char(&amp;out)[8])</td></tr>
-<tr class="memitem:a0c1ba0867ee04b395dc2b8a9de8f0912" id="r_a0c1ba0867ee04b395dc2b8a9de8f0912"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c1ba0867ee04b395dc2b8a9de8f0912">parseRule</a> (const char *&amp;p, <a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a> &amp;r)</td></tr>
-<tr class="memitem:a13116951587b9eb25c7f3bdad5023e03" id="r_a13116951587b9eb25c7f3bdad5023e03"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13116951587b9eb25c7f3bdad5023e03">parseTime</a> (const char *&amp;p, int32_t &amp;seconds)</td></tr>
-<tr class="memitem:a7dd5ea923bc5c6c7446ccd339fd31885" id="r_a7dd5ea923bc5c6c7446ccd339fd31885"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dd5ea923bc5c6c7446ccd339fd31885">transition</a> (int year, const <a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a> &amp;r)</td></tr>
-<tr class="memitem:aaee058055efa026dc66b76b833c6226f" id="r_aaee058055efa026dc66b76b833c6226f"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaee058055efa026dc66b76b833c6226f">yearOf</a> (int64_t t)</td></tr>
+<tr class="memitem:a0672b60bde84585804fa1e3b487dc023" id="r_a0672b60bde84585804fa1e3b487dc023"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0672b60bde84585804fa1e3b487dc023">parseName</a> (const char *&amp;p, char(&amp;out)[8])</td></tr>
+<tr class="memitem:a9ee4adec197f64a9cc6e921ba87ea8be" id="r_a9ee4adec197f64a9cc6e921ba87ea8be"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ee4adec197f64a9cc6e921ba87ea8be">parseRule</a> (const char *&amp;p, <a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a> &amp;r)</td></tr>
+<tr class="memitem:a4ea48fe154faa38934053d1694452cc5" id="r_a4ea48fe154faa38934053d1694452cc5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ea48fe154faa38934053d1694452cc5">parseTime</a> (const char *&amp;p, int32_t &amp;seconds)</td></tr>
+<tr class="memitem:a873a78c724f93625ff971e0a697c5155" id="r_a873a78c724f93625ff971e0a697c5155"><td class="memItemLeft" align="right" valign="top">static int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a873a78c724f93625ff971e0a697c5155">transition</a> (int year, const <a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a> &amp;r)</td></tr>
+<tr class="memitem:afdda1f491ae0ad377b46b01d864db04d" id="r_afdda1f491ae0ad377b46b01d864db04d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdda1f491ae0ad377b46b01d864db04d">yearOf</a> (int64_t t)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a60fa604cc27596454cd546fd9b9ebc38" id="r_a60fa604cc27596454cd546fd9b9ebc38"><td class="memItemLeft" align="right" valign="top"><a id="a60fa604cc27596454cd546fd9b9ebc38" name="a60fa604cc27596454cd546fd9b9ebc38"></a>
+<tr class="memitem:a4f05d21e5d5459cd678544b63d9ebcaa" id="r_a4f05d21e5d5459cd678544b63d9ebcaa"><td class="memItemLeft" align="right" valign="top"><a id="a4f05d21e5d5459cd678544b63d9ebcaa" name="a4f05d21e5d5459cd678544b63d9ebcaa"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>_dstName</b> [8] = &quot;&quot;</td></tr>
-<tr class="memitem:a38e3d636913bd34ec67fc968b028ca15" id="r_a38e3d636913bd34ec67fc968b028ca15"><td class="memItemLeft" align="right" valign="top"><a id="a38e3d636913bd34ec67fc968b028ca15" name="a38e3d636913bd34ec67fc968b028ca15"></a>
+<tr class="memitem:adc9f49f53e6180dc4812cc910177dd77" id="r_adc9f49f53e6180dc4812cc910177dd77"><td class="memItemLeft" align="right" valign="top"><a id="adc9f49f53e6180dc4812cc910177dd77" name="adc9f49f53e6180dc4812cc910177dd77"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_dstOffset</b> = 0</td></tr>
-<tr class="memitem:a92c1a2e9fe87497c304455165ef59fbe" id="r_a92c1a2e9fe87497c304455165ef59fbe"><td class="memItemLeft" align="right" valign="top"><a id="a92c1a2e9fe87497c304455165ef59fbe" name="a92c1a2e9fe87497c304455165ef59fbe"></a>
-<a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_end</b></td></tr>
-<tr class="memitem:a0653765334bbaaee6aeb1faf94405ad1" id="r_a0653765334bbaaee6aeb1faf94405ad1"><td class="memItemLeft" align="right" valign="top"><a id="a0653765334bbaaee6aeb1faf94405ad1" name="a0653765334bbaaee6aeb1faf94405ad1"></a>
+<tr class="memitem:a7970dfc5567fc831cda5dc6b7f73656d" id="r_a7970dfc5567fc831cda5dc6b7f73656d"><td class="memItemLeft" align="right" valign="top"><a id="a7970dfc5567fc831cda5dc6b7f73656d" name="a7970dfc5567fc831cda5dc6b7f73656d"></a>
+<a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_end</b></td></tr>
+<tr class="memitem:a954a439be29cffaa2108ffd472a89f02" id="r_a954a439be29cffaa2108ffd472a89f02"><td class="memItemLeft" align="right" valign="top"><a id="a954a439be29cffaa2108ffd472a89f02" name="a954a439be29cffaa2108ffd472a89f02"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_hasDst</b> = false</td></tr>
-<tr class="memitem:a8419062745aa827c3613ac59b7ac25b4" id="r_a8419062745aa827c3613ac59b7ac25b4"><td class="memItemLeft" align="right" valign="top"><a id="a8419062745aa827c3613ac59b7ac25b4" name="a8419062745aa827c3613ac59b7ac25b4"></a>
-<a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_start</b></td></tr>
-<tr class="memitem:aafe58e867792ffb37660bcc3cb1505fe" id="r_aafe58e867792ffb37660bcc3cb1505fe"><td class="memItemLeft" align="right" valign="top"><a id="aafe58e867792ffb37660bcc3cb1505fe" name="aafe58e867792ffb37660bcc3cb1505fe"></a>
+<tr class="memitem:a71e6e9602df9ab67fae22fe8467ddb34" id="r_a71e6e9602df9ab67fae22fe8467ddb34"><td class="memItemLeft" align="right" valign="top"><a id="a71e6e9602df9ab67fae22fe8467ddb34" name="a71e6e9602df9ab67fae22fe8467ddb34"></a>
+<a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_start</b></td></tr>
+<tr class="memitem:abfd725abfc80110ef43571397fd383d6" id="r_abfd725abfc80110ef43571397fd383d6"><td class="memItemLeft" align="right" valign="top"><a id="abfd725abfc80110ef43571397fd383d6" name="abfd725abfc80110ef43571397fd383d6"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>_stdName</b> [8] = &quot;UTC&quot;</td></tr>
-<tr class="memitem:a4191e6d1cd53c0d7c0d05e816a65e666" id="r_a4191e6d1cd53c0d7c0d05e816a65e666"><td class="memItemLeft" align="right" valign="top"><a id="a4191e6d1cd53c0d7c0d05e816a65e666" name="a4191e6d1cd53c0d7c0d05e816a65e666"></a>
+<tr class="memitem:ad8ec3e69e9774e6278ca6be1f517b143" id="r_ad8ec3e69e9774e6278ca6be1f517b143"><td class="memItemLeft" align="right" valign="top"><a id="ad8ec3e69e9774e6278ca6be1f517b143" name="ad8ec3e69e9774e6278ca6be1f517b143"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_stdOffset</b> = 0</td></tr>
-<tr class="memitem:ae5e6ebdb939a4206478442e08ca26e04" id="r_ae5e6ebdb939a4206478442e08ca26e04"><td class="memItemLeft" align="right" valign="top"><a id="ae5e6ebdb939a4206478442e08ca26e04" name="ae5e6ebdb939a4206478442e08ca26e04"></a>
+<tr class="memitem:ac64cad721d269cc3e59695bd6179c34b" id="r_ac64cad721d269cc3e59695bd6179c34b"><td class="memItemLeft" align="right" valign="top"><a id="ac64cad721d269cc3e59695bd6179c34b" name="ac64cad721d269cc3e59695bd6179c34b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
@@ -166,8 +170,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 <li>time: [+-]hh[:mm[:ss]], default 02:00:00 If a DST name is given without rules, the US rules (M3.2.0,M11.1.0) are used. </li>
 </ul>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa281ea97c5a4e7d4ace7b53c86c265d9" name="aa281ea97c5a4e7d4ace7b53c86c265d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa281ea97c5a4e7d4ace7b53c86c265d9">&#9670;&#160;</a></span>TinyTimeZone()</h2>
+<a id="a9adc59e4115c5405ef8fd5810719cd3b" name="a9adc59e4115c5405ef8fd5810719cd3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9adc59e4115c5405ef8fd5810719cd3b">&#9670;&#160;</a></span>TinyTimeZone()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +180,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TinyTimeZone::TinyTimeZone </td>
+          <td class="memname">tiny_ntp::TinyTimeZone::TinyTimeZone </td>
           <td>(</td>
           <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>tz</em></span></td><td>)</td>
           <td></td>
@@ -189,7 +193,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 </table>
 </div><div class="memdoc">
 
-<p>Construct and parse a POSIX TZ string. Use <a class="el" href="#abf57edfbcbdaf370c9658991f44b5e40" title="Returns true if a TZ string was successfully parsed.">isValid()</a> to check if the string was valid. </p>
+<p>Construct and parse a POSIX TZ string. Use <a class="el" href="#acc54efbcf0be377926c043c35969d590" title="Returns true if a TZ string was successfully parsed.">isValid()</a> to check if the string was valid. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tz</td><td>The TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3". </td></tr>
@@ -200,8 +204,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a8a36206f3089ffa11f7ae278c8439282" name="a8a36206f3089ffa11f7ae278c8439282"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a36206f3089ffa11f7ae278c8439282">&#9670;&#160;</a></span>daysFromCivil()</h2>
+<a id="a11ed50de28eccc798d20648f0a519c83" name="a11ed50de28eccc798d20648f0a519c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11ed50de28eccc798d20648f0a519c83">&#9670;&#160;</a></span>daysFromCivil()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,7 +214,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int64_t TinyTimeZone::daysFromCivil </td>
+          <td class="memname">int64_t tiny_ntp::TinyTimeZone::daysFromCivil </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
         </tr>
@@ -235,8 +239,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="ae9b22a3431cb00126b587ac7b30ba0d2" name="ae9b22a3431cb00126b587ac7b30ba0d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9b22a3431cb00126b587ac7b30ba0d2">&#9670;&#160;</a></span>isDst()</h2>
+<a id="a13aa52b678187e2e8b2cc2b3b5db7666" name="a13aa52b678187e2e8b2cc2b3b5db7666"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13aa52b678187e2e8b2cc2b3b5db7666">&#9670;&#160;</a></span>isDst()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,7 +249,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool TinyTimeZone::isDst </td>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::isDst </td>
           <td>(</td>
           <td class="paramtype">int64_t</td>          <td class="paramname"><span class="paramname"><em>utc</em></span></td><td>)</td>
           <td> const</td>
@@ -268,8 +272,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="af1a098f2ec5eb7551d6342cef2daffed" name="af1a098f2ec5eb7551d6342cef2daffed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1a098f2ec5eb7551d6342cef2daffed">&#9670;&#160;</a></span>parseName()</h2>
+<a id="a0672b60bde84585804fa1e3b487dc023" name="a0672b60bde84585804fa1e3b487dc023"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0672b60bde84585804fa1e3b487dc023">&#9670;&#160;</a></span>parseName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +282,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool TinyTimeZone::parseName </td>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::parseName </td>
           <td>(</td>
           <td class="paramtype">const char *&amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
         </tr>
@@ -298,8 +302,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="a0c1ba0867ee04b395dc2b8a9de8f0912" name="a0c1ba0867ee04b395dc2b8a9de8f0912"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c1ba0867ee04b395dc2b8a9de8f0912">&#9670;&#160;</a></span>parseRule()</h2>
+<a id="a9ee4adec197f64a9cc6e921ba87ea8be" name="a9ee4adec197f64a9cc6e921ba87ea8be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ee4adec197f64a9cc6e921ba87ea8be">&#9670;&#160;</a></span>parseRule()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -308,14 +312,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool TinyTimeZone::parseRule </td>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::parseRule </td>
           <td>(</td>
           <td class="paramtype">const char *&amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -328,8 +332,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="a13116951587b9eb25c7f3bdad5023e03" name="a13116951587b9eb25c7f3bdad5023e03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13116951587b9eb25c7f3bdad5023e03">&#9670;&#160;</a></span>parseTime()</h2>
+<a id="a4ea48fe154faa38934053d1694452cc5" name="a4ea48fe154faa38934053d1694452cc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ea48fe154faa38934053d1694452cc5">&#9670;&#160;</a></span>parseTime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -338,7 +342,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool TinyTimeZone::parseTime </td>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::parseTime </td>
           <td>(</td>
           <td class="paramtype">const char *&amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
         </tr>
@@ -358,8 +362,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="aaf2bf767228da8a44afcc2395af4d65d" name="aaf2bf767228da8a44afcc2395af4d65d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf2bf767228da8a44afcc2395af4d65d">&#9670;&#160;</a></span>setTimeZone()</h2>
+<a id="aeaec07dffc9e3c793db9f5d9fe7c6783" name="aeaec07dffc9e3c793db9f5d9fe7c6783"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaec07dffc9e3c793db9f5d9fe7c6783">&#9670;&#160;</a></span>setTimeZone()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -368,7 +372,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool TinyTimeZone::setTimeZone </td>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::setTimeZone </td>
           <td>(</td>
           <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>tz</em></span></td><td>)</td>
           <td></td>
@@ -392,8 +396,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="a2dbc4e4085ad84cb2dd6c94e6379d50c" name="a2dbc4e4085ad84cb2dd6c94e6379d50c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dbc4e4085ad84cb2dd6c94e6379d50c">&#9670;&#160;</a></span>toLocal()</h2>
+<a id="a56cf5abc7ee850f1d0596f19954443ed" name="a56cf5abc7ee850f1d0596f19954443ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56cf5abc7ee850f1d0596f19954443ed">&#9670;&#160;</a></span>toLocal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -402,7 +406,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::tm TinyTimeZone::toLocal </td>
+          <td class="memname">std::tm tiny_ntp::TinyTimeZone::toLocal </td>
           <td>(</td>
           <td class="paramtype">int64_t</td>          <td class="paramname"><span class="paramname"><em>utc</em></span></td><td>)</td>
           <td> const</td>
@@ -426,8 +430,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="a7dd5ea923bc5c6c7446ccd339fd31885" name="a7dd5ea923bc5c6c7446ccd339fd31885"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dd5ea923bc5c6c7446ccd339fd31885">&#9670;&#160;</a></span>transition()</h2>
+<a id="a873a78c724f93625ff971e0a697c5155" name="a873a78c724f93625ff971e0a697c5155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a873a78c724f93625ff971e0a697c5155">&#9670;&#160;</a></span>transition()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,14 +440,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int64_t TinyTimeZone::transition </td>
+          <td class="memname">int64_t tiny_ntp::TinyTimeZone::transition </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>year</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="struct_tiny_time_zone_1_1_rule.html">Rule</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtiny__ntp_1_1_tiny_time_zone_1_1_rule.html">Rule</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -456,8 +460,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
 
 </div>
 </div>
-<a id="aaee058055efa026dc66b76b833c6226f" name="aaee058055efa026dc66b76b833c6226f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaee058055efa026dc66b76b833c6226f">&#9670;&#160;</a></span>yearOf()</h2>
+<a id="afdda1f491ae0ad377b46b01d864db04d" name="afdda1f491ae0ad377b46b01d864db04d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdda1f491ae0ad377b46b01d864db04d">&#9670;&#160;</a></span>yearOf()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -466,7 +470,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_valid</b> = false</t
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int TinyTimeZone::yearOf </td>
+          <td class="memname">int tiny_ntp::TinyTimeZone::yearOf </td>
           <td>(</td>
           <td class="paramtype">int64_t</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
           <td></td>

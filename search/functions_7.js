@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['l_5fhtonl_0',['l_htonl',['../class_tiny_n_t_p_client.html#a495ad2bdbc0e90be0e3bbb947364ff8d',1,'TinyNTPClient']]],
-  ['l_5fntohl_1',['l_ntohl',['../class_tiny_n_t_p_client.html#ab7f6b3e5014c1fa7ceda21826d099470',1,'TinyNTPClient']]],
-  ['log_2',['log',['../class_tiny_n_t_p_client.html#a5a978d100e9879cc1c52b185665a4590',1,'TinyNTPClient']]]
+  ['isdst_0',['isDst',['../classtiny__ntp_1_1_tiny_time_zone.html#a13aa52b678187e2e8b2cc2b3b5db7666',1,'tiny_ntp::TinyTimeZone']]],
+  ['isset_1',['isSet',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d',1,'tiny_ntp::TinyClockTimeSource']]],
+  ['isvalid_2',['isValid',['../classtiny__ntp_1_1_tiny_time_zone.html#acc54efbcf0be377926c043c35969d590',1,'tiny_ntp::TinyTimeZone']]]
 ];

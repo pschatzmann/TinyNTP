@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['offsetseconds_0',['offsetSeconds',['../class_tiny_time_zone.html#a1b82ce501713523382d06cbbf40f5d91',1,'TinyTimeZone']]],
-  ['operator_20bool_1',['operator bool',['../class_tiny_n_t_p_client.html#a98f414a88273fc5e600a133a93ad56d0',1,'TinyNTPClient']]]
+  ['name_0',['name',['../classtiny__ntp_1_1_tiny_time_zone.html#a653395d529b78f612cf0555a25879ad4',1,'tiny_ntp::TinyTimeZone']]],
+  ['ntpepochoffset_1',['NtpEpochOffset',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a2bbab5e958c826a417a5ffb96791be31',1,'tiny_ntp::TinyNTPServer']]],
+  ['ntpexchange_2',['ntpExchange',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a13356dfde77279da5bc90d0d1543aa02',1,'tiny_ntp::TinyNTPClient']]],
+  ['ntpfractiontoms_3',['ntpFractionToMs',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a6ac528ba86067c549f9d7d4129787757',1,'tiny_ntp::TinyNTPClient']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['begin_0',['begin',['../class_tiny_n_t_p_client.html#a80d3f50be30c1747dd203878cf7f5626',1,'TinyNTPClient::begin()'],['../class_tiny_n_t_p_server.html#af588f1c1b7f931f0e47d336d7fe02557',1,'TinyNTPServer::begin()']]]
+  ['begin_0',['begin',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a1b7a8f96edc258176e33839c529ed6a8',1,'tiny_ntp::TinyNTPClient::begin()'],['../classtiny__ntp_1_1_tiny_n_t_p_server.html#ad7b6d9aff1a77435af0a5825cb2ddd4b',1,'tiny_ntp::TinyNTPServer::begin()']]]
 ];

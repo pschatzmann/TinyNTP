@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['_5f_5fattribute_5f_5f_0',['__attribute__',['../class_tiny_n_t_p_client.html#a11dfddc64b872169cf575eedd500fa5b',1,'TinyNTPClient']]],
-  ['_5fbaselinentptime_1',['_baselineNtpTime',['../class_tiny_n_t_p_client.html#ac493791306a43597187eead4be6ee105',1,'TinyNTPClient']]],
-  ['_5fbaselinentptimems_2',['_baselineNtpTimeMs',['../class_tiny_n_t_p_client.html#a897c0219d4b7645f29abd917471e2d23',1,'TinyNTPClient']]],
-  ['_5fbaselineupdatemillis_3',['_baselineUpdateMillis',['../class_tiny_n_t_p_client.html#a6391786737b010467180f0f801519736',1,'TinyNTPClient']]],
-  ['_5flastntptime_4',['_lastNtpTime',['../class_tiny_n_t_p_client.html#ae402229c2697e50cd4fb43ce52505f60',1,'TinyNTPClient']]],
-  ['_5flastntptimems_5',['_lastNtpTimeMs',['../class_tiny_n_t_p_client.html#a654193f792dc67897d31b9bd9dcc015d',1,'TinyNTPClient']]],
-  ['_5flastupdatemillis_6',['_lastUpdateMillis',['../class_tiny_n_t_p_client.html#a122419d982ddb2de6a19b940a0c53725',1,'TinyNTPClient']]],
-  ['_5flocalport_7',['_localPort',['../class_tiny_n_t_p_client.html#abd371bb2293053d0dbcb3011e0eda24c',1,'TinyNTPClient']]],
-  ['_5fmilliscorrectionfactor_8',['_millisCorrectionFactor',['../class_tiny_n_t_p_client.html#a4536e03c9121248a6a74ab3e8403669e',1,'TinyNTPClient']]],
-  ['_5fport_9',['_port',['../class_tiny_n_t_p_client.html#ad2a5f3fdcfac511b4a7932d748e507a0',1,'TinyNTPClient']]],
-  ['_5fserver_10',['_server',['../class_tiny_n_t_p_client.html#a64f4d14e9c38e2c38a5de0066051c413',1,'TinyNTPClient']]],
-  ['_5ftimeoffsetseconds_11',['_timeOffsetSeconds',['../class_tiny_n_t_p_client.html#a9a56f1622b9478418b3db2827467db43',1,'TinyNTPClient']]],
-  ['_5ftimeoutms_12',['_timeoutMs',['../class_tiny_n_t_p_client.html#ad7ba964564bcb1ea6d334bc7d629a79e',1,'TinyNTPClient']]],
-  ['_5ftimezone_13',['_timeZone',['../class_tiny_n_t_p_client.html#a021ab30d830d045668710c76311bb0a0',1,'TinyNTPClient']]],
-  ['_5fudp_14',['_udp',['../class_tiny_n_t_p_client.html#aa864436e4414b9d7155134aafb6588c5',1,'TinyNTPClient']]]
+  ['_5f_5fattribute_5f_5f_0',['__attribute__',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a673da32cce00e5431382b6379cc47fec',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fbaselinentptime_1',['_baselineNtpTime',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#ac0750ddafe2caba16d1abf085a633e25',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fbaselinentptimems_2',['_baselineNtpTimeMs',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a4c13f8df3b7dea99d8488a81033457f5',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fbaselineupdatemillis_3',['_baselineUpdateMillis',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a573a1af94a1e505ed7d2c3b6f06d7547',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5flastntptime_4',['_lastNtpTime',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a4dac642bbbf1f619bb9be3c8606dd8f7',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5flastntptimems_5',['_lastNtpTimeMs',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a31cd869688ffd0e864551cdd0edde0bf',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5flastupdatemillis_6',['_lastUpdateMillis',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#ac5133fcf3c628b7bfa2c8f229eac1b77',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5flocalport_7',['_localPort',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a5e5b7b474e3a39866d9ec8707fe8b63c',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fmilliscorrectionfactor_8',['_millisCorrectionFactor',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a5ef35e19100d85fdff5bfb84666f4e22',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fport_9',['_port',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#aacc542fd5811ff372e56e5cb60f49763',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fserver_10',['_server',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a56867948af50b5001f15d1e8e3a3afa1',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5ftimeoffsetseconds_11',['_timeOffsetSeconds',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#ae537e8bbd39d51db1eb730a57071b77c',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5ftimeoutms_12',['_timeoutMs',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#aa353b768a38736fa3963106136755e36',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5ftimezone_13',['_timeZone',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a8df8bc3cd2c9dcdb161d7d517b34d217',1,'tiny_ntp::TinyNTPClient']]],
+  ['_5fudp_14',['_udp',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a2b08e57ddac8619b6cefc63f22e65b1c',1,'tiny_ntp::TinyNTPClient']]]
 ];

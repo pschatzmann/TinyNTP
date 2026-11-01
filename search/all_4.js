@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['end_0',['end',['../class_tiny_n_t_p_client.html#a980f17894fb2bf4f1beeaadec87c4f42',1,'TinyNTPClient::end()'],['../class_tiny_n_t_p_server.html#ab05ea1be719870251e4bf3ccf998307e',1,'TinyNTPServer::end()']]],
-  ['examples_1',['Examples',['../index.html#autotoc_md5',1,'']]]
+  ['daysfromcivil_0',['daysFromCivil',['../classtiny__ntp_1_1_tiny_time_zone.html#a11ed50de28eccc798d20648f0a519c83',1,'tiny_ntp::TinyTimeZone']]],
+  ['documentation_1',['Documentation',['../index.html#autotoc_md4',1,'']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: TinyNTPServer&lt; UDPAPI &gt; Class Template Reference</title>
+<title>TinyNTPClient: tiny_ntp::TinyNTPServer&lt; UDPAPI &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,6 +68,10 @@ $(function() {
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_n_t_p_server.html">TinyNTPServer</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
@@ -76,8 +80,8 @@ $(function() {
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
-<a href="class_tiny_n_t_p_server-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">TinyNTPServer&lt; UDPAPI &gt; Class Template Reference</div></div>
+<a href="classtiny__ntp_1_1_tiny_n_t_p_server-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tiny_ntp::TinyNTPServer&lt; UDPAPI &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -88,54 +92,51 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af588f1c1b7f931f0e47d336d7fe02557" id="r_af588f1c1b7f931f0e47d336d7fe02557"><td class="memTemplParams" colspan="2">template&lt;typename TimeSource&gt; </td></tr>
-<tr class="memitem:af588f1c1b7f931f0e47d336d7fe02557 template"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af588f1c1b7f931f0e47d336d7fe02557">begin</a> (TimeSource &amp;source, uint16_t port=123)</td></tr>
-<tr class="memdesc:af588f1c1b7f931f0e47d336d7fe02557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start listening for requests.  <br /></td></tr>
-<tr class="memitem:ab05ea1be719870251e4bf3ccf998307e" id="r_ab05ea1be719870251e4bf3ccf998307e"><td class="memItemLeft" align="right" valign="top"><a id="ab05ea1be719870251e4bf3ccf998307e" name="ab05ea1be719870251e4bf3ccf998307e"></a>
+<tr class="memitem:ad7b6d9aff1a77435af0a5825cb2ddd4b" id="r_ad7b6d9aff1a77435af0a5825cb2ddd4b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7b6d9aff1a77435af0a5825cb2ddd4b">begin</a> (<a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> &amp;source, uint16_t port=123)</td></tr>
+<tr class="memdesc:ad7b6d9aff1a77435af0a5825cb2ddd4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start listening for requests.  <br /></td></tr>
+<tr class="memitem:ad59580c8264e612ae92248e42ed0e0ab" id="r_ad59580c8264e612ae92248e42ed0e0ab"><td class="memItemLeft" align="right" valign="top"><a id="ad59580c8264e612ae92248e42ed0e0ab" name="ad59580c8264e612ae92248e42ed0e0ab"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
-<tr class="memdesc:ab05ea1be719870251e4bf3ccf998307e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop listening. <br /></td></tr>
-<tr class="memitem:a23ce364bf098b4364ba0be7a66858b74" id="r_a23ce364bf098b4364ba0be7a66858b74"><td class="memItemLeft" align="right" valign="top"><a id="a23ce364bf098b4364ba0be7a66858b74" name="a23ce364bf098b4364ba0be7a66858b74"></a>
+<tr class="memdesc:ad59580c8264e612ae92248e42ed0e0ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop listening. <br /></td></tr>
+<tr class="memitem:ae29f24f10ee57132b5f4947d12b772f2" id="r_ae29f24f10ee57132b5f4947d12b772f2"><td class="memItemLeft" align="right" valign="top"><a id="ae29f24f10ee57132b5f4947d12b772f2" name="ae29f24f10ee57132b5f4947d12b772f2"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getRequestCount</b> () const</td></tr>
-<tr class="memdesc:a23ce364bf098b4364ba0be7a66858b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of requests that were answered since <a class="el" href="#af588f1c1b7f931f0e47d336d7fe02557" title="Start listening for requests.">begin()</a>. <br /></td></tr>
-<tr class="memitem:a25a225640cb770148d5ba6b8774ba37f" id="r_a25a225640cb770148d5ba6b8774ba37f"><td class="memItemLeft" align="right" valign="top"><a id="a25a225640cb770148d5ba6b8774ba37f" name="a25a225640cb770148d5ba6b8774ba37f"></a>
+<tr class="memdesc:ae29f24f10ee57132b5f4947d12b772f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of requests that were answered since <a class="el" href="#ad7b6d9aff1a77435af0a5825cb2ddd4b" title="Start listening for requests.">begin()</a>. <br /></td></tr>
+<tr class="memitem:a669c982c2120d8f18a34a6c121ac67ba" id="r_a669c982c2120d8f18a34a6c121ac67ba"><td class="memItemLeft" align="right" valign="top"><a id="a669c982c2120d8f18a34a6c121ac67ba" name="a669c982c2120d8f18a34a6c121ac67ba"></a>
 UDPAPI &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUDP</b> ()</td></tr>
-<tr class="memdesc:a25a225640cb770148d5ba6b8774ba37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the UDP API. <br /></td></tr>
-<tr class="memitem:ae887c179a6773b63290ae2ba762068e0" id="r_ae887c179a6773b63290ae2ba762068e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae887c179a6773b63290ae2ba762068e0">process</a> ()</td></tr>
-<tr class="memdesc:ae887c179a6773b63290ae2ba762068e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Answer a pending request. Call this regularly in loop().  <br /></td></tr>
-<tr class="memitem:a8990855502e1ce2b87d58763222b4f03" id="r_a8990855502e1ce2b87d58763222b4f03"><td class="memItemLeft" align="right" valign="top"><a id="a8990855502e1ce2b87d58763222b4f03" name="a8990855502e1ce2b87d58763222b4f03"></a>
+<tr class="memdesc:a669c982c2120d8f18a34a6c121ac67ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the UDP API. <br /></td></tr>
+<tr class="memitem:a25fabc33695eb1becf5a5908c4a727f1" id="r_a25fabc33695eb1becf5a5908c4a727f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25fabc33695eb1becf5a5908c4a727f1">process</a> ()</td></tr>
+<tr class="memdesc:a25fabc33695eb1becf5a5908c4a727f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Answer a pending request. Call this regularly in loop().  <br /></td></tr>
+<tr class="memitem:a1188617184327a1bf9a751d166778582" id="r_a1188617184327a1bf9a751d166778582"><td class="memItemLeft" align="right" valign="top"><a id="a1188617184327a1bf9a751d166778582" name="a1188617184327a1bf9a751d166778582"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setStratum</b> (uint8_t stratum)</td></tr>
-<tr class="memdesc:a8990855502e1ce2b87d58763222b4f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stratum that is reported to the clients: 1 for a server with a reference clock (e.g. GPS), otherwise the stratum of the upstream server plus one. Default: 3. <br /></td></tr>
+<tr class="memdesc:a1188617184327a1bf9a751d166778582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stratum that is reported to the clients: 1 for a server with a reference clock (e.g. GPS), otherwise the stratum of the upstream server plus one. Default: 3. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-static-methods" class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a2b60d6f811c7e961ddba5006c607e6ae" id="r_a2b60d6f811c7e961ddba5006c607e6ae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b60d6f811c7e961ddba5006c607e6ae">putTimestamp</a> (uint8_t *out, uint64_t unixMs)</td></tr>
-<tr class="memitem:a178474d4e126817c5a225eabf5d30387" id="r_a178474d4e126817c5a225eabf5d30387"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a178474d4e126817c5a225eabf5d30387">putUint32</a> (uint8_t *out, uint32_t value)</td></tr>
+<tr class="memitem:ae69451ca0b2e0bc579918f73f712e0cd" id="r_ae69451ca0b2e0bc579918f73f712e0cd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae69451ca0b2e0bc579918f73f712e0cd">putTimestamp</a> (uint8_t *out, uint64_t unixMs)</td></tr>
+<tr class="memitem:a0ea8f2e937594845fefaa4fbb3774802" id="r_a0ea8f2e937594845fefaa4fbb3774802"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ea8f2e937594845fefaa4fbb3774802">putUint32</a> (uint8_t *out, uint32_t value)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a483e40215368b4b1efda1f39d8f8c8e2" id="r_a483e40215368b4b1efda1f39d8f8c8e2"><td class="memItemLeft" align="right" valign="top"><a id="a483e40215368b4b1efda1f39d8f8c8e2" name="a483e40215368b4b1efda1f39d8f8c8e2"></a>
-uint64_t(*&#160;</td><td class="memItemRight" valign="bottom"><b>_getTimeMs</b> )(void *) = nullptr</td></tr>
-<tr class="memitem:ac18876dccd03f0f1f26f24d894d26657" id="r_ac18876dccd03f0f1f26f24d894d26657"><td class="memItemLeft" align="right" valign="top"><a id="ac18876dccd03f0f1f26f24d894d26657" name="ac18876dccd03f0f1f26f24d894d26657"></a>
+<tr class="memitem:ad94cc163e590107da502c6b427ce66f5" id="r_ad94cc163e590107da502c6b427ce66f5"><td class="memItemLeft" align="right" valign="top"><a id="ad94cc163e590107da502c6b427ce66f5" name="ad94cc163e590107da502c6b427ce66f5"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_requests</b> = 0</td></tr>
-<tr class="memitem:a02d223e22c34fa384aa2004a950de461" id="r_a02d223e22c34fa384aa2004a950de461"><td class="memItemLeft" align="right" valign="top"><a id="a02d223e22c34fa384aa2004a950de461" name="a02d223e22c34fa384aa2004a950de461"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>_source</b> = nullptr</td></tr>
-<tr class="memitem:a6d743f123bfcaa85e95c8972501f6ffd" id="r_a6d743f123bfcaa85e95c8972501f6ffd"><td class="memItemLeft" align="right" valign="top"><a id="a6d743f123bfcaa85e95c8972501f6ffd" name="a6d743f123bfcaa85e95c8972501f6ffd"></a>
+<tr class="memitem:a4c8cfd6966127ccc2b57d9fa9a58c739" id="r_a4c8cfd6966127ccc2b57d9fa9a58c739"><td class="memItemLeft" align="right" valign="top"><a id="a4c8cfd6966127ccc2b57d9fa9a58c739" name="a4c8cfd6966127ccc2b57d9fa9a58c739"></a>
+<a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_source</b> = nullptr</td></tr>
+<tr class="memitem:acb0509fb1e1bce79690b9f53428e95d3" id="r_acb0509fb1e1bce79690b9f53428e95d3"><td class="memItemLeft" align="right" valign="top"><a id="acb0509fb1e1bce79690b9f53428e95d3" name="acb0509fb1e1bce79690b9f53428e95d3"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_stratum</b> = 3</td></tr>
-<tr class="memitem:ad4712e3e127eec5c47d3bb32d6d45a4b" id="r_ad4712e3e127eec5c47d3bb32d6d45a4b"><td class="memItemLeft" align="right" valign="top"><a id="ad4712e3e127eec5c47d3bb32d6d45a4b" name="ad4712e3e127eec5c47d3bb32d6d45a4b"></a>
+<tr class="memitem:aaf5b20099226bedb01648c9148f06de8" id="r_aaf5b20099226bedb01648c9148f06de8"><td class="memItemLeft" align="right" valign="top"><a id="aaf5b20099226bedb01648c9148f06de8" name="aaf5b20099226bedb01648c9148f06de8"></a>
 UDPAPI&#160;</td><td class="memItemRight" valign="bottom"><b>_udp</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-static-attribs" class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:acfb8d504983c61cbcbef684362ff2eb0" id="r_acfb8d504983c61cbcbef684362ff2eb0"><td class="memItemLeft" align="right" valign="top">static constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfb8d504983c61cbcbef684362ff2eb0">NtpEpochOffset</a> = 2208988800UL</td></tr>
-<tr class="memitem:a33319a0b26efd709af3575fffd2d4d75" id="r_a33319a0b26efd709af3575fffd2d4d75"><td class="memItemLeft" align="right" valign="top"><a id="a33319a0b26efd709af3575fffd2d4d75" name="a33319a0b26efd709af3575fffd2d4d75"></a>
+<tr class="memitem:a2bbab5e958c826a417a5ffb96791be31" id="r_a2bbab5e958c826a417a5ffb96791be31"><td class="memItemLeft" align="right" valign="top">static constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bbab5e958c826a417a5ffb96791be31">NtpEpochOffset</a> = 2208988800UL</td></tr>
+<tr class="memitem:a93e3c41da431a0de805409f8cbc0aa0a" id="r_a93e3c41da431a0de805409f8cbc0aa0a"><td class="memItemLeft" align="right" valign="top"><a id="a93e3c41da431a0de805409f8cbc0aa0a" name="a93e3c41da431a0de805409f8cbc0aa0a"></a>
 static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>PacketSize</b> = 48</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename UDPAPI&gt;<br />
-class TinyNTPServer&lt; UDPAPI &gt;</div><p>A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source to the clients in your network. </p>
-<p>The time source is any object with a <span class="tt">uint64_t getTimeMs()</span> method that returns the UTC time in milliseconds since the Unix epoch and 0 as long as the time is not known, e.g. a <a class="el" href="class_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a> (without a time offset or time zone). While the time is not known, requests are not answered.</p>
-<p>The server does not block: call <a class="el" href="#ae887c179a6773b63290ae2ba762068e0" title="Answer a pending request. Call this regularly in loop().">process()</a> in your loop(). It does not limit the request rate, so do not make it reachable from the internet.</p>
-<p>If the same device also runs a <a class="el" href="class_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a>, the client must not use port 123 as local port: call <a class="el" href="class_tiny_n_t_p_client.html#a948818ba8c110141d26df770cb4949d7" title="Set the local UDP port that is used to send the requests. By default this is the same as the NTP serv...">TinyNTPClient::setLocalPort()</a>.</p>
+class tiny_ntp::TinyNTPServer&lt; UDPAPI &gt;</div><p>A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source to the clients in your network. </p>
+<p>The time comes from a <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html" title="Abstract base class of all time sources: an object that knows the current UTC time....">TinyTimeSource</a>, e.g. a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a> (without a time offset or time zone), a <a class="el" href="classtiny__ntp_1_1_tiny_system_time_source.html" title="Serves the UTC time of the system clock (gettimeofday()). It is available on the platforms that provi...">TinySystemTimeSource</a> or a <a class="el" href="classtiny__ntp_1_1_tiny_clock_time_source.html" title="A software clock: you set the UTC time with setTime() and it keeps counting with millis()....">TinyClockTimeSource</a>. While the time source returns 0 (time not known), requests are not answered.</p>
+<p>The server does not block: call <a class="el" href="#a25fabc33695eb1becf5a5908c4a727f1" title="Answer a pending request. Call this regularly in loop().">process()</a> in your loop(). It does not limit the request rate, so do not make it reachable from the internet.</p>
+<p>If the same device also runs a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a>, the client must not use port 123 as local port: call <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#ac8e67531ff01dd311404616cf87256bf" title="Set the local UDP port that is used to send the requests. By default this is the same as the NTP serv...">TinyNTPClient::setLocalPort()</a>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">UDPAPI</td><td>The UDP class to use (e.g: WiFiUDP) </td></tr>
@@ -143,23 +144,21 @@ class TinyNTPServer&lt; UDPAPI &gt;</div><p>A minimal Network Time Protocol (NTP
   </dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="af588f1c1b7f931f0e47d336d7fe02557" name="af588f1c1b7f931f0e47d336d7fe02557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af588f1c1b7f931f0e47d336d7fe02557">&#9670;&#160;</a></span>begin()</h2>
+<a id="ad7b6d9aff1a77435af0a5825cb2ddd4b" name="ad7b6d9aff1a77435af0a5825cb2ddd4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7b6d9aff1a77435af0a5825cb2ddd4b">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename UDPAPI&gt; </div>
-<div class="memtemplate">
-template&lt;typename TimeSource&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_tiny_n_t_p_server.html">TinyNTPServer</a>&lt; UDPAPI &gt;::begin </td>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer</a>&lt; UDPAPI &gt;::begin </td>
           <td>(</td>
-          <td class="paramtype">TimeSource &amp;</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -177,7 +176,7 @@ template&lt;typename TimeSource&gt; </div>
 <p>Start listening for requests. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Time source with <span class="tt">uint64_t getTimeMs()</span>. It must stay valid as long as the server is used. </td></tr>
+    <tr><td class="paramname">source</td><td>The time source. It must stay valid as long as the server is used. </td></tr>
     <tr><td class="paramname">port</td><td>UDP port (default: 123). </td></tr>
   </table>
   </dd>
@@ -186,8 +185,8 @@ template&lt;typename TimeSource&gt; </div>
 
 </div>
 </div>
-<a id="ae887c179a6773b63290ae2ba762068e0" name="ae887c179a6773b63290ae2ba762068e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae887c179a6773b63290ae2ba762068e0">&#9670;&#160;</a></span>process()</h2>
+<a id="a25fabc33695eb1becf5a5908c4a727f1" name="a25fabc33695eb1becf5a5908c4a727f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25fabc33695eb1becf5a5908c4a727f1">&#9670;&#160;</a></span>process()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +197,7 @@ template&lt;typename UDPAPI&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_tiny_n_t_p_server.html">TinyNTPServer</a>&lt; UDPAPI &gt;::process </td>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer</a>&lt; UDPAPI &gt;::process </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -216,8 +215,8 @@ template&lt;typename UDPAPI&gt; </div>
 
 </div>
 </div>
-<a id="a2b60d6f811c7e961ddba5006c607e6ae" name="a2b60d6f811c7e961ddba5006c607e6ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b60d6f811c7e961ddba5006c607e6ae">&#9670;&#160;</a></span>putTimestamp()</h2>
+<a id="ae69451ca0b2e0bc579918f73f712e0cd" name="ae69451ca0b2e0bc579918f73f712e0cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae69451ca0b2e0bc579918f73f712e0cd">&#9670;&#160;</a></span>putTimestamp()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +227,7 @@ template&lt;typename UDPAPI&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_tiny_n_t_p_server.html">TinyNTPServer</a>&lt; UDPAPI &gt;::putTimestamp </td>
+          <td class="memname">void <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer</a>&lt; UDPAPI &gt;::putTimestamp </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>out</em></span>, </td>
         </tr>
@@ -248,8 +247,8 @@ template&lt;typename UDPAPI&gt; </div>
 
 </div>
 </div>
-<a id="a178474d4e126817c5a225eabf5d30387" name="a178474d4e126817c5a225eabf5d30387"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a178474d4e126817c5a225eabf5d30387">&#9670;&#160;</a></span>putUint32()</h2>
+<a id="a0ea8f2e937594845fefaa4fbb3774802" name="a0ea8f2e937594845fefaa4fbb3774802"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ea8f2e937594845fefaa4fbb3774802">&#9670;&#160;</a></span>putUint32()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +259,7 @@ template&lt;typename UDPAPI&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_tiny_n_t_p_server.html">TinyNTPServer</a>&lt; UDPAPI &gt;::putUint32 </td>
+          <td class="memname">void <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer</a>&lt; UDPAPI &gt;::putUint32 </td>
           <td>(</td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>out</em></span>, </td>
         </tr>
@@ -281,8 +280,8 @@ template&lt;typename UDPAPI&gt; </div>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="acfb8d504983c61cbcbef684362ff2eb0" name="acfb8d504983c61cbcbef684362ff2eb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfb8d504983c61cbcbef684362ff2eb0">&#9670;&#160;</a></span>NtpEpochOffset</h2>
+<a id="a2bbab5e958c826a417a5ffb96791be31" name="a2bbab5e958c826a417a5ffb96791be31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bbab5e958c826a417a5ffb96791be31">&#9670;&#160;</a></span>NtpEpochOffset</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -293,7 +292,7 @@ template&lt;typename UDPAPI&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t <a class="el" href="class_tiny_n_t_p_server.html">TinyNTPServer</a>&lt; UDPAPI &gt;::NtpEpochOffset = 2208988800UL</td>
+          <td class="memname">uint32_t <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer</a>&lt; UDPAPI &gt;::NtpEpochOffset = 2208988800UL</td>
         </tr>
       </table>
   </td>

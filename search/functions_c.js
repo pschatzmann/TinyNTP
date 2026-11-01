@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['setlocalport_0',['setLocalPort',['../class_tiny_n_t_p_client.html#a948818ba8c110141d26df770cb4949d7',1,'TinyNTPClient']]],
-  ['setserver_1',['setServer',['../class_tiny_n_t_p_client.html#abe7174e6ac966f533aba09d5973d18ef',1,'TinyNTPClient']]],
-  ['setstratum_2',['setStratum',['../class_tiny_n_t_p_server.html#a8990855502e1ce2b87d58763222b4f03',1,'TinyNTPServer']]],
-  ['settimeoffsethours_3',['setTimeOffsetHours',['../class_tiny_n_t_p_client.html#aca6d6fdf5427090d49de0912eeb7df45',1,'TinyNTPClient']]],
-  ['settimeoffsetseconds_4',['setTimeOffsetSeconds',['../class_tiny_n_t_p_client.html#ae9243f4898861eab112a970fb363cf03',1,'TinyNTPClient']]],
-  ['settimezone_5',['setTimeZone',['../class_tiny_n_t_p_client.html#a78d8795837f9af984b647c93aa65c1cd',1,'TinyNTPClient::setTimeZone()'],['../class_tiny_time_zone.html#aaf2bf767228da8a44afcc2395af4d65d',1,'TinyTimeZone::setTimeZone()']]]
+  ['parsename_0',['parseName',['../classtiny__ntp_1_1_tiny_time_zone.html#a0672b60bde84585804fa1e3b487dc023',1,'tiny_ntp::TinyTimeZone']]],
+  ['parserule_1',['parseRule',['../classtiny__ntp_1_1_tiny_time_zone.html#a9ee4adec197f64a9cc6e921ba87ea8be',1,'tiny_ntp::TinyTimeZone']]],
+  ['parsetime_2',['parseTime',['../classtiny__ntp_1_1_tiny_time_zone.html#a4ea48fe154faa38934053d1694452cc5',1,'tiny_ntp::TinyTimeZone']]],
+  ['process_3',['process',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a25fabc33695eb1becf5a5908c4a727f1',1,'tiny_ntp::TinyNTPServer']]],
+  ['puttimestamp_4',['putTimestamp',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#ae69451ca0b2e0bc579918f73f712e0cd',1,'tiny_ntp::TinyNTPServer']]],
+  ['putuint32_5',['putUint32',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a0ea8f2e937594845fefaa4fbb3774802',1,'tiny_ntp::TinyNTPServer']]]
 ];

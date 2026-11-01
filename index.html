@@ -92,7 +92,7 @@ Features</h1>
 <li><span class="tt">TZ_*</span> defines for all IANA time zones (e.g. <span class="tt">TZ_EUROPE_ZURICH</span>)</li>
 </ul>
 <p><b>Server</b></p><ul>
-<li><span class="tt"><a class="el" href="class_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a></span> serves the time to the devices in your network, from the NTP client, the system time, a GPS or an RTC</li>
+<li><span class="tt">TinyNTPServer</span> serves the time to the devices in your network, from the NTP client, the system time (<span class="tt">TinySystemTimeSource</span>), or an RTC or GPS (<span class="tt">TinyClockTimeSource</span>); your own sources derive from <span class="tt">TinyTimeSource</span></li>
 </ul>
 <p><b>General</b></p><ul>
 <li>Header-only, easy to integrate</li>
@@ -104,7 +104,7 @@ Quick Start</h1>
 <div class="line"><span class="preprocessor">#include &lt;WiFiUdp.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="_tiny_n_t_p_client_8h.html">TinyNTPClient.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_class" href="class_tiny_n_t_p_client.html">TinyNTPClient&lt;WiFiUDP&gt;</a> ntp(NTP_IP_GOOGLE_1, 123, 1000);</div>
+<div class="line">TinyNTPClient&lt;WiFiUDP&gt; ntp(NTP_IP_GOOGLE_1, 123, 1000);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> setup() {</div>
 <div class="line">  Serial.begin(115200);</div>
@@ -122,8 +122,8 @@ Quick Start</h1>
 <div class="line">  delay(1000);</div>
 <div class="line">}</div>
 <div class="ttc" id="a_tiny_n_t_p_client_8h_html"><div class="ttname"><a href="_tiny_n_t_p_client_8h.html">TinyNTPClient.h</a></div><div class="ttdoc">Simple NTP client for Arduino using a generic UDP Client (e.g., WiFiUdp, EthernetUdp).</div></div>
-<div class="ttc" id="aclass_tiny_n_t_p_client_html"><div class="ttname"><a href="class_tiny_n_t_p_client.html">TinyNTPClient</a></div><div class="ttdoc">A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...</div><div class="ttdef"><b>Definition</b> TinyNTPClient.h:29</div></div>
 </div><!-- fragment --><p> Call <span class="tt">ntp.update()</span> from time to time (e.g. once per hour) to stay in sync.</p>
+<p>All classes are in the namespace <span class="tt">tiny_ntp</span>. In Arduino sketches (<span class="tt">ARDUINO</span> is defined) <span class="tt">using namespace tiny_ntp;</span> is applied automatically, so you can use the plain class names. On other platforms write <span class="tt"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">tiny_ntp::TinyNTPClient</a>&lt;...&gt;</span> or add <span class="tt">using namespace tiny_ntp;</span> yourself. The <span class="tt">NTP_*</span> and <span class="tt">TZ_*</span> defines are macros: they have no namespace.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Installation in Arduino</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with</p>
@@ -137,7 +137,7 @@ Documentation</h1>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/UDP-Stacks">UDP Stacks</a>: the supported networking stacks (WiFi, Ethernet, GSM, ...)</li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/Time-Zones">Time Zones</a>: fixed offset, POSIX TZ strings and the <span class="tt">TZ_*</span> defines</li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/Public-NTP-Servers">Public NTP Servers</a>: the <span class="tt">NTP_IP_*</span> and <span class="tt">NTP_HOST_*</span> defines</li>
-<li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/NTP-Server">NTP Server</a>: serve the time to your network with <span class="tt"><a class="el" href="class_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a></span></li>
+<li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/NTP-Server">NTP Server</a>: serve the time to your network with <span class="tt">TinyNTPServer</span></li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/wiki/Server-Time-Sources">Server Time Sources</a>: NTP client, system time, GPS and RTC as source for the server</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
@@ -146,6 +146,7 @@ Examples</h1>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino">ntp-wifi</a>: UTC time with a fixed offset</li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-timezone/ntp-wifi-timezone.ino">ntp-wifi-timezone</a>: local time with summer/winter time</li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-server/ntp-wifi-server.ino">ntp-wifi-server</a>: get the time from the internet and serve it to your network</li>
+<li><a href="https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-server-rtc/ntp-wifi-server-rtc.ino">ntp-wifi-server-rtc</a>: serve the time of an RTC (DS3231)</li>
 <li><a href="https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-desktop/ntp-desktop.cpp">ntp-desktop</a>: runs on a computer with the <a href="https://github.com/pschatzmann/arduino-emulator">arduino-emulator</a></li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
