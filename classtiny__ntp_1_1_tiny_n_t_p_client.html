@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: tiny_ntp::TinyNTPClient&lt; UDPAPI &gt; Class Template Reference</title>
+<title>TinyNTP: tiny_ntp::TinyNTPClient&lt; UDPAPI &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_n_t_p_client.html">TinyNTPClient</a></li>  </ul>
+<li class="navelem"><a href="namespacetiny__ntp.html">tiny_ntp</a></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_n_t_p_client.html">TinyNTPClient</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -140,6 +141,10 @@ UDPAPI &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUDP</b> ()
 <tr class="memdesc:adfb7ad64b115a35664a9eb4d5a7c357a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time zone with a POSIX TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich. Summer/winter time is handled by <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>. Do not combine with <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set the time offset in seconds (e.g., for timezone adjustment).">setTimeOffsetSeconds()</a>.  <br /></td></tr>
 <tr class="memitem:a7a7cf9df733411930cba1a4f7c55a4df" id="r_a7a7cf9df733411930cba1a4f7c55a4df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a7cf9df733411930cba1a4f7c55a4df">update</a> ()</td></tr>
 <tr class="memdesc:a7a7cf9df733411930cba1a4f7c55a4df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current time from the NTP server.  <br /></td></tr>
+<tr class="inherit_header pub_methods_classtiny__ntp_1_1_tiny_time_source"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtiny__ntp_1_1_tiny_time_source')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></td></tr>
+<tr class="memitem:aed4dc70b6149d73a2be5a84e6867f222 inherit pub_methods_classtiny__ntp_1_1_tiny_time_source" id="r_aed4dc70b6149d73a2be5a84e6867f222"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">setTimeMs</a> (uint64_t unixMs)</td></tr>
+<tr class="memdesc:aed4dc70b6149d73a2be5a84e6867f222 inherit pub_methods_classtiny__ntp_1_1_tiny_time_source"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time, e.g. by the command line tool <span class="tt">tinyntp
+set</span> (see <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html#a8f747322bed34cbfb970b68d87b2ece8" title="Allow to set the time of the time source over the network, e.g. with the command line tool tinyntp se...">TinyNTPServer::enableTimeSetting()</a>). The default implementation does not support this. Override it if the source can be set; you can also write the time to an RTC here.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -149,8 +154,7 @@ struct&#160;</td><td class="memItemRight" valign="bottom"><b>__attribute__</b> (
 <tr class="memitem:a8ab7e8c24ebccca58a96596e67806159" id="r_a8ab7e8c24ebccca58a96596e67806159"><td class="memItemLeft" align="right" valign="top"><a id="a8ab7e8c24ebccca58a96596e67806159" name="a8ab7e8c24ebccca58a96596e67806159"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getUncorrectedTimeSec</b> ()</td></tr>
 <tr class="memdesc:a8ab7e8c24ebccca58a96596e67806159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get uncorrected time in seconds (without millis correction factor). Used internally during NTP exchange to avoid circular dependency. Returns UTC time without timezone offset. <br /></td></tr>
-<tr class="memitem:a02bfe8a382c5dc58811b145d8fee1d9a" id="r_a02bfe8a382c5dc58811b145d8fee1d9a"><td class="memItemLeft" align="right" valign="top"><a id="a02bfe8a382c5dc58811b145d8fee1d9a" name="a02bfe8a382c5dc58811b145d8fee1d9a"></a>
-constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLittleEndian</b> ()</td></tr>
+<tr class="memitem:a02bfe8a382c5dc58811b145d8fee1d9a" id="r_a02bfe8a382c5dc58811b145d8fee1d9a"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02bfe8a382c5dc58811b145d8fee1d9a">isLittleEndian</a> ()</td></tr>
 <tr class="memitem:a2bcf6ec30f29d569326853aa07e72b77" id="r_a2bcf6ec30f29d569326853aa07e72b77"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bcf6ec30f29d569326853aa07e72b77">l_htonl</a> (uint32_t hostlong)</td></tr>
 <tr class="memdesc:a2bcf6ec30f29d569326853aa07e72b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a 32-bit value from host byte order to network byte order (big-endian).  <br /></td></tr>
 <tr class="memitem:a864837972cecc60c52d8fafbedcf7149" id="r_a864837972cecc60c52d8fafbedcf7149"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a864837972cecc60c52d8fafbedcf7149">l_ntohl</a> (uint32_t netlong)</td></tr>
@@ -161,8 +165,7 @@ constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLittleEnd
 <tr class="memdesc:a13356dfde77279da5bc90d0d1543aa02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the NTP request/response exchange and update the internal time.  <br /></td></tr>
 <tr class="memitem:a6ac528ba86067c549f9d7d4129787757" id="r_a6ac528ba86067c549f9d7d4129787757"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ac528ba86067c549f9d7d4129787757">ntpFractionToMs</a> (uint32_t fraction)</td></tr>
 <tr class="memdesc:a6ac528ba86067c549f9d7d4129787757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert NTP fractional timestamp to milliseconds. NTP fractions are in units of 2^-32 seconds, so we need to convert to ms.  <br /></td></tr>
-<tr class="memitem:a15ebc23bc257c18967ac607f6298bc6d" id="r_a15ebc23bc257c18967ac607f6298bc6d"><td class="memItemLeft" align="right" valign="top"><a id="a15ebc23bc257c18967ac607f6298bc6d" name="a15ebc23bc257c18967ac607f6298bc6d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>swap32</b> (uint32_t value)</td></tr>
+<tr class="memitem:a15ebc23bc257c18967ac607f6298bc6d" id="r_a15ebc23bc257c18967ac607f6298bc6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15ebc23bc257c18967ac607f6298bc6d">swap32</a> (uint32_t value)</td></tr>
 <tr class="memitem:a9ee4071e1c3e9019175a095cb40fb30d" id="r_a9ee4071e1c3e9019175a095cb40fb30d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ee4071e1c3e9019175a095cb40fb30d">updateWithoutRTC</a> ()</td></tr>
 <tr class="memdesc:a9ee4071e1c3e9019175a095cb40fb30d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the current time from the NTP server and update the internal time.  <br /></td></tr>
 <tr class="memitem:a07a7d8bc8a60e281189a1c7c69e6e875" id="r_a07a7d8bc8a60e281189a1c7c69e6e875"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07a7d8bc8a60e281189a1c7c69e6e875">updateWithRTC</a> ()</td></tr>
@@ -234,6 +237,7 @@ template&lt;typename UDPAPI&gt; </div>
   <table class="params">
     <tr><td class="paramname">server</td><td>NTP server hostname or IP address. </td></tr>
     <tr><td class="paramname">port</td><td>NTP server port (default: 123). </td></tr>
+    <tr><td class="paramname">timeoutMs</td><td>Time to wait for the response of the server in ms. </td></tr>
   </table>
   </dd>
 </dl>
@@ -420,6 +424,34 @@ template&lt;typename UDPAPI&gt; </div>
 
 <p>Get the current time as a std::tm structure (UTC). </p>
 <dl class="section return"><dt>Returns</dt><dd>std::tm structure representing the current time (UTC). </dd></dl>
+
+</div>
+</div>
+<a id="a02bfe8a382c5dc58811b145d8fee1d9a" name="a02bfe8a382c5dc58811b145d8fee1d9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02bfe8a382c5dc58811b145d8fee1d9a">&#9670;&#160;</a></span>isLittleEndian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::isLittleEndian </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns true if the CPU is little endian. </p>
 
 </div>
 </div>
@@ -815,6 +847,34 @@ template&lt;typename UDPAPI&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the string was valid. </dd></dl>
+
+</div>
+</div>
+<a id="a15ebc23bc257c18967ac607f6298bc6d" name="a15ebc23bc257c18967ac607f6298bc6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15ebc23bc257c18967ac607f6298bc6d">&#9670;&#160;</a></span>swap32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::swap32 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Swap the byte order of a 32 bit value. </p>
 
 </div>
 </div>
@@ -1260,7 +1320,7 @@ template&lt;typename UDPAPI&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="_tiny_n_t_p_client_8h_source.html">TinyNTPClient.h</a></li>
+<li>src/TinyNTP/<a class="el" href="_tiny_n_t_p_client_8h_source.html">TinyNTPClient.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

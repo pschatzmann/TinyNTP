@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: Member List</title>
+<title>TinyNTP: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_n_t_p_client.html">TinyNTPClient</a></li>  </ul>
+<li class="navelem"><a href="namespacetiny__ntp.html">tiny_ntp</a></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_n_t_p_client.html">TinyNTPClient</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -106,7 +107,7 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#afafef0bbf882fc8382dbb61bc526b64a">getTm</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#aecf2cb2e672eafd74c97a9336950571b">getUDP</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a8ab7e8c24ebccca58a96596e67806159">getUncorrectedTimeSec</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="odd"><td class="entry"><b>isLittleEndian</b>() (defined in <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a>)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a02bfe8a382c5dc58811b145d8fee1d9a">isLittleEndian</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a2bcf6ec30f29d569326853aa07e72b77">l_htonl</a>(uint32_t hostlong)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a864837972cecc60c52d8fafbedcf7149">l_ntohl</a>(uint32_t netlong)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a2fb1d40fd6f9afcf18f106c87bf5cb62">log</a>(const char *format,...)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
@@ -116,14 +117,15 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a85794d30de1bbc99e8db3d34343a13c4">operator bool</a>() const</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#ac8e67531ff01dd311404616cf87256bf">setLocalPort</a>(uint16_t port)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a100c5ad09ec104bdaec44b0336e2aecf">setServer</a>(const char *server, int port=123)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a40affb8f1abe0e6e3d2184b67ed2ec93">setTimeOffsetHours</a>(long hours)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#aef4b6f4d91d476a806667db6e6704cdc">setTimeOffsetSeconds</a>(long offset)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#adfb7ad64b115a35664a9eb4d5a7c357a">setTimeZone</a>(const char *tz)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>swap32</b>(uint32_t value) (defined in <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a>)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#aa1c98f9126c61ebace9d22601c5bc4a5">TinyNTPClient</a>(const char *server=NTP_HOST_POOL, int port=123, uint32_t timeoutMs=6000)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a7a7cf9df733411930cba1a4f7c55a4df">update</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a9ee4071e1c3e9019175a095cb40fb30d">updateWithoutRTC</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a07a7d8bc8a60e281189a1c7c69e6e875">updateWithRTC</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">setTimeMs</a>(uint64_t unixMs)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a40affb8f1abe0e6e3d2184b67ed2ec93">setTimeOffsetHours</a>(long hours)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#aef4b6f4d91d476a806667db6e6704cdc">setTimeOffsetSeconds</a>(long offset)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#adfb7ad64b115a35664a9eb4d5a7c357a">setTimeZone</a>(const char *tz)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a15ebc23bc257c18967ac607f6298bc6d">swap32</a>(uint32_t value)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#aa1c98f9126c61ebace9d22601c5bc4a5">TinyNTPClient</a>(const char *server=NTP_HOST_POOL, int port=123, uint32_t timeoutMs=6000)</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a7a7cf9df733411930cba1a4f7c55a4df">update</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a9ee4071e1c3e9019175a095cb40fb30d">updateWithoutRTC</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html#a07a7d8bc8a60e281189a1c7c69e6e875">updateWithRTC</a>()</td><td class="entry"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

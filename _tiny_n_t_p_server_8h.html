@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: src/TinyNTPServer.h File Reference</title>
+<title>TinyNTP: src/TinyNTP/TinyNTPServer.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,18 +71,19 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>src</b></li>  </ul>
+<li class="navelem"><b>src</b></li><li class="navelem"><b>TinyNTP</b></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">TinyNTPServer.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Simple NTP server for Arduino using a generic UDP class (e.g. WiFiUDP, EthernetUDP). It answers the requests of NTP clients with the time of a time source, e.g. a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a>.  
+<p>Simple NTP server for Arduino using a generic UDP class (e.g. WiFiUDP, EthernetUDP). It answers the requests of NTP clients with the time of a time source, e.g. a TinyNTPClient.  
 <a href="#details">More...</a></p>
 
 <p><a href="_tiny_n_t_p_server_8h_source.html">Go to the source code of this file.</a></p>
@@ -90,9 +92,14 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:tiny_5Fntp_3A_3ATinyNTPServer_3C_20UDPAPI_20_3E" id="r_tiny_5Fntp_3A_3ATinyNTPServer_3C_20UDPAPI_20_3E"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html">tiny_ntp::TinyNTPServer&lt; UDPAPI &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source to the clients in your network.  <a href="classtiny__ntp_1_1_tiny_n_t_p_server.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:tiny_5Fntp" id="r_tiny_5Fntp"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetiny__ntp.html">tiny_ntp</a></td></tr>
+<tr class="memdesc:namespacetiny__ntp"><td class="mdescLeft">&#160;</td><td class="mdescRight">The classes of the TinyNTP library: the NTP client (<a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a>), the NTP server (<a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a>), the time sources (<a class="el" href="classtiny__ntp_1_1_tiny_time_source.html" title="Abstract base class of all time sources: an object that knows the current UTC time....">TinyTimeSource</a>) and the time zone handling (<a class="el" href="classtiny__ntp_1_1_tiny_time_zone.html" title="Parses a POSIX TZ string and converts UTC time to local time.">TinyTimeZone</a>). In Arduino sketches (ARDUINO is defined) the namespace is used automatically. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Simple NTP server for Arduino using a generic UDP class (e.g. WiFiUDP, EthernetUDP). It answers the requests of NTP clients with the time of a time source, e.g. a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a>. </p>
+<div class="textblock"><p>Simple NTP server for Arduino using a generic UDP class (e.g. WiFiUDP, EthernetUDP). It answers the requests of NTP clients with the time of a time source, e.g. a TinyNTPClient. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

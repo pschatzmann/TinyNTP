@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: tiny_ntp::TinyTimeSource Class Reference</title>
+<title>TinyNTP: tiny_ntp::TinyTimeSource Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a></li>  </ul>
+<li class="navelem"><a href="namespacetiny__ntp.html">tiny_ntp</a></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -102,6 +103,9 @@ Inheritance diagram for tiny_ntp::TinyTimeSource:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af8c4c033ca7c624f21f9c47ef8e2634d" id="r_af8c4c033ca7c624f21f9c47ef8e2634d"><td class="memItemLeft" align="right" valign="top">virtual uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8c4c033ca7c624f21f9c47ef8e2634d">getTimeMs</a> ()=0</td></tr>
 <tr class="memdesc:af8c4c033ca7c624f21f9c47ef8e2634d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current UTC time in milliseconds since 1970-01-01. It is called for each request, so it should be fast and must not block.  <br /></td></tr>
+<tr class="memitem:aed4dc70b6149d73a2be5a84e6867f222" id="r_aed4dc70b6149d73a2be5a84e6867f222"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed4dc70b6149d73a2be5a84e6867f222">setTimeMs</a> (uint64_t unixMs)</td></tr>
+<tr class="memdesc:aed4dc70b6149d73a2be5a84e6867f222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time, e.g. by the command line tool <span class="tt">tinyntp
+set</span> (see <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html#a8f747322bed34cbfb970b68d87b2ece8" title="Allow to set the time of the time source over the network, e.g. with the command line tool tinyntp se...">TinyNTPServer::enableTimeSetting()</a>). The default implementation does not support this. Override it if the source can be set; you can also write the time to an RTC here.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class of all time sources: an object that knows the current UTC time. The <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a> serves the time of a <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html" title="Abstract base class of all time sources: an object that knows the current UTC time....">TinyTimeSource</a>. </p>
@@ -109,7 +113,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"> <span class="keyword">public</span>:</div>
 <div class="line">  uint64_t <a class="code hl_function" href="#af8c4c033ca7c624f21f9c47ef8e2634d">getTimeMs</a>()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> myClock.unixMs(); }</div>
 <div class="line">};</div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:27</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:34</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html_af8c4c033ca7c624f21f9c47ef8e2634d"><div class="ttname"><a href="#af8c4c033ca7c624f21f9c47ef8e2634d">tiny_ntp::TinyTimeSource::getTimeMs</a></div><div class="ttdeci">virtual uint64_t getTimeMs()=0</div><div class="ttdoc">Get the current UTC time in milliseconds since 1970-01-01. It is called for each request,...</div></div>
 </div><!-- fragment --> </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="af8c4c033ca7c624f21f9c47ef8e2634d" name="af8c4c033ca7c624f21f9c47ef8e2634d"></a>
@@ -142,8 +146,45 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aed4dc70b6149d73a2be5a84e6867f222" name="aed4dc70b6149d73a2be5a84e6867f222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed4dc70b6149d73a2be5a84e6867f222">&#9670;&#160;</a></span>setTimeMs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool tiny_ntp::TinyTimeSource::setTimeMs </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>unixMs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the current UTC time, e.g. by the command line tool <span class="tt">tinyntp
+set</span> (see <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html#a8f747322bed34cbfb970b68d87b2ece8" title="Allow to set the time of the time source over the network, e.g. with the command line tool tinyntp se...">TinyNTPServer::enableTimeSetting()</a>). The default implementation does not support this. Override it if the source can be set; you can also write the time to an RTC here. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unixMs</td><td>The new time in milliseconds since 1970-01-01. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the time was set. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da">tiny_ntp::TinyClockTimeSource</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="_tiny_time_source_8h_source.html">TinyTimeSource.h</a></li>
+<li>src/TinyNTP/<a class="el" href="_tiny_time_source_8h_source.html">TinyTimeSource.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

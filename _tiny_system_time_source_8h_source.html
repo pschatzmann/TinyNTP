@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: src/TinySystemTimeSource.h Source File</title>
+<title>TinyNTP: src/TinyNTP/TinySystemTimeSource.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>src</b></li>  </ul>
+<li class="navelem"><b>src</b></li><li class="navelem"><b>TinyNTP</b></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -87,40 +88,37 @@ $(function() {
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_tiny_time_source_8h.html">TinyTimeSource.h</a>&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span>tiny_ntp {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetiny__ntp.html">tiny_ntp</a> {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
 <div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_system_time_source.html">   31</a></span><span class="keyword">class </span><a class="code hl_function" href="classtiny__ntp_1_1_tiny_system_time_source.html#a50c044370fa3ccbfede3b09789b2b0b8">TinySystemTimeSource</a> : <span class="keyword">public</span> <a class="code hl_class" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> {</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_system_time_source.html#a50c044370fa3ccbfede3b09789b2b0b8">   37</a></span>  <span class="keyword">explicit</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_system_time_source.html#a50c044370fa3ccbfede3b09789b2b0b8">TinySystemTimeSource</a>(uint32_t minValidSeconds = 1700000000UL)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      : _minValid(minValidSeconds) {}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      : <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_system_time_source.html#a94f0649c6fda06792f89ba08cc4c247d">_minValid</a>(minValidSeconds) {}</div>
 </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
 <div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_system_time_source.html#a1e80012bcebaf64115f852ca110826d5">   44</a></span>  uint64_t <a class="code hl_function" href="classtiny__ntp_1_1_tiny_system_time_source.html#a1e80012bcebaf64115f852ca110826d5">getTimeMs</a>()<span class="keyword"> override </span>{</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    timeval tv;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">if</span> (gettimeofday(&amp;tv, <span class="keyword">nullptr</span>) != 0) <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(tv.tv_sec) &lt; _minValid) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(tv.tv_sec) &lt; <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_system_time_source.html#a94f0649c6fda06792f89ba08cc4c247d">_minValid</a>) <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(tv.tv_sec) * 1000ULL + tv.tv_usec / 1000;</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
 </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  uint32_t _minValid;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_system_time_source.html#a94f0649c6fda06792f89ba08cc4c247d">   53</a></span>  uint32_t <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_system_time_source.html#a94f0649c6fda06792f89ba08cc4c247d">_minValid</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>};</div>
 </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}  <span class="comment">// namespace tiny_ntp</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#if defined(ARDUINO)</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment">// Arduino sketches use the classes without the namespace</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">using namespace </span>tiny_ntp;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}  <span class="comment">// namespace tiny_ntp</span></div>
 <div class="ttc" id="a_tiny_time_source_8h_html"><div class="ttname"><a href="_tiny_time_source_8h.html">TinyTimeSource.h</a></div><div class="ttdoc">Interface for the time sources of the TinyNTPServer.</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_system_time_source_html_a1e80012bcebaf64115f852ca110826d5"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_system_time_source.html#a1e80012bcebaf64115f852ca110826d5">tiny_ntp::TinySystemTimeSource::getTimeMs</a></div><div class="ttdeci">uint64_t getTimeMs() override</div><div class="ttdoc">Get the current UTC time in milliseconds since 1970-01-01.</div><div class="ttdef"><b>Definition</b> TinySystemTimeSource.h:44</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_system_time_source_html_a50c044370fa3ccbfede3b09789b2b0b8"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_system_time_source.html#a50c044370fa3ccbfede3b09789b2b0b8">tiny_ntp::TinySystemTimeSource::TinySystemTimeSource</a></div><div class="ttdeci">TinySystemTimeSource(uint32_t minValidSeconds=1700000000UL)</div><div class="ttdef"><b>Definition</b> TinySystemTimeSource.h:37</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:27</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_system_time_source_html_a94f0649c6fda06792f89ba08cc4c247d"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_system_time_source.html#a94f0649c6fda06792f89ba08cc4c247d">tiny_ntp::TinySystemTimeSource::_minValid</a></div><div class="ttdeci">uint32_t _minValid</div><div class="ttdef"><b>Definition</b> TinySystemTimeSource.h:53</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:34</div></div>
+<div class="ttc" id="anamespacetiny__ntp_html"><div class="ttname"><a href="namespacetiny__ntp.html">tiny_ntp</a></div><div class="ttdoc">The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

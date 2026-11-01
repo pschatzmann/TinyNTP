@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: src/TinyClockTimeSource.h Source File</title>
+<title>TinyNTP: src/TinyNTP/TinyClockTimeSource.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>src</b></li>  </ul>
+<li class="navelem"><b>src</b></li><li class="navelem"><b>TinyNTP</b></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -85,60 +86,61 @@ $(function() {
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="_tiny_time_source_8h.html">TinyTimeSource.h</a>&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>tiny_ntp {</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespacetiny__ntp.html">   12</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetiny__ntp.html">tiny_ntp</a> {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
 <div class="foldopen" id="foldopen00030" data-start="{" data-end="};">
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html">   30</a></span><span class="keyword">class </span><a class="code hl_class" href="classtiny__ntp_1_1_tiny_clock_time_source.html">TinyClockTimeSource</a> : <span class="keyword">public</span> <a class="code hl_class" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> {</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> <span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a41fe1ff33fd5789b96d1b5288b8e9363">   38</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a41fe1ff33fd5789b96d1b5288b8e9363">setTime</a>(uint32_t unixSeconds, uint16_t milliseconds = 0) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a8586196226e4a747f85f29ac3658b54d">setTimeMs</a>(unixSeconds * 1000ULL + milliseconds);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da">setTimeMs</a>(unixSeconds * 1000ULL + milliseconds);</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  }</div>
 </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a8586196226e4a747f85f29ac3658b54d">   46</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a8586196226e4a747f85f29ac3658b54d">setTimeMs</a>(uint64_t unixMs) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    _timeMs = unixMs;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    _lastMillis = ::millis();</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da">   47</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da">setTimeMs</a>(uint64_t unixMs)<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> = unixMs;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">_lastMillis</a> = ::millis();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  }</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">   52</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">clear</a>() { _timeMs = 0; }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">   55</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">isSet</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _timeMs != 0; }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
-<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">   61</a></span>  uint64_t <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">getTimeMs</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">if</span> (_timeMs == 0) <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="comment">// add the time since the last call: this also handles the overflow of</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="comment">// millis() as long as it is called at least once every 49 days</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    uint32_t now = ::millis();</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    _timeMs += <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(now - _lastMillis);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    _lastMillis = now;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">return</span> _timeMs;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">   54</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">clear</a>() { <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> = 0; }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">   57</a></span>  <span class="keywordtype">bool</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">isSet</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> != 0; }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
+<div class="foldopen" id="foldopen00063" data-start="{" data-end="}">
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">   63</a></span>  uint64_t <a class="code hl_function" href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">getTimeMs</a>()<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> == 0) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="comment">// add the time since the last call: this also handles the overflow of</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// millis() as long as it is called at least once every 49 days</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    uint32_t now = ::millis();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> += <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(now - <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">_lastMillis</a>);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">_lastMillis</a> = now;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  }</div>
 </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  uint64_t _timeMs = 0;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  uint32_t _lastMillis = 0;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>};</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">   75</a></span>  uint64_t <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> = 0;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">   77</a></span>  uint32_t <a class="code hl_variable" href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">_lastMillis</a> = 0;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>};</div>
 </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}  <span class="comment">// namespace tiny_ntp</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#if defined(ARDUINO)</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">// Arduino sketches use the classes without the namespace</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keyword">using namespace </span>tiny_ntp;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}  <span class="comment">// namespace tiny_ntp</span></div>
+</div>
 <div class="ttc" id="a_tiny_time_source_8h_html"><div class="ttname"><a href="_tiny_time_source_8h.html">TinyTimeSource.h</a></div><div class="ttdoc">Interface for the time sources of the TinyNTPServer.</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html">tiny_ntp::TinyClockTimeSource</a></div><div class="ttdoc">A software clock: you set the UTC time with setTime() and it keeps counting with millis()....</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:30</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a0b2ce904c872e8b2a0f43a5b4b1355e4"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a0b2ce904c872e8b2a0f43a5b4b1355e4">tiny_ntp::TinyClockTimeSource::_lastMillis</a></div><div class="ttdeci">uint32_t _lastMillis</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:77</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a41fe1ff33fd5789b96d1b5288b8e9363"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a41fe1ff33fd5789b96d1b5288b8e9363">tiny_ntp::TinyClockTimeSource::setTime</a></div><div class="ttdeci">void setTime(uint32_t unixSeconds, uint16_t milliseconds=0)</div><div class="ttdoc">Set the current UTC time.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:38</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a558835b63c40c03b5401355ab3bd643d"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">tiny_ntp::TinyClockTimeSource::isSet</a></div><div class="ttdeci">bool isSet() const</div><div class="ttdoc">Returns true if the time has been set.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:55</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a8586196226e4a747f85f29ac3658b54d"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a8586196226e4a747f85f29ac3658b54d">tiny_ntp::TinyClockTimeSource::setTimeMs</a></div><div class="ttdeci">void setTimeMs(uint64_t unixMs)</div><div class="ttdoc">Set the current UTC time in milliseconds since 1970-01-01. Setting 0 clears the time.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:46</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_ab8a9ac731d4d14374a1a35cd528a6e0c"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">tiny_ntp::TinyClockTimeSource::getTimeMs</a></div><div class="ttdeci">uint64_t getTimeMs() override</div><div class="ttdoc">Get the current UTC time in milliseconds since 1970-01-01.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:61</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_ac9f56fb7065c5f25377d8285cfb5baa4"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">tiny_ntp::TinyClockTimeSource::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Forget the time: getTimeMs() returns 0 until it is set again.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:52</div></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:27</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a558835b63c40c03b5401355ab3bd643d"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d">tiny_ntp::TinyClockTimeSource::isSet</a></div><div class="ttdeci">bool isSet() const</div><div class="ttdoc">Returns true if the time has been set.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:57</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_a62814c25fa65d27370d5d67e5fd812da"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da">tiny_ntp::TinyClockTimeSource::setTimeMs</a></div><div class="ttdeci">bool setTimeMs(uint64_t unixMs) override</div><div class="ttdoc">Set the current UTC time in milliseconds since 1970-01-01. Setting 0 clears the time.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:47</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_ab8a9ac731d4d14374a1a35cd528a6e0c"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#ab8a9ac731d4d14374a1a35cd528a6e0c">tiny_ntp::TinyClockTimeSource::getTimeMs</a></div><div class="ttdeci">uint64_t getTimeMs() override</div><div class="ttdoc">Get the current UTC time in milliseconds since 1970-01-01.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:63</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_ac9f56fb7065c5f25377d8285cfb5baa4"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4">tiny_ntp::TinyClockTimeSource::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Forget the time: getTimeMs() returns 0 until it is set again.</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:54</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_clock_time_source_html_acc560e5b7d6fe487a8f06904621a77ad"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html#acc560e5b7d6fe487a8f06904621a77ad">tiny_ntp::TinyClockTimeSource::_timeMs</a></div><div class="ttdeci">uint64_t _timeMs</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:75</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:34</div></div>
+<div class="ttc" id="anamespacetiny__ntp_html"><div class="ttname"><a href="namespacetiny__ntp.html">tiny_ntp</a></div><div class="ttdoc">The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

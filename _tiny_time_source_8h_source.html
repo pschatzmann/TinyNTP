@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: src/TinyTimeSource.h Source File</title>
+<title>TinyNTP: src/TinyNTP/TinyTimeSource.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>src</b></li>  </ul>
+<li class="navelem"><b>src</b></li><li class="navelem"><b>TinyNTP</b></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -82,24 +83,28 @@ $(function() {
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>tiny_ntp {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span></div>
-<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_time_source.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">   35</a></span>  <span class="keyword">virtual</span> uint64_t <a class="code hl_function" href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">getTimeMs</a>() = 0;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>};</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetiny__ntp.html">tiny_ntp</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_time_source.html">   34</a></span><span class="keyword">class </span><a class="code hl_class" href="classtiny__ntp_1_1_tiny_time_source.html">TinyTimeSource</a> {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">   42</a></span>  <span class="keyword">virtual</span> uint64_t <a class="code hl_function" href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">getTimeMs</a>() = 0;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">   52</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">setTimeMs</a>(uint64_t unixMs) {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    (void)unixMs;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
 </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}  <span class="comment">// namespace tiny_ntp</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#if defined(ARDUINO)</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment">// Arduino sketches use the classes without the namespace</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">using namespace </span>tiny_ntp;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:27</div></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}  <span class="comment">// namespace tiny_ntp</span></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></div><div class="ttdoc">Abstract base class of all time sources: an object that knows the current UTC time....</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:34</div></div>
+<div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html_aed4dc70b6149d73a2be5a84e6867f222"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">tiny_ntp::TinyTimeSource::setTimeMs</a></div><div class="ttdeci">virtual bool setTimeMs(uint64_t unixMs)</div><div class="ttdoc">Set the current UTC time, e.g. by the command line tool tinyntp set (see TinyNTPServer::enableTimeSet...</div><div class="ttdef"><b>Definition</b> TinyTimeSource.h:52</div></div>
 <div class="ttc" id="aclasstiny__ntp_1_1_tiny_time_source_html_af8c4c033ca7c624f21f9c47ef8e2634d"><div class="ttname"><a href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">tiny_ntp::TinyTimeSource::getTimeMs</a></div><div class="ttdeci">virtual uint64_t getTimeMs()=0</div><div class="ttdoc">Get the current UTC time in milliseconds since 1970-01-01. It is called for each request,...</div></div>
+<div class="ttc" id="anamespacetiny__ntp_html"><div class="ttname"><a href="namespacetiny__ntp.html">tiny_ntp</a></div><div class="ttdoc">The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...</div><div class="ttdef"><b>Definition</b> TinyClockTimeSource.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

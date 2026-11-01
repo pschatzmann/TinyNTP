@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TinyNTPClient: tiny_ntp::TinyClockTimeSource Class Reference</title>
+<title>TinyNTP: tiny_ntp::TinyClockTimeSource Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TinyNTPClient
+   <div id="projectname">TinyNTP
    </div>
+   <div id="projectbrief">NTP client and server for Arduino</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tiny_ntp</b></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html">TinyClockTimeSource</a></li>  </ul>
+<li class="navelem"><a href="namespacetiny__ntp.html">tiny_ntp</a></li><li class="navelem"><a href="classtiny__ntp_1_1_tiny_clock_time_source.html">TinyClockTimeSource</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -109,16 +110,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSet</b> () const</t
 <tr class="memdesc:a558835b63c40c03b5401355ab3bd643d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time has been set. <br /></td></tr>
 <tr class="memitem:a41fe1ff33fd5789b96d1b5288b8e9363" id="r_a41fe1ff33fd5789b96d1b5288b8e9363"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41fe1ff33fd5789b96d1b5288b8e9363">setTime</a> (uint32_t unixSeconds, uint16_t milliseconds=0)</td></tr>
 <tr class="memdesc:a41fe1ff33fd5789b96d1b5288b8e9363"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time.  <br /></td></tr>
-<tr class="memitem:a8586196226e4a747f85f29ac3658b54d" id="r_a8586196226e4a747f85f29ac3658b54d"><td class="memItemLeft" align="right" valign="top"><a id="a8586196226e4a747f85f29ac3658b54d" name="a8586196226e4a747f85f29ac3658b54d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setTimeMs</b> (uint64_t unixMs)</td></tr>
-<tr class="memdesc:a8586196226e4a747f85f29ac3658b54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time in milliseconds since 1970-01-01. Setting 0 clears the time. <br /></td></tr>
+<tr class="memitem:a62814c25fa65d27370d5d67e5fd812da" id="r_a62814c25fa65d27370d5d67e5fd812da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62814c25fa65d27370d5d67e5fd812da">setTimeMs</a> (uint64_t unixMs) override</td></tr>
+<tr class="memdesc:a62814c25fa65d27370d5d67e5fd812da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time in milliseconds since 1970-01-01. Setting 0 clears the time.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a0b2ce904c872e8b2a0f43a5b4b1355e4" id="r_a0b2ce904c872e8b2a0f43a5b4b1355e4"><td class="memItemLeft" align="right" valign="top"><a id="a0b2ce904c872e8b2a0f43a5b4b1355e4" name="a0b2ce904c872e8b2a0f43a5b4b1355e4"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_lastMillis</b> = 0</td></tr>
-<tr class="memitem:acc560e5b7d6fe487a8f06904621a77ad" id="r_acc560e5b7d6fe487a8f06904621a77ad"><td class="memItemLeft" align="right" valign="top"><a id="acc560e5b7d6fe487a8f06904621a77ad" name="acc560e5b7d6fe487a8f06904621a77ad"></a>
-uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>_timeMs</b> = 0</td></tr>
+<tr class="memitem:a0b2ce904c872e8b2a0f43a5b4b1355e4" id="r_a0b2ce904c872e8b2a0f43a5b4b1355e4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b2ce904c872e8b2a0f43a5b4b1355e4">_lastMillis</a> = 0</td></tr>
+<tr class="memitem:acc560e5b7d6fe487a8f06904621a77ad" id="r_acc560e5b7d6fe487a8f06904621a77ad"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc560e5b7d6fe487a8f06904621a77ad">_timeMs</a> = 0</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A software clock: you set the UTC time with <a class="el" href="#a41fe1ff33fd5789b96d1b5288b8e9363" title="Set the current UTC time.">setTime()</a> and it keeps counting with millis(). Use it as time source of the <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a> when the time comes from a device that has no ready made <a class="el" href="#ab8a9ac731d4d14374a1a35cd528a6e0c" title="Get the current UTC time in milliseconds since 1970-01-01.">getTimeMs()</a>, e.g. an RTC chip or a GPS receiver: </p>
@@ -194,8 +192,85 @@ uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>_timeMs</b> = 0</
 
 </div>
 </div>
+<a id="a62814c25fa65d27370d5d67e5fd812da" name="a62814c25fa65d27370d5d67e5fd812da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62814c25fa65d27370d5d67e5fd812da">&#9670;&#160;</a></span>setTimeMs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tiny_ntp::TinyClockTimeSource::setTimeMs </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>unixMs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the current UTC time in milliseconds since 1970-01-01. Setting 0 clears the time. </p>
+<dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">tiny_ntp::TinyTimeSource</a>.</p>
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a0b2ce904c872e8b2a0f43a5b4b1355e4" name="a0b2ce904c872e8b2a0f43a5b4b1355e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b2ce904c872e8b2a0f43a5b4b1355e4">&#9670;&#160;</a></span>_lastMillis</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tiny_ntp::TinyClockTimeSource::_lastMillis = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The value of millis() at the last call. </p>
+
+</div>
+</div>
+<a id="acc560e5b7d6fe487a8f06904621a77ad" name="acc560e5b7d6fe487a8f06904621a77ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc560e5b7d6fe487a8f06904621a77ad">&#9670;&#160;</a></span>_timeMs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t tiny_ntp::TinyClockTimeSource::_timeMs = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Time in ms since 1970-01-01 at the last call, 0 if not set. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="_tiny_clock_time_source_8h_source.html">TinyClockTimeSource.h</a></li>
+<li>src/TinyNTP/<a class="el" href="_tiny_clock_time_source_8h_source.html">TinyClockTimeSource.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
