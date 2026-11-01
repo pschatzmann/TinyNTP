@@ -1,0 +1,405 @@
+// Tests of TinyNTPClient with a simulated network and a simulated NTP server
+#include "mock.h"
+#include "test.h"
+#include "TinyNTP/TinyNTPClient.h"
+
+using namespace tiny_ntp;
+using Client = TinyNTPClient<MockUDP>;
+
+// 2026-07-01 12:00:00.500 UTC and 2026-01-15 12:00:00.000 UTC
+static const uint64_t summerMs = 1782907200500ULL;
+static const uint64_t winterMs = 1768478400000ULL;
+
+/// A simulated NTP server. Its time runs with millis() times `rate`.
+struct FakeServer {
+  uint64_t baseMs;
+  uint32_t baseMillis = 1000;
+  double rate = 1.0;
+  int requests = 0;
+  explicit FakeServer(uint64_t ms) : baseMs(ms) {}
+  uint64_t now() const {
+    return baseMs + static_cast<uint64_t>((mock::now - baseMillis) * rate);
+  }
+  Bytes operator()(const Bytes& request) {
+    requests++;
+    Bytes r(48, 0);
+    r[0] = 0x24;  // version 4, mode 4 (server)
+    r[1] = 2;     // stratum
+    for (int i = 0; i < 8; i++) r[24 + i] = request[40 + i];  // originate
+    putTimestamp(r, 32, now());                               // receive
+    putTimestamp(r, 40, now());                               // transmit
+    return r;
+  }
+};
+
+static void setup(FakeServer& server) {
+  mock::reset();
+  MockUDP::reset();
+  MockUDP::responder = [&server](const Bytes& b) { return server(b); };
+  MockUDP::idleStep = 1;  // time passes while we wait for a response
+}
+
+TEST(begin_gets_the_time_of_the_server) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(!ntp);
+  CHECK_EQ(ntp.getTimeMs(), 0u);  // not set yet
+  CHECK(ntp.begin());
+  CHECK(ntp);
+  CHECK_EQ(ntp.getTimeMs(), summerMs);
+  CHECK_EQ(ntp.getTimeSec(), 1782907200u);
+  CHECK_EQ(ntp.millis(), summerMs);
+  std::tm tm = ntp.getTm();
+  CHECK_EQ(tm.tm_year + 1900, 2026);
+  CHECK_EQ(tm.tm_mon + 1, 7);
+  CHECK_EQ(tm.tm_mday, 1);
+  CHECK_EQ(tm.tm_hour, 12);
+  CHECK_EQ(tm.tm_min, 0);
+  CHECK_EQ(tm.tm_sec, 0);
+}
+
+TEST(begin_does_two_exchanges) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_EQ(server.requests, 2);
+  CHECK_EQ(MockUDP::sent.size(), 2u);
+}
+
+TEST(request_packets) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 4123, 1000);
+  CHECK(ntp.begin());
+  const auto& first = MockUDP::sent[0];
+  const auto& second = MockUDP::sent[1];
+  CHECK_EQ(first.data.size(), 48u);
+  CHECK_STR(first.host, "192.0.2.1");
+  CHECK_EQ(first.port, 4123);
+  CHECK_EQ(first.data[0], 0xDB);   // LI=3, version 3, mode 3 (client)
+  CHECK_EQ(get32(first.data, 40), 0u);  // the first request has no time
+  CHECK_EQ(second.data[0], 0xDB);
+  // the second request contains the time of the client (NTP seconds)
+  CHECK_EQ(get32(second.data, 40),
+           static_cast<uint32_t>(summerMs / 1000 + NtpEpoch));
+}
+
+TEST(local_port_is_the_server_port_by_default) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 4123, 1000);
+  CHECK(ntp.begin());
+  for (uint16_t p : MockUDP::boundPorts) CHECK_EQ(p, 4123);
+}
+
+TEST(local_port_can_be_changed) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  ntp.setLocalPort(12300);
+  CHECK(ntp.begin());
+  CHECK(!MockUDP::boundPorts.empty());
+  for (uint16_t p : MockUDP::boundPorts) CHECK_EQ(p, 12300);
+  CHECK_EQ(MockUDP::sent[0].port, 123);  // the server port does not change
+  ntp.setLocalPort(0);  // back to the server port
+  MockUDP::boundPorts.clear();
+  CHECK(ntp.update());
+  CHECK_EQ(MockUDP::boundPorts.back(), 123);
+}
+
+TEST(time_runs_with_millis) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  mock::now += 2500;
+  CHECK_EQ(ntp.getTimeMs(), summerMs + 2500);
+  CHECK_EQ(ntp.getTimeSec(), 1782907203u);
+}
+
+TEST(response_can_arrive_later) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::delayPolls = 50;  // 50 ms
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK(ntp);
+}
+
+TEST(response_after_the_timeout_is_too_late) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::delayPolls = 500;
+  Client ntp("192.0.2.1", 123, 100);  // waits 100 ms
+  CHECK(!ntp.begin());
+}
+
+// KNOWN BUG in ntpExchange(): timeout_ms is a uint32_t, but ::millis() returns
+// an unsigned long, which has 64 bit on a computer. After an uptime of more
+// than 49.7 days ::millis() is larger than any 32 bit value and the client
+// gives up at the first poll, before the server could answer.
+KNOWN_BUG(response_can_arrive_later_after_49_days_of_uptime_on_64_bit) {
+  FakeServer server(summerMs);
+  setup(server);
+  mock::high = 1ULL << 32;
+  MockUDP::delayPolls = 50;
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+}
+
+// KNOWN BUG: the client uses _lastUpdateMillis == 0 for "never updated". If the
+// first response arrives when millis() is 0 (a program that starts and asks for
+// the time at once, e.g. on a computer or with the Arduino emulator), the client
+// does not see that it has a time: the second exchange sends the time 1900 as
+// its own time and the result is twice the correct time.
+KNOWN_BUG(first_response_when_millis_is_zero) {
+  FakeServer server(summerMs);
+  server.baseMillis = 0;
+  setup(server);
+  mock::now = 0;
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(summerMs), 1000);
+}
+
+TEST(first_response_when_millis_is_not_zero) {
+  FakeServer server(summerMs);
+  server.baseMillis = 1;
+  setup(server);
+  mock::now = 1;
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(summerMs), 1000);
+}
+
+TEST(fraction_of_a_second) {
+  FakeServer server(1782907200750ULL);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs() % 1000), 750, 1);
+}
+
+TEST(time_offset) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  ntp.setTimeOffsetHours(2);
+  CHECK_EQ(ntp.getTimeMs(), summerMs + 7200000);
+  ntp.setTimeOffsetSeconds(-90);
+  CHECK_EQ(ntp.getTimeMs(), summerMs - 90000);
+  CHECK_EQ(ntp.getTm().tm_hour, 11);
+  CHECK_EQ(ntp.getTm().tm_min, 58);
+  ntp.setTimeOffsetSeconds(0);
+  CHECK_EQ(ntp.getTimeMs(), summerMs);
+}
+
+TEST(local_time_with_summer_time) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK(ntp.setTimeZone(TZ_EUROPE_ZURICH));
+  std::tm tm = ntp.getLocalTm();
+  CHECK_EQ(tm.tm_hour, 14);
+  CHECK_EQ(tm.tm_isdst, 1);
+  CHECK_STR(ntp.getTimeZoneName(), "CEST");
+  CHECK_EQ(ntp.getTm().tm_hour, 12);  // UTC does not change
+}
+
+TEST(local_time_with_winter_time) {
+  FakeServer server(winterMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK(ntp.setTimeZone(TZ_EUROPE_ZURICH));
+  std::tm tm = ntp.getLocalTm();
+  CHECK_EQ(tm.tm_hour, 13);
+  CHECK_EQ(tm.tm_isdst, 0);
+  CHECK_STR(ntp.getTimeZoneName(), "CET");
+}
+
+TEST(local_time_follows_the_switch_to_summer_time) {
+  // 2026-03-29 00:59:50 UTC: 10 seconds before the switch
+  FakeServer server(1774745990000ULL);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  ntp.setTimeZone(TZ_EUROPE_ZURICH);
+  CHECK_EQ(ntp.getLocalTm().tm_hour, 1);
+  CHECK_EQ(ntp.getLocalTm().tm_isdst, 0);
+  mock::now += 10000;
+  CHECK_EQ(ntp.getLocalTm().tm_hour, 3);
+  CHECK_EQ(ntp.getLocalTm().tm_isdst, 1);
+}
+
+TEST(invalid_time_zone_is_refused_and_local_time_is_utc) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK(!ntp.setTimeZone("nonsense"));
+  CHECK_EQ(ntp.getLocalTm().tm_hour, 12);
+  CHECK_STR(ntp.getTimeZoneName(), "UTC");
+}
+
+TEST(time_zone_survives_update_and_end) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  ntp.setTimeZone(TZ_EUROPE_ZURICH);
+  CHECK(ntp.begin());  // begin() calls end(): the time zone is kept
+  CHECK_EQ(ntp.getLocalTm().tm_hour, 14);
+}
+
+TEST(timeout_without_response) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = nullptr;  // nobody answers
+  Client ntp("192.0.2.1", 123, 100);
+  uint32_t start = mock::now;
+  CHECK(!ntp.begin());
+  CHECK(!ntp);
+  CHECK_EQ(ntp.getTimeMs(), 0u);
+  uint32_t waited = mock::now - start;
+  CHECK(waited >= 100 && waited < 200);  // timeout of 100 ms
+  CHECK(mock::serialOutput.find("timed out") != std::string::npos);
+}
+
+TEST(short_response_is_refused) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = [](const Bytes&) { return Bytes(20, 0); };
+  Client ntp("192.0.2.1", 123, 100);
+  CHECK(!ntp.begin());
+  CHECK(!ntp);
+  CHECK(mock::serialOutput.find("too short") != std::string::npos);
+}
+
+TEST(failed_update_keeps_the_time) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 100);
+  CHECK(ntp.begin());
+  MockUDP::responder = nullptr;
+  mock::now += 3000;
+  CHECK(!ntp.update());
+  CHECK(ntp);
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(summerMs + 3000), 200);  // runs on millis()
+}
+
+// KNOWN BUG in ntpExchange(): newNtpTime = transmit - epoch + offset adds the
+// clock offset to the time of the server, which already is the correct time.
+// If the clock of the client is off by 1 s or more at the time of an update,
+// the new time is off by the same amount (after a jump of +30 s: +60 s).
+KNOWN_BUG(update_follows_a_jump_of_the_server) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  server.baseMs += 30000;  // the clock of the server is 30 s ahead
+  CHECK(ntp.update());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(server.now()), 1000);
+}
+
+// KNOWN BUG, same cause as above: the offset of 10 s that millis() has built up
+// after 1000 s is counted twice, so the factor is 1.02 and not 1.01.
+KNOWN_BUG(correction_factor_follows_the_speed_of_millis) {
+  FakeServer server(summerMs);
+  server.rate = 1.01;  // millis() is 1% slower than the real time
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.0, 1e-9);
+  mock::now += 1000000;  // 1000 s later
+  CHECK(ntp.update());
+  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.01, 0.003);
+  // the time between the updates is now corrected
+  uint64_t before = ntp.getTimeMs();
+  mock::now += 100000;
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs() - before), 101000, 1000);
+}
+
+TEST(correction_factor_is_not_changed_within_10_seconds) {
+  FakeServer server(summerMs);
+  server.rate = 1.5;
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  mock::now += 5000;
+  CHECK(ntp.update());
+  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.0, 1e-9);
+}
+
+TEST(end_clears_the_state) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  ntp.setTimeOffsetHours(1);
+  int stops = MockUDP::stopCount;
+  ntp.end();
+  CHECK(!ntp);
+  CHECK_EQ(ntp.getTimeMs(), 0u);
+  CHECK_EQ(MockUDP::stopCount, stops + 1);
+  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.0, 1e-9);
+  CHECK(ntp.begin());  // can be started again
+  CHECK_EQ(ntp.getTimeMs(), summerMs + (mock::now - 1000));
+}
+
+TEST(set_server) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  ntp.setServer("198.51.100.7", 4444);
+  CHECK(ntp.begin());
+  CHECK_STR(MockUDP::sent[0].host, "198.51.100.7");
+  CHECK_EQ(MockUDP::sent[0].port, 4444);
+  ntp.setServer("203.0.113.9");  // the default port
+  CHECK(ntp.update());
+  CHECK_STR(MockUDP::sent.back().host, "203.0.113.9");
+  CHECK_EQ(MockUDP::sent.back().port, 123);
+}
+
+TEST(default_server_is_the_pool) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp;
+  CHECK(ntp.begin());
+  CHECK_STR(MockUDP::sent[0].host, "pool.ntp.org");
+}
+
+TEST(client_is_a_time_source) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  TinyTimeSource& source = ntp;
+  CHECK_EQ(source.getTimeMs(), summerMs);
+  CHECK(!source.setTimeMs(1));  // the client cannot be set
+}
+
+TEST(udp_object_is_accessible) {
+  Client ntp;
+  MockUDP& udp = ntp.getUDP();
+  (void)udp;
+  CHECK(true);
+}
+
+TEST(big_values_do_not_overflow) {
+  // 2100-01-01 00:00:00 UTC: the 32 bit NTP seconds are 2208988800 + ...
+  FakeServer server(4102444800000ULL);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_EQ(ntp.getTm().tm_year + 1900, 2100);
+}
+
+TEST_MAIN("client")

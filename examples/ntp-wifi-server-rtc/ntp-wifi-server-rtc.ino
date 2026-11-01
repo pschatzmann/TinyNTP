@@ -4,11 +4,19 @@
 #include <RTClib.h>
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include "TinyClockTimeSource.h"
-#include "TinyNTPServer.h"
+#include "TinyNTP.h"
 
 RTC_DS3231 rtc;
-TinyClockTimeSource clockSource;
+
+// The clock of the server. A set request (tinyntp set) also sets the RTC
+class RtcClockSource : public TinyClockTimeSource {
+ public:
+  bool setTimeMs(uint64_t unixMs) override {
+    rtc.adjust(DateTime(static_cast<uint32_t>(unixMs / 1000)));
+    return TinyClockTimeSource::setTimeMs(unixMs);
+  }
+};
+RtcClockSource clockSource;
 TinyNTPServer<WiFiUDP> server;
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
@@ -54,6 +62,9 @@ void setup() {
   // clients prefer other servers
   server.setStratum(10);
   server.begin(clockSource);
+  // Optional: allow to set the time over the network with the command line
+  // tool: tinyntp set <ip of this device> -k <secret>. Use a long random text.
+  server.enableTimeSetting("CHANGE-THIS-SECRET");
 }
 
 void loop() {

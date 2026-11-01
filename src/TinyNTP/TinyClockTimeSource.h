@@ -42,10 +42,12 @@ class TinyClockTimeSource : public TinyTimeSource {
   /**
    * @brief Set the current UTC time in milliseconds since 1970-01-01.
    * Setting 0 clears the time.
+   * @return true
    */
-  void setTimeMs(uint64_t unixMs) {
+  bool setTimeMs(uint64_t unixMs) override {
     _timeMs = unixMs;
     _lastMillis = ::millis();
+    return true;
   }
 
   /** @brief Forget the time: getTimeMs() returns 0 until it is set again. */
@@ -69,13 +71,10 @@ class TinyClockTimeSource : public TinyTimeSource {
   }
 
  protected:
+  /** Time in ms since 1970-01-01 at the last call, 0 if not set. */
   uint64_t _timeMs = 0;
+  /** The value of millis() at the last call. */
   uint32_t _lastMillis = 0;
 };
 
 }  // namespace tiny_ntp
-
-#if defined(ARDUINO)
-// Arduino sketches use the classes without the namespace
-using namespace tiny_ntp;
-#endif

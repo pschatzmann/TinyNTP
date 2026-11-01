@@ -7,7 +7,9 @@
 
 #pragma once
 #include <cstdint>
+#include <cstring>
 
+#include "TinyTimeSet.h"
 #include "TinyTimeSource.h"
 
 namespace tiny_ntp {
@@ -20,6 +22,9 @@ namespace tiny_ntp {
  * The time comes from a TinyTimeSource, e.g. a TinyNTPClient (without a time
  * offset or time zone), a TinySystemTimeSource or a TinyClockTimeSource. While
  * the time source returns 0 (time not known), requests are not answered.
+ *
+ * The server can optionally allow to set the time of the time source over the
+ * network, see enableTimeSetting().
  *
  * The server does not block: call process() in your loop(). It does not
  * limit the request rate, so do not make it reachable from the internet.
@@ -44,6 +49,7 @@ class TinyNTPServer {
   bool begin(TinyTimeSource& source, uint16_t port = 123) {
     _source = &source;
     _requests = 0;
+    _timeSetCount = 0;
     return _udp.begin(port) != 0;
   }
 
@@ -60,16 +66,20 @@ class TinyNTPServer {
   bool process() {
     if (_source == nullptr) return false;
     int size = _udp.parsePacket();
-    if (size < PacketSize) return false;
+    if (size <= 0) return false;
 
     // the time when the request was received
     uint64_t rxMs = _source->getTimeMs();
-    uint8_t request[PacketSize];
+    uint8_t request[MaxRequestSize];
     int total = 0;
-    while (total < PacketSize) {
-      int len = _udp.read(request + total, PacketSize - total);
+    while (total < size && total < MaxRequestSize) {
+      int len = _udp.read(request + total, MaxRequestSize - total);
       if (len <= 0) break;
       total += len;
+    }
+    // mode 7: request to set the time
+    if (TinyTimeSetMessage::isPrivate(request, total)) {
+      return processTimeSet(request, total);
     }
     if (total < PacketSize) return false;
     if ((request[0] & 0x07) != 3) return false;  // only client requests
@@ -107,6 +117,34 @@ class TinyNTPServer {
    */
   void setStratum(uint8_t stratum) { _stratum = stratum; }
 
+  /**
+   * @brief Allow to set the time of the time source over the network, e.g.
+   * with the command line tool `tinyntp set`. The requests are authenticated
+   * with HMAC-SHA256 and the secret, which is never sent over the network,
+   * and cannot be replayed. It is off by default and needs a time source that
+   * implements TinyTimeSource::setTimeMs() (e.g. TinyClockTimeSource).
+   *
+   * Keep in mind that everybody who knows the secret can change the time that
+   * you serve: use this in a trusted network only.
+   * @param secret The shared secret (a long random text). The text is not
+   * copied: it must stay valid as long as the server is used.
+   */
+  void enableTimeSetting(const char* secret) {
+    _secret = reinterpret_cast<const uint8_t*>(secret);
+    _secretLen = secret != nullptr ? strlen(secret) : 0;
+    _nonceValid = false;
+  }
+
+  /** @brief Do not allow to set the time (default). */
+  void disableTimeSetting() {
+    _secret = nullptr;
+    _secretLen = 0;
+    _nonceValid = false;
+  }
+
+  /** @brief Number of times that the time was set since begin(). */
+  uint32_t getTimeSetCount() const { return _timeSetCount; }
+
   /** @brief Number of requests that were answered since begin(). */
   uint32_t getRequestCount() const { return _requests; }
 
@@ -114,14 +152,89 @@ class TinyNTPServer {
   UDPAPI& getUDP() { return _udp; }
 
  protected:
+  /** Size of an NTP packet in bytes. */
   static constexpr int PacketSize = 48;
+  /** Largest request that is read. */
+  static constexpr int MaxRequestSize = 64;
+  /** Time in ms that a nonce can be used. */
+  static constexpr uint32_t NonceLifetimeMs = 10000;
   /** Seconds between 1900-01-01 (NTP epoch) and 1970-01-01 (Unix epoch). */
   static constexpr uint32_t NtpEpochOffset = 2208988800UL;
 
+  /** The UDP API (e.g., WiFiUDP, EthernetUDP). */
   UDPAPI _udp;
+  /** The source of the time. */
   TinyTimeSource* _source = nullptr;
+  /** Stratum that is reported to the clients. */
   uint8_t _stratum = 3;
+  /** Number of answered requests. */
   uint32_t _requests = 0;
+  /** The secret to set the time (nullptr: not allowed). */
+  const uint8_t* _secret = nullptr;
+  /** Length of the secret. */
+  size_t _secretLen = 0;
+  /** The nonce that was issued last. */
+  uint8_t _nonce[TinyTimeSetMessage::NonceSize] = {};
+  /** True if the nonce can be used. */
+  bool _nonceValid = false;
+  /** The value of millis() when the nonce was issued. */
+  uint32_t _nonceMillis = 0;
+  /** Counter for the nonces. */
+  uint32_t _nonceCounter = 0;
+  /** Number of times that the time was set. */
+  uint32_t _timeSetCount = 0;
+
+  /** Send a message to the sender of the last request. */
+  void reply(const uint8_t* message, size_t size) {
+    auto ip = _udp.remoteIP();
+    auto port = _udp.remotePort();
+    _udp.beginPacket(ip, port);
+    _udp.write(message, size);
+    _udp.endPacket();
+  }
+
+  /** Handle a challenge request or a set request. */
+  bool processTimeSet(const uint8_t* request, int size) {
+    if (_secretLen == 0) return false;  // not allowed
+    uint8_t response[TinyTimeSetMessage::SetRequestSize];
+    if (TinyTimeSetMessage::type(request) ==
+        TinyTimeSetMessage::ChallengeRequest) {
+      // a nonce that nobody can predict without the secret
+      uint32_t now = ::millis();
+      TinyTimeSetMessage::makeNonce(_secret, _secretLen, ++_nonceCounter,
+                                    _source->getTimeMs(), now, _nonce);
+      _nonceValid = true;
+      _nonceMillis = now;
+      reply(response,
+            TinyTimeSetMessage::makeChallengeResponse(response, _nonce));
+      return true;
+    }
+    if (TinyTimeSetMessage::type(request) != TinyTimeSetMessage::SetRequest) {
+      return false;
+    }
+    TinyTimeSetMessage::Status status = TinyTimeSetMessage::Rejected;
+    uint64_t timeMs = 0;
+    // 32 bit arithmetic: also correct after the overflow of millis(), and
+    // if millis() returns a 64 bit value (e.g. on a computer)
+    bool fresh = _nonceValid && static_cast<uint32_t>(::millis() - _nonceMillis) <
+                                    NonceLifetimeMs;
+    // a failed attempt keeps the nonce: others cannot block a valid request
+    if (fresh && TinyTimeSetMessage::verifySetRequest(
+                     request, size, _secret, _secretLen, _nonce, timeMs)) {
+      _nonceValid = false;  // use it only once
+      if (timeMs < TinyTimeSetMessage::MinValidTimeMs) {
+        status = TinyTimeSetMessage::InvalidTime;
+      } else if (!_source->setTimeMs(timeMs)) {
+        status = TinyTimeSetMessage::NotSupported;
+      } else {
+        status = TinyTimeSetMessage::Ok;
+        _timeSetCount++;
+      }
+    }
+    reply(response, TinyTimeSetMessage::makeSetResponse(
+                        response, status, _source->getTimeMs()));
+    return true;
+  }
 
   /** Write a 32 bit value in network byte order (big endian). */
   static void putUint32(uint8_t* out, uint32_t value) {
@@ -142,8 +255,3 @@ class TinyNTPServer {
 };
 
 }  // namespace tiny_ntp
-
-#if defined(ARDUINO)
-// Arduino sketches use the classes without the namespace
-using namespace tiny_ntp;
-#endif

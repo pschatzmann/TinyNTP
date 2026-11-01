@@ -3,8 +3,7 @@
 // devices in the local network
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include "TinyNTPClient.h"
-#include "TinyNTPServer.h"
+#include "TinyNTP.h"
 
 TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1, 123, 1000);
 TinyNTPServer<WiFiUDP> server;

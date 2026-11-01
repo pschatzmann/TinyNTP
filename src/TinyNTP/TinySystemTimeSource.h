@@ -49,12 +49,8 @@ class TinySystemTimeSource : public TinyTimeSource {
   }
 
  protected:
+  /** Times before this Unix time (seconds) are treated as not set. */
   uint32_t _minValid;
 };
 
 }  // namespace tiny_ntp
-
-#if defined(ARDUINO)
-// Arduino sketches use the classes without the namespace
-using namespace tiny_ntp;
-#endif

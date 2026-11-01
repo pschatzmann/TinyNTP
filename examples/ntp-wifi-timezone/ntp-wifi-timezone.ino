@@ -2,7 +2,7 @@
 // time) for a POSIX TZ string, e.g. on ESP32
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include "TinyNTPClient.h"
+#include "TinyNTP.h"
 
 TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1, 123, 1000);
 const char* ssid = "SSID";

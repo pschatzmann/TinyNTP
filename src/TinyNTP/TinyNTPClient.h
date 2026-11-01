@@ -3,7 +3,9 @@
 /**
  * @file TinyNTPClient.h
  * @brief Simple NTP client for Arduino using a generic UDP Client (e.g.,
- * WiFiUdp, EthernetUdp).
+ * WiFiUdp, EthernetUdp). It provides the UTC time and, with a POSIX TZ string,
+ * the local time including summer/winter time. The client is also a
+ * TinyTimeSource for the TinyNTPServer.
  */
 
 #pragma once
@@ -13,9 +15,9 @@
 #include <ctime>
 
 #include "TinyTimeSource.h"
-#include "TinyNTPClient/TinyTimeZone.h"
-#include "TinyNTPClient/TinyNTPServers.h"
-#include "TinyNTPClient/TinyTimeZones.h"
+#include "TinyTimeZone.h"
+#include "TinyNTPServers.h"
+#include "TinyTimeZones.h"
 
 namespace tiny_ntp {
 
@@ -35,6 +37,7 @@ class TinyNTPClient : public TinyTimeSource {
    * @brief Construct a new TinyNTPClient object.
    * @param server NTP server hostname or IP address.
    * @param port NTP server port (default: 123).
+   * @param timeoutMs Time to wait for the response of the server in ms.
    */
   TinyNTPClient(const char* server = NTP_HOST_POOL, int port = 123,
                 uint32_t timeoutMs = 6000)
@@ -257,12 +260,14 @@ class TinyNTPClient : public TinyTimeSource {
   /** Correction factor for millis() drift (real_time / millis_time). */
   double _millisCorrectionFactor = 1.0;
 
+  /** Returns true if the CPU is little endian. */
   constexpr bool isLittleEndian() {
     unsigned int x = 1;
     char* c = (char*)&x;
     return (int)*c;
   }
 
+  /** Swap the byte order of a 32 bit value. */
   inline uint32_t swap32(uint32_t value) {
     return ((value & 0x000000FF) << 24) | ((value & 0x0000FF00) << 8) |
            ((value & 0x00FF0000) >> 8) | ((value & 0xFF000000) >> 24);
@@ -467,8 +472,3 @@ class TinyNTPClient : public TinyTimeSource {
 };
 
 }  // namespace tiny_ntp
-
-#if defined(ARDUINO)
-// Arduino sketches use the classes without the namespace
-using namespace tiny_ntp;
-#endif

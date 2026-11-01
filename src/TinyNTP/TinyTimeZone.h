@@ -132,22 +132,36 @@ class TinyTimeZone {
  protected:
   /** Rule describing when a DST transition happens. */
   struct Rule {
-    char type = 'M';        // 'M', 'J' or 'N' (plain day number)
-    int month = 0;          // M: 1-12
-    int week = 0;           // M: 1-5
-    int day = 0;            // M: weekday 0-6; J/N: day number
-    int32_t time = 7200;    // local seconds after midnight
+    /** 'M' (month.week.weekday), 'J' (day 1-365) or 'N' (day 0-365) */
+    char type = 'M';
+    /** M: month 1-12 */
+    int month = 0;
+    /** M: week 1-5 (5 is the last week) */
+    int week = 0;
+    /** M: weekday 0-6 (0 is Sunday); J/N: day number */
+    int day = 0;
+    /** Local time of the switch in seconds after midnight */
+    int32_t time = 7200;
   };
 
+  /** True if a TZ string was parsed successfully. */
   bool _valid = false;
+  /** True if the TZ string has summer time rules. */
   bool _hasDst = false;
+  /** Name of the standard time (e.g. CET). */
   char _stdName[8] = "UTC";
+  /** Name of the summer time (e.g. CEST). */
   char _dstName[8] = "";
-  int32_t _stdOffset = 0;  // seconds east of UTC
-  int32_t _dstOffset = 0;  // seconds east of UTC
+  /** Offset of the standard time in seconds east of UTC. */
+  int32_t _stdOffset = 0;
+  /** Offset of the summer time in seconds east of UTC. */
+  int32_t _dstOffset = 0;
+  /** Start of the summer time. */
   Rule _start;
+  /** End of the summer time. */
   Rule _end;
 
+  /** Reset to UTC without summer time. */
   void clear() {
     _valid = false;
     _hasDst = false;
@@ -159,9 +173,11 @@ class TinyTimeZone {
     _end = Rule();
   }
 
+  /** Returns true for the letters A-Z and a-z. */
   static bool isAlpha(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
   }
+  /** Returns true for the digits 0-9. */
   static bool isDigit(char c) { return c >= '0' && c <= '9'; }
 
   /** Parse a zone name; names longer than the buffer are truncated. */
@@ -185,6 +201,7 @@ class TinyTimeZone {
     return n >= 3 || (n > 0 && out[0] != 0 && p[-1] == '>');
   }
 
+  /** Parse an unsigned number. */
   static bool parseInt(const char*& p, int& value) {
     if (!isDigit(*p)) return false;
     value = 0;
@@ -237,10 +254,12 @@ class TinyTimeZone {
     return true;
   }
 
+  /** Returns true if the year is a leap year. */
   static bool isLeap(int y) {
     return (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;
   }
 
+  /** Number of days of a month (1-12) in a year. */
   static int daysInMonth(int y, int m) {
     static const uint8_t d[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     return (m == 2 && isLeap(y)) ? 29 : d[m - 1];
@@ -290,8 +309,3 @@ class TinyTimeZone {
 };
 
 }  // namespace tiny_ntp
-
-#if defined(ARDUINO)
-// Arduino sketches use the classes without the namespace
-using namespace tiny_ntp;
-#endif

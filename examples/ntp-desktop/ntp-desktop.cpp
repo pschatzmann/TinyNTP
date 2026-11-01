@@ -2,7 +2,7 @@
 #include "WiFi.h"
 #include "WiFiUdp.h"
 
-#include "TinyNTPClient.h"
+#include "TinyNTP.h"
 
 using namespace tiny_ntp;  // automatic if ARDUINO is defined
 
