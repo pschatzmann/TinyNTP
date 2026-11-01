@@ -161,6 +161,14 @@ class TinyNTPClient {
   }
 
   /**
+   * @brief Set the local UDP port that is used to send the requests. By
+   * default this is the same as the NTP server port (123). Use a different
+   * port if the device also runs a TinyNTPServer on port 123.
+   * @param port Local port or 0 to use the NTP server port.
+   */
+  void setLocalPort(uint16_t port) { _localPort = port; }
+
+  /**
    * @brief Update the current time from the NTP server.
    * @return true if the update was successful, false otherwise.
    */
@@ -223,6 +231,8 @@ class TinyNTPClient {
   const char* _server;
   /** NTP server port. */
   int _port;
+  /** Local UDP port (0: same as the NTP server port). */
+  uint16_t _localPort = 0;
   /** Time zone rules from a POSIX TZ string. */
   TinyTimeZone _timeZone;
   /** Time offset in seconds (for timezone adjustment). */
@@ -304,7 +314,7 @@ class TinyNTPClient {
     packet.txTm_s = l_htonl(txTm_s);
     packet.txTm_f = 0;
 
-    _udp.begin(_port);
+    _udp.begin(_localPort != 0 ? _localPort : _port);
     _udp.beginPacket(_server, _port);
     _udp.write(reinterpret_cast<uint8_t*>(&packet), sizeof(NTPPacket));
     _udp.endPacket();

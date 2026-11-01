@@ -1,23 +1,60 @@
-# TinyNTPClient
+# TinyNTP
 
 [![Arduino Library](https://img.shields.io/badge/Arduino-Library-blue.svg)](https://www.arduino.cc/reference/en/libraries/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-A minimal, header-only Network Time Protocol (NTP) client for Arduino and compatible platforms, designed for efficiency and portability. It works with any Arduino UDP API (e.g., WiFiUDP, EthernetUDP).
+A minimal, header-only Network Time Protocol (NTP) client and server for Arduino and compatible platforms, designed for efficiency and portability. It works with any Arduino UDP API (e.g., WiFiUDP, EthernetUDP).
 
 
 ## Features
 
+**Client**
 - Retrieves accurate UTC time from NTP servers
 - Minimal resource usage, suitable for embedded/IoT
-- Header-only, easy to integrate
+- Works with any UDP API (WiFiUDP, EthernetUDP, etc.)
+- Returns time as seconds, milliseconds, or `std::tm` struct
 - `NTP_IP_*` / `NTP_HOST_*` defines for well known public NTP servers
+
+**Time zones**
 - Supports a fixed timezone offset
 - Local time incl. summer/winter time from a POSIX TZ string (own parser, no `tzset()` needed)
 - `TZ_*` defines for all IANA time zones (e.g. `TZ_EUROPE_ZURICH`)
-- Works with any UDP API (WiFiUDP, EthernetUDP, etc.)
-- Returns time as seconds, milliseconds, or `std::tm` struct
+
+**Server**
+- `TinyNTPServer` serves the time to the devices in your network, from the NTP client, the system time, a GPS or an RTC
+
+**General**
+- Header-only, easy to integrate
 - cmake support
+
+
+## Quick Start
+
+```cpp
+#include <WiFi.h>
+#include <WiFiUdp.h>
+#include "TinyNTPClient.h"
+
+TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1, 123, 1000);
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin("SSID", "PASSWORD");
+  while (WiFi.status() != WL_CONNECTED) delay(500);
+
+  ntp.begin();                      // gets the time
+  ntp.setTimeZone(TZ_EUROPE_ZURICH);  // optional: local time incl. summer time
+}
+
+void loop() {
+  std::tm tm = ntp.getLocalTm();    // or getTm() for UTC
+  Serial.printf("%04d-%02d-%02d %02d:%02d:%02d\n", tm.tm_year + 1900,
+                tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+  delay(1000);
+}
+```
+Call `ntp.update()` from time to time (e.g. once per hour) to stay in sync.
+
 
 ## Installation in Arduino
 
@@ -31,12 +68,21 @@ git clone https://github.com/pschatzmann/TinyNTPClient.git
 I recommend to use git because you can easily update to the latest version just by executing the git pull command in the project folder. 
 
 
-## Documentaion
+## Documentation
 
-- [Class Documentation](https://pschatzmann.github.io/TinyNTPClient/annotated.html) 
-- [Example Sketch](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino)
+- [Class Documentation](https://pschatzmann.github.io/TinyNTPClient/annotated.html)
 - [UDP Stacks](https://github.com/pschatzmann/TinyNTPClient/wiki/UDP-Stacks): the supported networking stacks (WiFi, Ethernet, GSM, ...)
 - [Time Zones](https://github.com/pschatzmann/TinyNTPClient/wiki/Time-Zones): fixed offset, POSIX TZ strings and the `TZ_*` defines
+- [Public NTP Servers](https://github.com/pschatzmann/TinyNTPClient/wiki/Public-NTP-Servers): the `NTP_IP_*` and `NTP_HOST_*` defines
+- [NTP Server](https://github.com/pschatzmann/TinyNTPClient/wiki/NTP-Server): serve the time to your network with `TinyNTPServer`
+- [Server Time Sources](https://github.com/pschatzmann/TinyNTPClient/wiki/Server-Time-Sources): NTP client, system time, GPS and RTC as source for the server
+
+## Examples
+
+- [ntp-wifi](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino): UTC time with a fixed offset
+- [ntp-wifi-timezone](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-timezone/ntp-wifi-timezone.ino): local time with summer/winter time
+- [ntp-wifi-server](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-server/ntp-wifi-server.ino): get the time from the internet and serve it to your network
+- [ntp-desktop](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-desktop/ntp-desktop.cpp): runs on a computer with the [arduino-emulator](https://github.com/pschatzmann/arduino-emulator)
 
 
 ## License
