@@ -85,7 +85,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an Arduino UDP API. It returns the time information from the NTP server and adjusts it based on the round-trip delay calculation. The timezone offset can be set to account for local time differences.  
+<p>A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an Arduino UDP API. The time of the server is corrected by half of the network delay, and between the updates the time is calculated with <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a>, corrected by the measured speed of <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a> (see <a class="el" href="#ad747a2a59af1804326dcca2b98879368" title="Get the millis() correction factor.">getMillisCorrectionFactor()</a>).  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_tiny_n_t_p_client_8h_source.html">TinyNTPClient.h</a>&gt;</code></p>
@@ -104,43 +104,43 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1c98f9126c61ebace9d22601c5bc4a5" id="r_aa1c98f9126c61ebace9d22601c5bc4a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c98f9126c61ebace9d22601c5bc4a5">TinyNTPClient</a> (const char *server=NTP_HOST_POOL, int port=123, uint32_t timeoutMs=6000)</td></tr>
 <tr class="memdesc:aa1c98f9126c61ebace9d22601c5bc4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a> object.  <br /></td></tr>
 <tr class="memitem:a1b7a8f96edc258176e33839c529ed6a8" id="r_a1b7a8f96edc258176e33839c529ed6a8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b7a8f96edc258176e33839c529ed6a8">begin</a> ()</td></tr>
-<tr class="memdesc:a1b7a8f96edc258176e33839c529ed6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the NTP client and perform the first time update.  <br /></td></tr>
+<tr class="memdesc:a1b7a8f96edc258176e33839c529ed6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the NTP client and perform the first time update (two requests to the server). This calls <a class="el" href="#a190bed1cab727e5d3bfb60a882ab66c8" title="Reset the client state: the time, the time offset and the correction factor are cleared and the UDP s...">end()</a> first, so a time offset that was set before is cleared: set it after <a class="el" href="#a1b7a8f96edc258176e33839c529ed6a8" title="Initialize the NTP client and perform the first time update (two requests to the server)....">begin()</a>.  <br /></td></tr>
 <tr class="memitem:a190bed1cab727e5d3bfb60a882ab66c8" id="r_a190bed1cab727e5d3bfb60a882ab66c8"><td class="memItemLeft" align="right" valign="top"><a id="a190bed1cab727e5d3bfb60a882ab66c8" name="a190bed1cab727e5d3bfb60a882ab66c8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
-<tr class="memdesc:a190bed1cab727e5d3bfb60a882ab66c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the client state and clear the last received time. <br /></td></tr>
+<tr class="memdesc:a190bed1cab727e5d3bfb60a882ab66c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the client state: the time, the time offset and the correction factor are cleared and the UDP socket is closed. The time zone that was set with <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a> is kept. <br /></td></tr>
 <tr class="memitem:acd0abf44d33a7d0fa4ad790cf499a14c" id="r_acd0abf44d33a7d0fa4ad790cf499a14c"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c">getLocalTm</a> ()</td></tr>
-<tr class="memdesc:acd0abf44d33a7d0fa4ad790cf499a14c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current local time according to <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich....">setTimeZone()</a>. If no valid time zone was set, this is the same as <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC).">getTm()</a>.  <br /></td></tr>
+<tr class="memdesc:acd0abf44d33a7d0fa4ad790cf499a14c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current local time according to <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a>. If no valid time zone was set, this is the same as <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a> (UTC).  <br /></td></tr>
 <tr class="memitem:ad747a2a59af1804326dcca2b98879368" id="r_ad747a2a59af1804326dcca2b98879368"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad747a2a59af1804326dcca2b98879368">getMillisCorrectionFactor</a> () const</td></tr>
 <tr class="memdesc:ad747a2a59af1804326dcca2b98879368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a> correction factor.  <br /></td></tr>
 <tr class="memitem:a63e35a7b675740c0039542b5eb7aea77" id="r_a63e35a7b675740c0039542b5eb7aea77"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63e35a7b675740c0039542b5eb7aea77">getTimeMs</a> () override</td></tr>
-<tr class="memdesc:a63e35a7b675740c0039542b5eb7aea77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time in milliseconds since Unix epoch (UTC).  <br /></td></tr>
+<tr class="memdesc:a63e35a7b675740c0039542b5eb7aea77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).  <br /></td></tr>
 <tr class="memitem:a9451e7139d83913199542d3d245caa05" id="r_a9451e7139d83913199542d3d245caa05"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9451e7139d83913199542d3d245caa05">getTimeSec</a> ()</td></tr>
-<tr class="memdesc:a9451e7139d83913199542d3d245caa05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time in seconds since Unix epoch (UTC).  <br /></td></tr>
+<tr class="memdesc:a9451e7139d83913199542d3d245caa05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time in seconds since Unix epoch (UTC, plus the time offset if one was set).  <br /></td></tr>
 <tr class="memitem:a54e6322f846cac98fecd8e436c669a20" id="r_a54e6322f846cac98fecd8e436c669a20"><td class="memItemLeft" align="right" valign="top"><a id="a54e6322f846cac98fecd8e436c669a20" name="a54e6322f846cac98fecd8e436c669a20"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getTimeZoneName</b> ()</td></tr>
-<tr class="memdesc:a54e6322f846cac98fecd8e436c669a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the active time zone (e.g. "CET" or "CEST"). <br /></td></tr>
+<tr class="memdesc:a54e6322f846cac98fecd8e436c669a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the active time zone (e.g. "CET" or "CEST"), or "UTC" if no valid time zone was set. <br /></td></tr>
 <tr class="memitem:afafef0bbf882fc8382dbb61bc526b64a" id="r_afafef0bbf882fc8382dbb61bc526b64a"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a">getTm</a> ()</td></tr>
-<tr class="memdesc:afafef0bbf882fc8382dbb61bc526b64a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time as a std::tm structure (UTC).  <br /></td></tr>
+<tr class="memdesc:afafef0bbf882fc8382dbb61bc526b64a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time as a std::tm structure (UTC, plus the time offset if one was set). Use <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a> for the local time.  <br /></td></tr>
 <tr class="memitem:aecf2cb2e672eafd74c97a9336950571b" id="r_aecf2cb2e672eafd74c97a9336950571b"><td class="memItemLeft" align="right" valign="top"><a id="aecf2cb2e672eafd74c97a9336950571b" name="aecf2cb2e672eafd74c97a9336950571b"></a>
 UDPAPI &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUDP</b> ()</td></tr>
 <tr class="memdesc:aecf2cb2e672eafd74c97a9336950571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the UDP API. <br /></td></tr>
 <tr class="memitem:a6f47e0ce1b8189699db37c2a3b7b5f51" id="r_a6f47e0ce1b8189699db37c2a3b7b5f51"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51">millis</a> ()</td></tr>
-<tr class="memdesc:a6f47e0ce1b8189699db37c2a3b7b5f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC).">getTimeMs()</a>.  <br /></td></tr>
+<tr class="memdesc:a6f47e0ce1b8189699db37c2a3b7b5f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>.  <br /></td></tr>
 <tr class="memitem:a85794d30de1bbc99e8db3d34343a13c4" id="r_a85794d30de1bbc99e8db3d34343a13c4"><td class="memItemLeft" align="right" valign="top"><a id="a85794d30de1bbc99e8db3d34343a13c4" name="a85794d30de1bbc99e8db3d34343a13c4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> () const</td></tr>
-<tr class="memdesc:a85794d30de1bbc99e8db3d34343a13c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion operator to bool. <br /></td></tr>
+<tr class="memdesc:a85794d30de1bbc99e8db3d34343a13c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time has been received from a server. <br /></td></tr>
 <tr class="memitem:ac8e67531ff01dd311404616cf87256bf" id="r_ac8e67531ff01dd311404616cf87256bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8e67531ff01dd311404616cf87256bf">setLocalPort</a> (uint16_t port)</td></tr>
 <tr class="memdesc:ac8e67531ff01dd311404616cf87256bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the local UDP port that is used to send the requests. By default this is the same as the NTP server port (123). Use a different port if the device also runs a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a> on port 123.  <br /></td></tr>
 <tr class="memitem:a100c5ad09ec104bdaec44b0336e2aecf" id="r_a100c5ad09ec104bdaec44b0336e2aecf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a100c5ad09ec104bdaec44b0336e2aecf">setServer</a> (const char *server, int port=123)</td></tr>
-<tr class="memdesc:a100c5ad09ec104bdaec44b0336e2aecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the NTP server address and port.  <br /></td></tr>
+<tr class="memdesc:a100c5ad09ec104bdaec44b0336e2aecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the NTP server address and port for the next update.  <br /></td></tr>
 <tr class="memitem:a40affb8f1abe0e6e3d2184b67ed2ec93" id="r_a40affb8f1abe0e6e3d2184b67ed2ec93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40affb8f1abe0e6e3d2184b67ed2ec93">setTimeOffsetHours</a> (long hours)</td></tr>
-<tr class="memdesc:a40affb8f1abe0e6e3d2184b67ed2ec93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time offset in hours (e.g., for timezone adjustment).  <br /></td></tr>
+<tr class="memdesc:a40affb8f1abe0e6e3d2184b67ed2ec93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a fixed time offset in hours, see <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to getTimeMs(),...">setTimeOffsetSeconds()</a>.  <br /></td></tr>
 <tr class="memitem:aef4b6f4d91d476a806667db6e6704cdc" id="r_aef4b6f4d91d476a806667db6e6704cdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc">setTimeOffsetSeconds</a> (long offset)</td></tr>
-<tr class="memdesc:aef4b6f4d91d476a806667db6e6704cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time offset in seconds (e.g., for timezone adjustment).  <br /></td></tr>
+<tr class="memdesc:aef4b6f4d91d476a806667db6e6704cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>, <a class="el" href="#a9451e7139d83913199542d3d245caa05" title="Get the current time in seconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeSec()</a> and <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a>. Do not set it on a client that is the time source of a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a>: the server would serve the shifted time instead of UTC. The offset is cleared by <a class="el" href="#a1b7a8f96edc258176e33839c529ed6a8" title="Initialize the NTP client and perform the first time update (two requests to the server)....">begin()</a> and <a class="el" href="#a190bed1cab727e5d3bfb60a882ab66c8" title="Reset the client state: the time, the time offset and the correction factor are cleared and the UDP s...">end()</a>. There is no handling of summer time: use <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a> for that, and not both.  <br /></td></tr>
 <tr class="memitem:adfb7ad64b115a35664a9eb4d5a7c357a" id="r_adfb7ad64b115a35664a9eb4d5a7c357a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a">setTimeZone</a> (const char *tz)</td></tr>
-<tr class="memdesc:adfb7ad64b115a35664a9eb4d5a7c357a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time zone with a POSIX TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich. Summer/winter time is handled by <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>. Do not combine with <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set the time offset in seconds (e.g., for timezone adjustment).">setTimeOffsetSeconds()</a>.  <br /></td></tr>
+<tr class="memdesc:adfb7ad64b115a35664a9eb4d5a7c357a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time zone with a POSIX TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich (or the define TZ_EUROPE_ZURICH). Summer/winter time is handled by <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>. Do not combine with <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to getTimeMs(),...">setTimeOffsetSeconds()</a>. The time zone does not change the time of <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>, which stays UTC.  <br /></td></tr>
 <tr class="memitem:a7a7cf9df733411930cba1a4f7c55a4df" id="r_a7a7cf9df733411930cba1a4f7c55a4df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a7cf9df733411930cba1a4f7c55a4df">update</a> ()</td></tr>
-<tr class="memdesc:a7a7cf9df733411930cba1a4f7c55a4df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current time from the NTP server.  <br /></td></tr>
+<tr class="memdesc:a7a7cf9df733411930cba1a4f7c55a4df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the current time from the NTP server (one request, or two if there is no time yet). If it fails, the time that is known stays valid and keeps running. Each update also improves the correction factor of <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a>.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtiny__ntp_1_1_tiny_time_source"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtiny__ntp_1_1_tiny_time_source')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html">tiny_ntp::TinyTimeSource</a></td></tr>
 <tr class="memitem:aed4dc70b6149d73a2be5a84e6867f222 inherit pub_methods_classtiny__ntp_1_1_tiny_time_source" id="r_aed4dc70b6149d73a2be5a84e6867f222"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222">setTimeMs</a> (uint64_t unixMs)</td></tr>
 <tr class="memdesc:aed4dc70b6149d73a2be5a84e6867f222 inherit pub_methods_classtiny__ntp_1_1_tiny_time_source"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current UTC time, e.g. by the command line tool <span class="tt">tinyntp
@@ -176,6 +176,8 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ac0750ddafe2caba16d1abf085a633e25" id="r_ac0750ddafe2caba16d1abf085a633e25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0750ddafe2caba16d1abf085a633e25">_baselineNtpTime</a> = 0</td></tr>
 <tr class="memitem:a4c13f8df3b7dea99d8488a81033457f5" id="r_a4c13f8df3b7dea99d8488a81033457f5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c13f8df3b7dea99d8488a81033457f5">_baselineNtpTimeMs</a> = 0</td></tr>
 <tr class="memitem:a573a1af94a1e505ed7d2c3b6f06d7547" id="r_a573a1af94a1e505ed7d2c3b6f06d7547"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a573a1af94a1e505ed7d2c3b6f06d7547">_baselineUpdateMillis</a> = 0</td></tr>
+<tr class="memitem:ac5eea513f890e5089f536989e1a19ee4" id="r_ac5eea513f890e5089f536989e1a19ee4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5eea513f890e5089f536989e1a19ee4">_hasBaseline</a> = false</td></tr>
+<tr class="memitem:a1d07dd42edc9e64d41dadb48a461a765" id="r_a1d07dd42edc9e64d41dadb48a461a765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d07dd42edc9e64d41dadb48a461a765">_hasTime</a> = false</td></tr>
 <tr class="memitem:a4dac642bbbf1f619bb9be3c8606dd8f7" id="r_a4dac642bbbf1f619bb9be3c8606dd8f7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dac642bbbf1f619bb9be3c8606dd8f7">_lastNtpTime</a> = 0</td></tr>
 <tr class="memitem:a31cd869688ffd0e864551cdd0edde0bf" id="r_a31cd869688ffd0e864551cdd0edde0bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31cd869688ffd0e864551cdd0edde0bf">_lastNtpTimeMs</a> = 0</td></tr>
 <tr class="memitem:ac5133fcf3c628b7bfa2c8f229eac1b77" id="r_ac5133fcf3c628b7bfa2c8f229eac1b77"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5133fcf3c628b7bfa2c8f229eac1b77">_lastUpdateMillis</a> = 0</td></tr>
@@ -190,8 +192,9 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename UDPAPI&gt;<br />
-class tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</div><p>A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an Arduino UDP API. It returns the time information from the NTP server and adjusts it based on the round-trip delay calculation. The timezone offset can be set to account for local time differences. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+class tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;</div><p>A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an Arduino UDP API. The time of the server is corrected by half of the network delay, and between the updates the time is calculated with <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a>, corrected by the measured speed of <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a> (see <a class="el" href="#ad747a2a59af1804326dcca2b98879368" title="Get the millis() correction factor.">getMillisCorrectionFactor()</a>). </p>
+<p>The client provides the UTC time (<a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>, <a class="el" href="#a9451e7139d83913199542d3d245caa05" title="Get the current time in seconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeSec()</a>, <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a>) and, with a POSIX TZ string, the local time including summer/winter time (<a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a>, <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>). It is also a <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html" title="Abstract base class of all time sources: an object that knows the current UTC time....">TinyTimeSource</a>, so a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a> can serve its time.</p>
+<p>The functions block until the server has answered or the timeout has passed. Call <a class="el" href="#a7a7cf9df733411930cba1a4f7c55a4df" title="Update the current time from the NTP server (one request, or two if there is no time yet)....">update()</a> from time to time (e.g. once per hour). </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">UDPAPI</td><td>The UDP class to use (e.g: WiFiUDP) </td></tr>
   </table>
@@ -235,7 +238,7 @@ template&lt;typename UDPAPI&gt; </div>
 <p>Construct a new <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. </td></tr>
+    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. The text is not copied: it must stay valid as long as the client is used (e.g. a string literal or one of the NTP_HOST_* / NTP_IP_* defines). </td></tr>
     <tr><td class="paramname">port</td><td>NTP server port (default: 123). </td></tr>
     <tr><td class="paramname">timeoutMs</td><td>Time to wait for the response of the server in ms. </td></tr>
   </table>
@@ -270,7 +273,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Initialize the NTP client and perform the first time update. </p>
+<p>Initialize the NTP client and perform the first time update (two requests to the server). This calls <a class="el" href="#a190bed1cab727e5d3bfb60a882ab66c8" title="Reset the client state: the time, the time offset and the correction factor are cleared and the UDP s...">end()</a> first, so a time offset that was set before is cleared: set it after <a class="el" href="#a1b7a8f96edc258176e33839c529ed6a8" title="Initialize the NTP client and perform the first time update (two requests to the server)....">begin()</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the update was successful, false otherwise. </dd></dl>
 
 </div>
@@ -300,7 +303,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the current local time according to <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich....">setTimeZone()</a>. If no valid time zone was set, this is the same as <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC).">getTm()</a>. </p>
+<p>Get the current local time according to <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a>. If no valid time zone was set, this is the same as <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a> (UTC). </p>
 <dl class="section return"><dt>Returns</dt><dd>std::tm structure with the local time; tm_isdst is set during summer time. </dd></dl>
 
 </div>
@@ -360,8 +363,8 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the current time in milliseconds since Unix epoch (UTC). </p>
-<dl class="section return"><dt>Returns</dt><dd>Current time in milliseconds. </dd></dl>
+<p>Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set). </p>
+<dl class="section return"><dt>Returns</dt><dd>Current time in milliseconds, or 0 as long as the time is not known. </dd></dl>
 
 <p>Implements <a class="el" href="classtiny__ntp_1_1_tiny_time_source.html#af8c4c033ca7c624f21f9c47ef8e2634d">tiny_ntp::TinyTimeSource</a>.</p>
 
@@ -392,8 +395,8 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the current time in seconds since Unix epoch (UTC). </p>
-<dl class="section return"><dt>Returns</dt><dd>Current time in seconds. </dd></dl>
+<p>Get the current time in seconds since Unix epoch (UTC, plus the time offset if one was set). </p>
+<dl class="section return"><dt>Returns</dt><dd>Current time in seconds, or 0 as long as the time is not known. </dd></dl>
 
 </div>
 </div>
@@ -422,8 +425,8 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the current time as a std::tm structure (UTC). </p>
-<dl class="section return"><dt>Returns</dt><dd>std::tm structure representing the current time (UTC). </dd></dl>
+<p>Get the current time as a std::tm structure (UTC, plus the time offset if one was set). Use <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a> for the local time. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::tm structure representing the current time. </dd></dl>
 
 </div>
 </div>
@@ -592,7 +595,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Alias for <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC).">getTimeMs()</a>. </p>
+<p>Alias for <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current time in milliseconds. </dd></dl>
 
 </div>
@@ -733,10 +736,10 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the NTP server address and port. </p>
+<p>Set the NTP server address and port for the next update. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. </td></tr>
+    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. The text is not copied: it must stay valid as long as the client is used. </td></tr>
     <tr><td class="paramname">port</td><td>NTP server port (default: 123). </td></tr>
   </table>
   </dd>
@@ -769,7 +772,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the time offset in hours (e.g., for timezone adjustment). </p>
+<p>Set a fixed time offset in hours, see <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to getTimeMs(),...">setTimeOffsetSeconds()</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hours</td><td>Time offset in hours. </td></tr>
@@ -804,7 +807,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the time offset in seconds (e.g., for timezone adjustment). </p>
+<p>Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>, <a class="el" href="#a9451e7139d83913199542d3d245caa05" title="Get the current time in seconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeSec()</a> and <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a>. Do not set it on a client that is the time source of a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a>: the server would serve the shifted time instead of UTC. The offset is cleared by <a class="el" href="#a1b7a8f96edc258176e33839c529ed6a8" title="Initialize the NTP client and perform the first time update (two requests to the server)....">begin()</a> and <a class="el" href="#a190bed1cab727e5d3bfb60a882ab66c8" title="Reset the client state: the time, the time offset and the correction factor are cleared and the UDP s...">end()</a>. There is no handling of summer time: use <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a> for that, and not both. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">offset</td><td>Time offset in seconds. </td></tr>
@@ -839,10 +842,10 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Set the time zone with a POSIX TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich. Summer/winter time is handled by <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>. Do not combine with <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set the time offset in seconds (e.g., for timezone adjustment).">setTimeOffsetSeconds()</a>. </p>
+<p>Set the time zone with a POSIX TZ string, e.g. "CET-1CEST,M3.5.0,M10.5.0/3" for Europe/Zurich (or the define TZ_EUROPE_ZURICH). Summer/winter time is handled by <a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c" title="Get the current local time according to setTimeZone(). If no valid time zone was set,...">getLocalTm()</a>. Do not combine with <a class="el" href="#aef4b6f4d91d476a806667db6e6704cdc" title="Set a fixed time offset in seconds (e.g., for timezone adjustment). It is added to getTimeMs(),...">setTimeOffsetSeconds()</a>. The time zone does not change the time of <a class="el" href="#a63e35a7b675740c0039542b5eb7aea77" title="Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).">getTimeMs()</a>, which stays UTC. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tz</td><td>POSIX TZ string. </td></tr>
+    <tr><td class="paramname">tz</td><td>POSIX TZ string. The text is not copied: it must stay valid. </td></tr>
   </table>
   </dd>
 </dl>
@@ -903,7 +906,7 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Update the current time from the NTP server. </p>
+<p>Update the current time from the NTP server (one request, or two if there is no time yet). If it fails, the time that is known stays valid and keeps running. Each update also improves the correction factor of <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the update was successful, false otherwise. </dd></dl>
 
 </div>
@@ -1041,6 +1044,56 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Initial baseline <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a> value for correction factor calculation. </p>
+
+</div>
+</div>
+<a id="ac5eea513f890e5089f536989e1a19ee4" name="ac5eea513f890e5089f536989e1a19ee4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5eea513f890e5089f536989e1a19ee4">&#9670;&#160;</a></span>_hasBaseline</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_hasBaseline = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the baseline for the correction factor was established. </p>
+
+</div>
+</div>
+<a id="a1d07dd42edc9e64d41dadb48a461a765" name="a1d07dd42edc9e64d41dadb48a461a765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d07dd42edc9e64d41dadb48a461a765">&#9670;&#160;</a></span>_hasTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_hasTime = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True if the time was received from a server. </p>
 
 </div>
 </div>

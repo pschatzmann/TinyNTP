@@ -125,7 +125,7 @@ Quick Start</h1>
 <div class="line">}</div>
 <div class="ttc" id="a_tiny_n_t_p_8h_html"><div class="ttname"><a href="_tiny_n_t_p_8h.html">TinyNTP.h</a></div><div class="ttdoc">Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...</div></div>
 </div><!-- fragment --><p> Call <span class="tt">ntp.update()</span> from time to time (e.g. once per hour) to stay in sync.</p>
-<p>Include <span class="tt"><a class="el" href="_tiny_n_t_p_8h.html" title="Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...">TinyNTP.h</a></span>: it provides everything. All classes are in the namespace <span class="tt"><a class="el" href="namespacetiny__ntp.html" title="The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...">tiny_ntp</a></span>. <span class="tt"><a class="el" href="_tiny_n_t_p_8h.html" title="Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...">TinyNTP.h</a></span> applies <span class="tt">using namespace <a class="el" href="namespacetiny__ntp.html" title="The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...">tiny_ntp</a>;</span> automatically in Arduino sketches (<span class="tt">ARDUINO</span> is defined), so you can use the plain class names. On other platforms write <span class="tt"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">tiny_ntp::TinyNTPClient</a>&lt;...&gt;</span> or add <span class="tt">using namespace <a class="el" href="namespacetiny__ntp.html" title="The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...">tiny_ntp</a>;</span> yourself. The individual headers are in <span class="tt">src/TinyNTP/</span> and do not use the namespace. The <span class="tt">NTP_*</span> and <span class="tt">TZ_*</span> defines are macros: they have no namespace.</p>
+<p>Include <span class="tt"><a class="el" href="_tiny_n_t_p_8h.html" title="Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...">TinyNTP.h</a></span>: it provides everything. All classes are in the namespace <span class="tt"><a class="el" href="namespacetiny__ntp.html" title="The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...">tiny_ntp</a></span>, and <span class="tt"><a class="el" href="_tiny_n_t_p_8h.html" title="Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...">TinyNTP.h</a></span> uses it (<span class="tt">using namespace <a class="el" href="namespacetiny__ntp.html" title="The classes of the TinyNTP library: the NTP client (TinyNTPClient), the NTP server (TinyNTPServer),...">tiny_ntp</a>;</span>), so you can use the plain class names. If your code has classes with the same names, define <span class="tt">NO_TINY_NTP_NAMESPACE</span> before you include <span class="tt"><a class="el" href="_tiny_n_t_p_8h.html" title="Include this file to use the library: NTP client and server, time sources, time zones (POSIX TZ strin...">TinyNTP.h</a></span> and write <span class="tt"><a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">tiny_ntp::TinyNTPClient</a>&lt;...&gt;</span>. The individual headers in <span class="tt">src/TinyNTP/</span> do not use the namespace. The <span class="tt">NTP_*</span> and <span class="tt">TZ_*</span> defines are macros: they have no namespace.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Installation in Arduino</h1>
 <p>You can download the library as zip and call include Library -&gt; zip library. Or you can git clone this project into the Arduino libraries folder e.g. with</p>
@@ -137,12 +137,12 @@ Documentation</h1>
 <ul>
 <li><a href="https://pschatzmann.github.io/TinyNTP/annotated.html">Class Documentation</a></li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/wiki/UDP-Stacks">UDP Stacks</a>: the supported networking stacks (WiFi, Ethernet, GSM, ...)</li>
-<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Time-Zones">Time Zones</a>: fixed offset, POSIX TZ strings and the <span class="tt">TZ_*</span> defines</li>
+<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Time-Zones">Time Zones</a>: fixed offset, POSIX TZ strings, the <span class="tt">TZ_*</span> defines and <span class="tt">TinyTimeZone</span></li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Public-NTP-Servers">Public NTP Servers</a>: the <span class="tt">NTP_IP_*</span> and <span class="tt">NTP_HOST_*</span> defines</li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/wiki/NTP-Server">NTP Server</a>: serve the time to your network with <span class="tt">TinyNTPServer</span></li>
-<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Command-Line-Tool">Command Line Tool</a>: <span class="tt">tinyntp</span> for the desktop</li>
-<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Tests">Tests</a>: the automatic tests and the known bugs</li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Server-Time-Sources">Server Time Sources</a>: NTP client, system time, GPS and RTC as source for the server</li>
+<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Command-Line-Tool">Command Line Tool</a>: <span class="tt">tinyntp</span> for the desktop</li>
+<li><a href="https://github.com/pschatzmann/TinyNTP/wiki/Tests">Tests</a>: the automatic tests</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Examples</h1>
@@ -150,15 +150,19 @@ Examples</h1>
 <li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-wifi/ntp-wifi.ino">ntp-wifi</a>: UTC time with a fixed offset</li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-wifi-timezone/ntp-wifi-timezone.ino">ntp-wifi-timezone</a>: local time with summer/winter time</li>
 <li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-wifi-server/ntp-wifi-server.ino">ntp-wifi-server</a>: get the time from the internet and serve it to your network</li>
-<li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-wifi-server-rtc/ntp-wifi-server-rtc.ino">ntp-wifi-server-rtc</a>: serve the time of an RTC (DS3231)</li>
-<li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-desktop/ntp-desktop.cpp">ntp-desktop</a>: runs on a computer with the <a href="https://github.com/pschatzmann/arduino-emulator">arduino-emulator</a></li>
+<li><a href="https://github.com/pschatzmann/TinyNTP/blob/main/examples/ntp-wifi-server-rtc/ntp-wifi-server-rtc.ino">ntp-wifi-server-rtc</a>: serve the time of an RTC (DS3231); needs the RTClib library and a board with an RTC</li>
 </ul>
+<p>The examples (except the one with the RTC) can also be built as programs for the desktop with CMake and the <a href="https://github.com/pschatzmann/arduino-emulator">Arduino emulator</a>, which is downloaded from GitHub:</p>
+<div class="fragment"><div class="line">cmake -S examples -B build-examples &amp;&amp; cmake --build build-examples</div>
+<div class="line">./build-examples/ntp-wifi-timezone/ntp-wifi-timezone</div>
+</div><!-- fragment --><p> Each example directory also has its own <span class="tt">CMakeLists.txt</span>. On Linux, binding the UDP port 123 needs root: without it the emulator prints <span class="tt">could not bind socket: 13</span> (twice at the start), but the programs still work, because the system chooses a port when the request is sent. To avoid the messages run them with <span class="tt">sudo</span>, or call <span class="tt">ntp.setLocalPort()</span> with another port in the sketch.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Tests</h1>
 <p>The library has automatic tests for the desktop (Linux, macOS), see the <a href="https://github.com/pschatzmann/TinyNTP/wiki/Tests">Tests</a> page:</p>
 <div class="fragment"><div class="line">cmake -S tests -B build-tests &amp;&amp; cmake --build build-tests</div>
 <div class="line">ctest --test-dir build-tests --output-on-failure</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><p> They take about 40 seconds (most of it is waiting for the lifetime of a nonce in the tool test). Add <span class="tt">-DTINYNTP_EMULATOR_TESTS=ON</span> to also test with the Arduino emulator, which also compiles the examples.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 License</h1>
 <p>This library is licensed under the GNU GPL v3. See <span class="tt">License.txt</span> for details. </p>
 </div></div><!-- PageDoc -->
