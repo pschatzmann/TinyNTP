@@ -12,9 +12,12 @@
 #include <cstdio>
 #include <ctime>
 
+#include "TinyTimeSource.h"
 #include "TinyNTPClient/TinyTimeZone.h"
 #include "TinyNTPClient/TinyNTPServers.h"
 #include "TinyNTPClient/TinyTimeZones.h"
+
+namespace tiny_ntp {
 
 /**
  * @class TinyNTPClient
@@ -26,7 +29,7 @@
  * @tparam UDPAPI The UDP class to use (e.g: WiFiUDP)
  */
 template <typename UDPAPI>
-class TinyNTPClient {
+class TinyNTPClient : public TinyTimeSource {
  public:
   /**
    * @brief Construct a new TinyNTPClient object.
@@ -74,7 +77,7 @@ class TinyNTPClient {
    * @brief Get the current time in milliseconds since Unix epoch (UTC).
    * @return Current time in milliseconds.
    */
-  uint64_t getTimeMs() {
+  uint64_t getTimeMs() override {
     if (_lastUpdateMillis == 0) {
       return 0;  // Time not yet initialized
     }
@@ -462,3 +465,10 @@ class TinyNTPClient {
     Serial.print(buffer);
   }
 };
+
+}  // namespace tiny_ntp
+
+#if defined(ARDUINO)
+// Arduino sketches use the classes without the namespace
+using namespace tiny_ntp;
+#endif

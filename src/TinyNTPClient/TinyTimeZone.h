@@ -10,6 +10,8 @@
 #include <cstring>
 #include <ctime>
 
+namespace tiny_ntp {
+
 /**
  * @class TinyTimeZone
  * @brief Parses a POSIX TZ string and converts UTC time to local time.
@@ -286,3 +288,10 @@ class TinyTimeZone {
     return days * 86400 + r.time;
   }
 };
+
+}  // namespace tiny_ntp
+
+#if defined(ARDUINO)
+// Arduino sketches use the classes without the namespace
+using namespace tiny_ntp;
+#endif

@@ -8,15 +8,18 @@
 #pragma once
 #include <cstdint>
 
+#include "TinyTimeSource.h"
+
+namespace tiny_ntp {
+
 /**
  * @class TinyNTPServer
  * @brief A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that
  * serves the time of a time source to the clients in your network.
  *
- * The time source is any object with a `uint64_t getTimeMs()` method that
- * returns the UTC time in milliseconds since the Unix epoch and 0 as long as
- * the time is not known, e.g. a TinyNTPClient (without a time offset or time
- * zone). While the time is not known, requests are not answered.
+ * The time comes from a TinyTimeSource, e.g. a TinyNTPClient (without a time
+ * offset or time zone), a TinySystemTimeSource or a TinyClockTimeSource. While
+ * the time source returns 0 (time not known), requests are not answered.
  *
  * The server does not block: call process() in your loop(). It does not
  * limit the request rate, so do not make it reachable from the internet.
@@ -33,17 +36,13 @@ class TinyNTPServer {
 
   /**
    * @brief Start listening for requests.
-   * @param source Time source with `uint64_t getTimeMs()`. It must stay valid
-   * as long as the server is used.
+   * @param source The time source. It must stay valid as long as the server
+   * is used.
    * @param port UDP port (default: 123).
    * @return true if the UDP socket could be opened.
    */
-  template <typename TimeSource>
-  bool begin(TimeSource& source, uint16_t port = 123) {
+  bool begin(TinyTimeSource& source, uint16_t port = 123) {
     _source = &source;
-    _getTimeMs = [](void* s) -> uint64_t {
-      return static_cast<TimeSource*>(s)->getTimeMs();
-    };
     _requests = 0;
     return _udp.begin(port) != 0;
   }
@@ -52,7 +51,6 @@ class TinyNTPServer {
   void end() {
     _udp.stop();
     _source = nullptr;
-    _getTimeMs = nullptr;
   }
 
   /**
@@ -60,12 +58,12 @@ class TinyNTPServer {
    * @return true if a request was answered.
    */
   bool process() {
-    if (_getTimeMs == nullptr) return false;
+    if (_source == nullptr) return false;
     int size = _udp.parsePacket();
     if (size < PacketSize) return false;
 
     // the time when the request was received
-    uint64_t rxMs = _getTimeMs(_source);
+    uint64_t rxMs = _source->getTimeMs();
     uint8_t request[PacketSize];
     int total = 0;
     while (total < PacketSize) {
@@ -91,7 +89,7 @@ class TinyNTPServer {
       response[24 + i] = request[40 + i];  // originate = client transmit time
     }
     putTimestamp(response + 32, rxMs);                  // receive time
-    putTimestamp(response + 40, _getTimeMs(_source));   // transmit time
+    putTimestamp(response + 40, _source->getTimeMs());   // transmit time
 
     auto ip = _udp.remoteIP();
     auto port = _udp.remotePort();
@@ -121,8 +119,7 @@ class TinyNTPServer {
   static constexpr uint32_t NtpEpochOffset = 2208988800UL;
 
   UDPAPI _udp;
-  void* _source = nullptr;
-  uint64_t (*_getTimeMs)(void*) = nullptr;
+  TinyTimeSource* _source = nullptr;
   uint8_t _stratum = 3;
   uint32_t _requests = 0;
 
@@ -143,3 +140,10 @@ class TinyNTPServer {
     putUint32(out + 4, fraction);
   }
 };
+
+}  // namespace tiny_ntp
+
+#if defined(ARDUINO)
+// Arduino sketches use the classes without the namespace
+using namespace tiny_ntp;
+#endif

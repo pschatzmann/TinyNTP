@@ -4,6 +4,8 @@
 
 #include "TinyNTPClient.h"
 
+using namespace tiny_ntp;  // automatic if ARDUINO is defined
+
 TinyNTPClient<WiFiUDP> ntp(NTP_IP_GOOGLE_1);
 
 void setup() {

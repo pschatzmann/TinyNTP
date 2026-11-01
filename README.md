@@ -21,7 +21,7 @@ A minimal, header-only Network Time Protocol (NTP) client and server for Arduino
 - `TZ_*` defines for all IANA time zones (e.g. `TZ_EUROPE_ZURICH`)
 
 **Server**
-- `TinyNTPServer` serves the time to the devices in your network, from the NTP client, the system time, a GPS or an RTC
+- `TinyNTPServer` serves the time to the devices in your network, from the NTP client, the system time (`TinySystemTimeSource`), or an RTC or GPS (`TinyClockTimeSource`); your own sources derive from `TinyTimeSource`
 
 **General**
 - Header-only, easy to integrate
@@ -55,6 +55,8 @@ void loop() {
 ```
 Call `ntp.update()` from time to time (e.g. once per hour) to stay in sync.
 
+All classes are in the namespace `tiny_ntp`. In Arduino sketches (`ARDUINO` is defined) `using namespace tiny_ntp;` is applied automatically, so you can use the plain class names. On other platforms write `tiny_ntp::TinyNTPClient<...>` or add `using namespace tiny_ntp;` yourself. The `NTP_*` and `TZ_*` defines are macros: they have no namespace.
+
 
 ## Installation in Arduino
 
@@ -82,6 +84,7 @@ I recommend to use git because you can easily update to the latest version just 
 - [ntp-wifi](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi/ntp-wifi.ino): UTC time with a fixed offset
 - [ntp-wifi-timezone](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-timezone/ntp-wifi-timezone.ino): local time with summer/winter time
 - [ntp-wifi-server](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-server/ntp-wifi-server.ino): get the time from the internet and serve it to your network
+- [ntp-wifi-server-rtc](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-wifi-server-rtc/ntp-wifi-server-rtc.ino): serve the time of an RTC (DS3231)
 - [ntp-desktop](https://github.com/pschatzmann/TinyNTPClient/blob/main/examples/ntp-desktop/ntp-desktop.cpp): runs on a computer with the [arduino-emulator](https://github.com/pschatzmann/arduino-emulator)
 
 
