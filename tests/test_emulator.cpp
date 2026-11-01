@@ -11,14 +11,8 @@
 #include "WiFiUdp.h"
 #include "EthernetUdp.h"
 
-#include "../test.h"
-#include "TinyNTP/TinyClockTimeSource.h"
-#include "TinyNTP/TinyNTPClient.h"
-#include "TinyNTP/TinyNTPServer.h"
-#include "TinyNTP/TinySystemTimeSource.h"
-
-// the emulator does not define ARDUINO: the namespace is not used automatically
-using namespace tiny_ntp;
+#include "test.h"
+#include "TinyNTP.h"
 
 static uint16_t basePort() { return 22000 + getpid() % 10000; }
 
@@ -49,11 +43,8 @@ struct ServerThread {
 
 template <typename UDP>
 static void exchange(uint16_t port) {
-  // The millis() of the emulator is 0 at its first call. The client has a
-  // problem if the first response arrives at millis() == 0 (a known bug, see
-  // first_response_when_millis_is_zero in test_client.cpp): start the clock
-  (void)millis();
-  delay(5);
+  // The millis() of the emulator is 0 at its first call, so the first response
+  // arrives at millis() == 0 (the client used to fail in this case)
   TinySystemTimeSource source;
   TinyNTPServer<UDP> server;
   CHECK(server.begin(source, port));
@@ -109,6 +100,31 @@ TEST(set_the_time_with_the_arduino_api) {
   CHECK_EQ(static_cast<int>(status), static_cast<int>(Msg::Ok));
   CHECK_NEAR(static_cast<double>(clock.getTimeMs()),
              static_cast<double>(systemMs()), 100);
+}
+
+TEST(client_resolves_host_names) {
+  uint16_t port = basePort() + 12;
+  TinySystemTimeSource source;
+  TinyNTPServer<EthernetUDP> server;
+  CHECK(server.begin(source, port));
+  ServerThread<EthernetUDP> t(server);
+  TinyNTPClient<EthernetUDP> ntp("localhost", port, 1000);
+  ntp.setLocalPort(port + 1);
+  CHECK(ntp.begin());
+}
+
+TEST(server_without_time_does_not_answer) {
+  uint16_t port = basePort() + 14;
+  TinyClockTimeSource clock;  // not set
+  TinyNTPServer<EthernetUDP> server;
+  CHECK(server.begin(clock, port));
+  ServerThread<EthernetUDP> t(server);
+  TinyNTPClient<EthernetUDP> ntp("127.0.0.1", port, 300);
+  ntp.setLocalPort(port + 1);
+  CHECK(!ntp.begin());
+  CHECK_EQ(server.getRequestCount(), 0u);  // nothing was answered
+  clock.setTimeMs(static_cast<uint64_t>(systemMs()));
+  CHECK(ntp.begin());  // now it answers
 }
 
 TEST_MAIN("emulator")

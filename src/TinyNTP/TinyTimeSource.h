@@ -10,8 +10,8 @@
  * @namespace tiny_ntp
  * @brief The classes of the TinyNTP library: the NTP client (TinyNTPClient),
  * the NTP server (TinyNTPServer), the time sources (TinyTimeSource) and the
- * time zone handling (TinyTimeZone). In Arduino sketches (ARDUINO is defined)
- * the namespace is used automatically.
+ * time zone handling (TinyTimeZone). TinyNTP.h uses the namespace
+ * automatically, unless NO_TINY_NTP_NAMESPACE is defined.
  */
 namespace tiny_ntp {
 

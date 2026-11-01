@@ -1,7 +1,10 @@
-// ARDUINO is defined (by the build): TinyNTP.h uses the namespace, so the
-// classes can be used without it. All classes come with this one header.
-#ifndef ARDUINO
-#error "this test needs ARDUINO to be defined"
+// TinyNTP.h uses the namespace tiny_ntp: the classes can be used without it,
+// also if ARDUINO is not defined (e.g. on the desktop)
+#ifdef ARDUINO
+#error "this test must be built without ARDUINO"
+#endif
+#ifdef NO_TINY_NTP_NAMESPACE
+#error "this test must be built without NO_TINY_NTP_NAMESPACE"
 #endif
 #include "mock.h"
 #include "test.h"
@@ -40,4 +43,4 @@ TEST(the_two_names_are_the_same_type) {
   CHECK(b.isValid());
 }
 
-TEST_MAIN("namespace_arduino")
+TEST_MAIN("namespace_default")

@@ -2,6 +2,7 @@
 #include "mock.h"
 #include "test.h"
 #include "TinyNTP/TinyNTPClient.h"
+#include "TinyNTP/TinyNTPServer.h"
 
 using namespace tiny_ntp;
 using Client = TinyNTPClient<MockUDP>;
@@ -15,6 +16,7 @@ struct FakeServer {
   uint64_t baseMs;
   uint32_t baseMillis = 1000;
   double rate = 1.0;
+  uint32_t processingMs = 0;  // the server needs this time to answer
   int requests = 0;
   explicit FakeServer(uint64_t ms) : baseMs(ms) {}
   uint64_t now() const {
@@ -27,7 +29,7 @@ struct FakeServer {
     r[1] = 2;     // stratum
     for (int i = 0; i < 8; i++) r[24 + i] = request[40 + i];  // originate
     putTimestamp(r, 32, now());                               // receive
-    putTimestamp(r, 40, now());                               // transmit
+    putTimestamp(r, 40, now() + processingMs);                // transmit
     return r;
   }
 };
@@ -136,11 +138,10 @@ TEST(response_after_the_timeout_is_too_late) {
   CHECK(!ntp.begin());
 }
 
-// KNOWN BUG in ntpExchange(): timeout_ms is a uint32_t, but ::millis() returns
-// an unsigned long, which has 64 bit on a computer. After an uptime of more
-// than 49.7 days ::millis() is larger than any 32 bit value and the client
-// gives up at the first poll, before the server could answer.
-KNOWN_BUG(response_can_arrive_later_after_49_days_of_uptime_on_64_bit) {
+// millis() returns an unsigned long, which has 64 bit on a computer. After an
+// uptime of more than 49.7 days it is larger than any 32 bit value: the client
+// gave up at the first poll, before the server could answer.
+TEST(response_can_arrive_later_after_49_days_of_uptime_on_64_bit) {
   FakeServer server(summerMs);
   setup(server);
   mock::high = 1ULL << 32;
@@ -149,12 +150,10 @@ KNOWN_BUG(response_can_arrive_later_after_49_days_of_uptime_on_64_bit) {
   CHECK(ntp.begin());
 }
 
-// KNOWN BUG: the client uses _lastUpdateMillis == 0 for "never updated". If the
-// first response arrives when millis() is 0 (a program that starts and asks for
-// the time at once, e.g. on a computer or with the Arduino emulator), the client
-// does not see that it has a time: the second exchange sends the time 1900 as
-// its own time and the result is twice the correct time.
-KNOWN_BUG(first_response_when_millis_is_zero) {
+// The client used millis() == 0 for "never updated". A program that asks for
+// the time at once (on a computer or with the Arduino emulator) got the first
+// response at millis() == 0 and the result was twice the correct time.
+TEST(first_response_when_millis_is_zero) {
   FakeServer server(summerMs);
   server.baseMillis = 0;
   setup(server);
@@ -174,6 +173,74 @@ TEST(first_response_when_millis_is_not_zero) {
   CHECK(ntp.begin());
   CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
              static_cast<double>(summerMs), 1000);
+}
+
+TEST(time_is_corrected_by_half_of_the_network_delay) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::delayPolls = 50;  // the answer needs 50 ms
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  // The simulated server stamps its answer when the request arrives, and the
+  // answer needs 50 ms to get to us: without a correction the client would be
+  // 50 ms behind the server, with half of the delay added it is 25 ms behind
+  CHECK_NEAR(static_cast<double>(server.now()) -
+                 static_cast<double>(ntp.getTimeMs()),
+             25, 2);
+}
+
+TEST(processing_time_of_the_server_is_not_network_delay) {
+  FakeServer server(summerMs);
+  server.processingMs = 20;  // 20 ms between receive and transmit
+  setup(server);
+  MockUDP::delayPolls = 100;  // 100 ms to get the answer: 80 ms network delay
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  // The transmit time was stamped 100 ms ago plus 20 ms processing time, and
+  // half of the 80 ms network delay is added: 40 ms behind the server
+  CHECK_NEAR(static_cast<double>(server.now()) -
+                 static_cast<double>(ntp.getTimeMs()),
+             40, 2);
+}
+
+TEST(a_server_that_needs_longer_than_the_round_trip_does_not_move_time_back) {
+  FakeServer server(summerMs);
+  server.processingMs = 500;  // not possible: more than the round trip
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_EQ(ntp.getTimeMs(), summerMs + 500);  // the transmit time, no change
+}
+
+TEST(timeout_and_response_work_across_the_overflow_of_millis) {
+  FakeServer server(summerMs);
+  server.baseMillis = 0xFFFFFE00u;
+  setup(server);
+  mock::now = 0xFFFFFE00u;  // 512 ms before the overflow
+  MockUDP::delayPolls = 500;
+  Client ntp("192.0.2.1", 123, 1000);  // the response arrives after the overflow
+  CHECK(ntp.begin());
+  CHECK(ntp);
+  // and a timeout still ends after the time that was given
+  FakeServer none(summerMs);
+  setup(none);
+  MockUDP::responder = nullptr;
+  mock::now = 0xFFFFFF80u;
+  Client lost("192.0.2.1", 123, 300);
+  CHECK(!lost.begin());
+  CHECK(mock::now - 0xFFFFFF80u >= 300);  // it waited for the timeout
+  CHECK(mock::now - 0xFFFFFF80u < 400);
+}
+
+TEST(time_keeps_running_across_the_overflow_of_millis) {
+  FakeServer server(summerMs);
+  server.baseMillis = 0xFFFFFF00u;
+  setup(server);
+  mock::now = 0xFFFFFF00u;
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  mock::now = 0x00000100u;  // 512 ms later
+  CHECK_EQ(ntp.getTimeMs(), summerMs + 512);
 }
 
 TEST(fraction_of_a_second) {
@@ -197,6 +264,22 @@ TEST(time_offset) {
   CHECK_EQ(ntp.getTm().tm_min, 58);
   ntp.setTimeOffsetSeconds(0);
   CHECK_EQ(ntp.getTimeMs(), summerMs);
+}
+
+TEST(a_server_that_uses_the_client_serves_its_time_offset) {
+  // the offset is part of getTimeMs(): do not set it on such a client
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  ntp.setTimeOffsetHours(1);
+  TinyNTPServer<MockUDP> served;
+  MockUDP::reset();
+  CHECK(served.begin(ntp));
+  MockUDP::deliver(ntpRequest());
+  CHECK(served.process());
+  CHECK_NEAR(static_cast<double>(getTimestamp(MockUDP::sent[0].data, 40)),
+             static_cast<double>(summerMs + 3600000), 2);
 }
 
 TEST(local_time_with_summer_time) {
@@ -294,11 +377,9 @@ TEST(failed_update_keeps_the_time) {
              static_cast<double>(summerMs + 3000), 200);  // runs on millis()
 }
 
-// KNOWN BUG in ntpExchange(): newNtpTime = transmit - epoch + offset adds the
-// clock offset to the time of the server, which already is the correct time.
-// If the clock of the client is off by 1 s or more at the time of an update,
-// the new time is off by the same amount (after a jump of +30 s: +60 s).
-KNOWN_BUG(update_follows_a_jump_of_the_server) {
+// The clock offset must not be added to the time of the server (it was, and
+// after a jump of +30 s the client was 60 s off)
+TEST(update_follows_a_jump_of_the_server) {
   FakeServer server(summerMs);
   setup(server);
   Client ntp("192.0.2.1", 123, 1000);
@@ -306,12 +387,23 @@ KNOWN_BUG(update_follows_a_jump_of_the_server) {
   server.baseMs += 30000;  // the clock of the server is 30 s ahead
   CHECK(ntp.update());
   CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
-             static_cast<double>(server.now()), 1000);
+             static_cast<double>(server.now()), 50);
 }
 
-// KNOWN BUG, same cause as above: the offset of 10 s that millis() has built up
-// after 1000 s is counted twice, so the factor is 1.02 and not 1.01.
-KNOWN_BUG(correction_factor_follows_the_speed_of_millis) {
+TEST(update_follows_a_jump_back) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  server.baseMs -= 3600000;  // one hour back
+  CHECK(ntp.update());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(server.now()), 50);
+}
+
+// The offset of 10 s that millis() has built up after 1000 s was counted twice,
+// so the factor was 1.02 and not 1.01
+TEST(correction_factor_follows_the_speed_of_millis) {
   FakeServer server(summerMs);
   server.rate = 1.01;  // millis() is 1% slower than the real time
   setup(server);
@@ -320,7 +412,7 @@ KNOWN_BUG(correction_factor_follows_the_speed_of_millis) {
   CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.0, 1e-9);
   mock::now += 1000000;  // 1000 s later
   CHECK(ntp.update());
-  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.01, 0.003);
+  CHECK_NEAR(ntp.getMillisCorrectionFactor(), 1.01, 0.001);
   // the time between the updates is now corrected
   uint64_t before = ntp.getTimeMs();
   mock::now += 100000;

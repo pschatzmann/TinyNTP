@@ -1,8 +1,7 @@
-// ARDUINO is not defined: TinyNTP.h does not use the namespace. The classes are
-// in tiny_ntp and do not disturb the code of the user
-#ifdef ARDUINO
-#error "this test must be built without ARDUINO"
-#endif
+// NO_TINY_NTP_NAMESPACE is defined: TinyNTP.h does not use the namespace. The
+// classes are in tiny_ntp and do not disturb the code of the user, even if it
+// has classes with the same names.
+#define NO_TINY_NTP_NAMESPACE
 #include "mock.h"
 #include "test.h"
 
@@ -48,4 +47,4 @@ TEST(macros_have_no_namespace) {
   CHECK_STR(NTP_HOST_POOL, "pool.ntp.org");
 }
 
-TEST_MAIN("namespace_plain")
+TEST_MAIN("namespace_opt_out")

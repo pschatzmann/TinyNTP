@@ -1,9 +1,11 @@
 // tinyntp: command line NTP client and server for the desktop (Linux, macOS)
-// based on the TinyNTP library. IPv4 only.
+// based on the TinyNTP library and the Arduino emulator. IPv4 only.
 //
 //   tinyntp [options] [server]     query a server and show the time
 //   tinyntp serve [options]        serve the time of this computer
 //   tinyntp set [options] device   set the time of a TinyNTPServer
+//
+// (main() is in main.cpp.)
 //
 // Build: cmake -S tools/tinyntp -B build-tinyntp && cmake --build build-tinyntp
 #include <signal.h>
@@ -14,29 +16,22 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 
-// ---- what the library expects from an Arduino environment -------------------
+// The Arduino API for the desktop (millis(), delay(), Serial, EthernetUDP) comes
+// from the Arduino emulator
+#include "Arduino.h"
+#include "EthernetUdp.h"
+
+#include "TinyNTP.h"
+
 static bool verbose = false;
-unsigned long millis() {
-  using namespace std::chrono;
-  // 32 bit like on Arduino boards: the library calculates with 32 bit values
-  return static_cast<uint32_t>(
-      duration_cast<milliseconds>(steady_clock::now().time_since_epoch())
-          .count());
-}
-struct SerialPort {
-  void print(const char* text) {
-    if (verbose) fputs(text, stderr);
-  }
-} Serial;
 
-#include "PosixUDP.h"
-
-#include "TinyNTP/TinyNTPClient.h"
-#include "TinyNTP/TinyNTPServer.h"
-#include "TinyNTP/TinySystemTimeSource.h"
-#include "TinyNTP/TinyTimeSet.h"
-using namespace tiny_ntp;
+/// Discards everything that is written to std::cout, which is where Serial of
+/// the emulator prints: the diagnostic messages of the library and the emulator
+struct NullBuffer : std::streambuf {
+  int overflow(int c) override { return c; }
+};
 
 // ---- command line -----------------------------------------------------------
 static const char* usage =
@@ -76,7 +71,7 @@ static void printTime(const char* label, const std::tm& tm, uint64_t ms,
 
 static int runQuery(const char* server, int port, uint32_t timeoutMs,
                     const char* tz) {
-  TinyNTPClient<PosixUDP> ntp(server, port, timeoutMs);
+  TinyNTPClient<EthernetUDP> ntp(server, port, timeoutMs);
   // an unprivileged local port: port 123 is used by the system or needs root
   ntp.setLocalPort(49152 + getpid() % 16000);
   if (tz != nullptr && !ntp.setTimeZone(tz)) {
@@ -117,10 +112,10 @@ static int64_t systemTimeMs() {
 }
 
 /// Wait for a message of the device. Returns its size or 0 on timeout.
-static int receive(PosixUDP& udp, uint8_t* buffer, int size,
+static int receive(EthernetUDP& udp, uint8_t* buffer, int size,
                    uint32_t timeoutMs) {
-  uint32_t end = millis() + timeoutMs;
-  while (millis() < end) {
+  uint32_t start = millis();
+  while (static_cast<uint32_t>(millis() - start) < timeoutMs) {
     int n = udp.parsePacket();
     if (n > 0) return udp.read(buffer, n < size ? n : size);
   }
@@ -132,7 +127,7 @@ static int runSet(const char* device, int port, uint32_t timeoutMs,
   using Msg = TinyTimeSetMessage;
   const uint8_t* k = reinterpret_cast<const uint8_t*>(key);
   size_t keyLen = strlen(key);
-  PosixUDP udp;
+  EthernetUDP udp;
   if (!udp.begin(49152 + getpid() % 16000)) {
     fprintf(stderr, "cannot open a local UDP port\n");
     return 1;
@@ -204,7 +199,7 @@ static int runSet(const char* device, int port, uint32_t timeoutMs,
 
 static int runServe(int port, int stratum) {
   TinySystemTimeSource source;
-  TinyNTPServer<PosixUDP> server;
+  TinyNTPServer<EthernetUDP> server;
   server.setStratum(stratum);
   if (!server.begin(source, port)) {
     fprintf(stderr, "cannot listen on UDP port %d%s\n", port,
@@ -218,15 +213,17 @@ static int runServe(int port, int stratum) {
          port, stratum);
   fflush(stdout);
   while (!stopRequested) {
-    if (server.process() && verbose) {
-      fprintf(stderr, "request %u\n", server.getRequestCount());
+    if (server.process()) {
+      if (verbose) fprintf(stderr, "request %u\n", server.getRequestCount());
+    } else {
+      delay(1);  // parsePacket() does not wait: do not use all of the CPU
     }
   }
   printf("\nserved %u requests\n", server.getRequestCount());
   return 0;
 }
 
-int main(int argc, char** argv) {
+int tinyntp_main(int argc, char** argv) {
   bool serve = false, set = false, haveServer = false;
   const char* key = getenv("TINYNTP_KEY");
   const char* server = "pool.ntp.org";
@@ -248,7 +245,6 @@ int main(int argc, char** argv) {
       return 0;
     } else if (!strcmp(a, "-v")) {
       verbose = true;
-      PosixUDP::debug = true;
     } else if (!strcmp(a, "-p")) {
       port = atoi(value());
     } else if (!strcmp(a, "-t")) {
@@ -271,6 +267,8 @@ int main(int argc, char** argv) {
       haveServer = true;
     }
   }
+  static NullBuffer nullBuffer;
+  if (!verbose) std::cout.rdbuf(&nullBuffer);  // the tool prints with printf
   if (port < 1 || port > 65535 || stratum < 1 || stratum > 15 ||
       timeoutMs == 0) {
     fprintf(stderr, "invalid option value\n\n%s", usage);
