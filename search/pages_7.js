@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['start_0',['Quick Start',['../index.html#autotoc_md2',1,'']]]
+  ['tinyntp_0',['TinyNTP',['../index.html',1,'']]]
 ];
