@@ -30,6 +30,12 @@ void connectToWiFi() {
     Serial.print(".");
   }
   Serial.println("\nWiFi connected");
+
+#ifdef ESP32
+  // Without the WiFi power save the responses of the NTP server are not held
+  // back by the access point
+  WiFi.setSleep(false);
+#endif
 }
 
 void setup() {

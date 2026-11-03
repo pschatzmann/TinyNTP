@@ -41,15 +41,21 @@ void connectToWiFi() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("\nWiFi connected");
+  Serial.print("\nWiFi connected: ");
   Serial.println(WiFi.localIP());
+
+#ifdef ESP32
+  // Without the WiFi power save the requests of the clients and the responses
+  // of the internet server are not held back by the access point
+  WiFi.setSleep(false);
+#endif
 }
 
 void setup() {
   Serial.begin(115200);
-  if (!rtc.begin()) {
-    Serial.println("RTC not found");
-    while (true) delay(1000);
+  while (!rtc.begin()) {
+    Serial.println("RTC not found: check the wiring");
+    delay(5000);
   }
   if (rtc.lostPower()) {
     Serial.println("RTC lost power: the time is not valid");
@@ -61,7 +67,11 @@ void setup() {
   // An RTC is not a reference clock: report a high stratum so that the
   // clients prefer other servers
   server.setStratum(10);
-  server.begin(clockSource);
+  while (!server.begin(clockSource)) {
+    Serial.println("Failed to start NTP server");
+    delay(5000);
+  }
+  Serial.println("NTP server initialized");
   // Optional: allow to set the time over the network with the command line
   // tool: tinyntp set <ip of this device> -k <secret>. Use a long random text.
   server.enableTimeSetting("CHANGE-THIS-SECRET");

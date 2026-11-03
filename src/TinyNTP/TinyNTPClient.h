@@ -35,7 +35,8 @@ namespace tiny_ntp {
  * TinyNTPServer can serve its time.
  *
  * The functions block until the server has answered or the timeout has
- * passed. Call update() from time to time (e.g. once per hour).
+ * passed. Without a response, the request is sent again every 300 ms (some
+ * WiFi networks lose responses or hold them back until the device sends). Call update() from time to time (e.g. once per hour).
  * @tparam UDPAPI The UDP class to use (e.g: WiFiUDP)
  */
 template <typename UDPAPI>
@@ -81,6 +82,7 @@ class TinyNTPClient : public TinyTimeSource {
     _baselineUpdateMillis = 0;
     _millisCorrectionFactor = 1.0;
     _udp.stop();
+    _openPort = 0;
   }
 
   /**
@@ -294,6 +296,14 @@ class TinyNTPClient : public TinyTimeSource {
   uint32_t _timeoutMs = 0;
   /** Correction factor for millis() drift (real_time / millis_time). */
   double _millisCorrectionFactor = 1.0;
+  /** Local port of the open UDP socket (0: not open). */
+  uint16_t _openPort = 0;
+  /** Counter for the numbers of the requests. */
+  uint32_t _requestCounter = 0;
+  /** Maximum number of requests that are sent in one exchange. */
+  static constexpr int MaxRequests = 16;
+  /** Time in ms until a request is sent again if there is no response. */
+  static constexpr uint32_t ResendIntervalMs = 300;
 
   /** Returns true if the CPU is little endian. */
   constexpr bool isLittleEndian() {
@@ -341,8 +351,39 @@ class TinyNTPClient : public TinyTimeSource {
   }
 
   /**
+   * @brief Read a received packet, including the bytes that do not fit into
+   * an NTP packet (otherwise some UDP classes do not return the next packet).
+   * @return true if it is a complete NTP packet.
+   */
+  bool readResponse(int packetSize, NTPPacket& response) {
+    uint8_t* buffer = reinterpret_cast<uint8_t*>(&response);
+    int totalRead = 0;
+    while (totalRead < (int)sizeof(NTPPacket) && _udp.available()) {
+      int bytesRead =
+          _udp.read(buffer + totalRead, (int)sizeof(NTPPacket) - totalRead);
+      if (bytesRead <= 0) break;
+      totalRead += bytesRead;
+    }
+    uint8_t rest[16];
+    while (_udp.available() > 0 && _udp.read(rest, sizeof(rest)) > 0) {
+    }
+    if (packetSize < (int)sizeof(NTPPacket)) {
+      log("NTP: packet too short - Expected: %d, Got: %d\n",
+          (int)sizeof(NTPPacket), packetSize);
+      return false;
+    }
+    if (totalRead < (int)sizeof(NTPPacket)) {
+      log("NTP: response read incomplete - Expected: %d, Got: %d\n",
+          (int)sizeof(NTPPacket), totalRead);
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * @brief Perform the NTP request/response exchange and update the internal
-   * time.
+   * time. The request is sent again every ResendIntervalMs until a response
+   * arrives or the timeout has passed.
    *
    * @param txTm_s   Transmit timestamp (seconds since NTP epoch, 1900) to send
    * in the request packet.
@@ -350,60 +391,61 @@ class TinyNTPClient : public TinyTimeSource {
    */
   bool ntpExchange(uint32_t txTm_s) {
     NTPPacket packet = {};
-    // Set LI=3 (no warning), VN=3 (NTPv3), Mode=3 (client)
+    // Set LI=3 (clock not synchronized), VN=3 (NTPv3), Mode=3 (client)
     // Binary: 11 011 011 = 0xDB
     packet.li_vn_mode = 0xDB;
     // Convert transmit timestamp to network byte order
     packet.txTm_s = l_htonl(txTm_s);
-    packet.txTm_f = 0;
 
-    _udp.begin(_localPort != 0 ? _localPort : _port);
-    uint32_t t0_millis = ::millis();  // the time when the request is sent
-    _udp.beginPacket(_server, _port);
-    _udp.write(reinterpret_cast<uint8_t*>(&packet), sizeof(NTPPacket));
-    _udp.endPacket();
+    // The socket stays open between the updates, so that a late response is
+    // still received (and ignored) and does not get lost with the socket
+    uint16_t localPort = _localPort != 0 ? _localPort : _port;
+    if (_openPort != localPort) {
+      _openPort = _udp.begin(localPort) ? localPort : 0;
+    }
 
-    // Wait for response with timeout
-    int packetSize = 0;
-    while ((packetSize = _udp.parsePacket()) == 0) {
+    // The request is sent again until a response arrives: some WiFi networks
+    // (e.g. with an ESP32) lose responses or hold them back until the device
+    // sends the next packet. Each request has its own number in the transmit
+    // fraction, which the server returns as originate time: the round trip is
+    // measured from the request that was answered, and responses to the
+    // requests of an earlier update are ignored.
+    uint32_t sentMillis[MaxRequests];
+    int sentCount = 0;
+    uint32_t requestId = ++_requestCounter << 8;
+    uint32_t startMillis = ::millis();
+    uint32_t t0_millis = 0;  // the time when the answered request was sent
+    uint32_t t3_millis = 0;  // the time when the response was received
+    NTPPacket response = {};
+    bool received = false;
+    while (!received) {
       // 32 bit arithmetic: also correct after the overflow of millis(), and if
       // millis() returns a 64 bit value (e.g. on a computer)
-      if (static_cast<uint32_t>(::millis() - t0_millis) > _timeoutMs) {
+      uint32_t now = ::millis();
+      if (static_cast<uint32_t>(now - startMillis) > _timeoutMs) {
         log("NTP: request timed out\n");
         return false;
       }
-    }
-
-    // Read response
-    uint32_t t3_millis = ::millis();
-    NTPPacket response = {};
-    uint8_t* buffer = reinterpret_cast<uint8_t*>(&response);
-
-    // Check if packet size is correct
-    if (packetSize < (int)sizeof(NTPPacket)) {
-      _udp.read(buffer, packetSize);  // Read available data for logging
-      log("NTP: packet too short - Expected: %d, Got: %d (%s)\n",
-          sizeof(NTPPacket), packetSize, buffer);
-      return false;
-    }
-
-    // Read the packet data - read in chunks if necessary
-    int totalRead = 0;
-    int bytesToRead = sizeof(NTPPacket);
-
-    while (totalRead < bytesToRead && _udp.available()) {
-      int bytesRead = _udp.read(buffer + totalRead, bytesToRead - totalRead);
-      if (bytesRead > 0) {
-        totalRead += bytesRead;
-      } else {
-        break;
+      if (sentCount < MaxRequests &&
+          (sentCount == 0 || static_cast<uint32_t>(
+                                 now - sentMillis[sentCount - 1]) >=
+                                 ResendIntervalMs)) {
+        packet.txTm_f = l_htonl(requestId | sentCount);
+        sentMillis[sentCount++] = now;
+        _udp.beginPacket(_server, _port);
+        _udp.write(reinterpret_cast<uint8_t*>(&packet), sizeof(NTPPacket));
+        _udp.endPacket();
       }
-    }
 
-    if (totalRead < (int)sizeof(NTPPacket)) {
-      log("NTP: response read incomplete - Expected: %d, Got: %d (%s)\n",
-          sizeof(NTPPacket), totalRead, buffer);
-      return false;
+      int packetSize = _udp.parsePacket();
+      if (packetSize <= 0) continue;
+      t3_millis = ::millis();
+      if (!readResponse(packetSize, response)) continue;
+      uint32_t originate = l_ntohl(response.origTm_f);
+      int index = static_cast<int>(originate & 0xFF);
+      if ((originate & ~0xFFu) != requestId || index >= sentCount) continue;
+      t0_millis = sentMillis[index];
+      received = true;
     }
 
     uint32_t receive = l_ntohl(response.rxTm_s);

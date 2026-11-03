@@ -138,6 +138,61 @@ TEST(response_after_the_timeout_is_too_late) {
   CHECK(!ntp.begin());
 }
 
+// Some WiFi networks (e.g. with an ESP32) lose responses
+TEST(request_is_sent_again_if_the_response_is_lost) {
+  FakeServer server(summerMs);
+  setup(server);
+  int lost = 2;
+  MockUDP::responder = [&](const Bytes& b) {
+    return lost-- > 0 ? Bytes() : server(b);
+  };
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_EQ(MockUDP::sent.size(), 4u);  // 2 lost, then 2 exchanges
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(server.now()), 2);
+}
+
+// The response to the first request arrives after the second one was sent:
+// the round trip is measured from the first request
+TEST(round_trip_is_measured_from_the_answered_request) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::delayPolls = 400;  // longer than the time until it is sent again
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  // 400 ms round trip: 200 ms behind the server (not 50 ms of 100 ms from
+  // the request that was sent again)
+  CHECK_NEAR(static_cast<double>(server.now()) -
+                 static_cast<double>(ntp.getTimeMs()),
+             200, 2);
+}
+
+TEST(response_to_an_earlier_update_is_ignored) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  // a late response to the last request, with a wrong time
+  FakeServer other(summerMs + 3600000);
+  MockUDP::deliver(other(MockUDP::sent.back().data));
+  CHECK(ntp.update());
+  CHECK_NEAR(static_cast<double>(ntp.getTimeMs()),
+             static_cast<double>(server.now()), 2);
+}
+
+TEST(socket_stays_open_between_updates) {
+  FakeServer server(summerMs);
+  setup(server);
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK(ntp.update());
+  CHECK_EQ(MockUDP::boundPorts.size(), 1u);
+  ntp.end();
+  CHECK(ntp.begin());  // opened again after end()
+  CHECK_EQ(MockUDP::boundPorts.size(), 2u);
+}
+
 // millis() returns an unsigned long, which has 64 bit on a computer. After an
 // uptime of more than 49.7 days it is larger than any 32 bit value: the client
 // gave up at the first poll, before the server could answer.
