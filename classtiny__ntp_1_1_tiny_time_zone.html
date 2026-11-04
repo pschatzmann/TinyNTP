@@ -100,6 +100,9 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9adc59e4115c5405ef8fd5810719cd3b" id="r_a9adc59e4115c5405ef8fd5810719cd3b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9adc59e4115c5405ef8fd5810719cd3b">TinyTimeZone</a> (const char *tz)</td></tr>
 <tr class="memdesc:a9adc59e4115c5405ef8fd5810719cd3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct and parse a POSIX TZ string. Use <a class="el" href="#acc54efbcf0be377926c043c35969d590" title="Returns true if a TZ string was successfully parsed.">isValid()</a> to check if the string was valid.  <br /></td></tr>
+<tr class="memitem:ac8ff267a8bbdc91cc82f1ce7c8083bfe" id="r_ac8ff267a8bbdc91cc82f1ce7c8083bfe"><td class="memItemLeft" align="right" valign="top"><a id="ac8ff267a8bbdc91cc82f1ce7c8083bfe" name="ac8ff267a8bbdc91cc82f1ce7c8083bfe"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>dstMinutes</b> (int64_t utc) const</td></tr>
+<tr class="memdesc:ac8ff267a8bbdc91cc82f1ce7c8083bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The summer time shift that applies at the given UTC time in minutes (0 during standard time), e.g. for the DST offset of the Bluetooth Current Time Service. <br /></td></tr>
 <tr class="memitem:afa133a042d024e58f79647d108488888" id="r_afa133a042d024e58f79647d108488888"><td class="memItemLeft" align="right" valign="top"><a id="afa133a042d024e58f79647d108488888" name="afa133a042d024e58f79647d108488888"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasDst</b> () const</td></tr>
 <tr class="memdesc:afa133a042d024e58f79647d108488888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time zone has summer time rules. <br /></td></tr>
@@ -111,11 +114,25 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isValid</b> () const<
 <tr class="memitem:a653395d529b78f612cf0555a25879ad4" id="r_a653395d529b78f612cf0555a25879ad4"><td class="memItemLeft" align="right" valign="top"><a id="a653395d529b78f612cf0555a25879ad4" name="a653395d529b78f612cf0555a25879ad4"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (int64_t utc) const</td></tr>
 <tr class="memdesc:a653395d529b78f612cf0555a25879ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the zone that applies at the given UTC time. <br /></td></tr>
+<tr class="memitem:a8e6636b9de40d071a1c69445c97a8ed9" id="r_a8e6636b9de40d071a1c69445c97a8ed9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e6636b9de40d071a1c69445c97a8ed9">nextTransition</a> (int64_t utc, int64_t &amp;atUtc, int32_t &amp;offsetBefore, int32_t &amp;offsetAfter) const</td></tr>
+<tr class="memdesc:a8e6636b9de40d071a1c69445c97a8ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next change between standard and summer time after the given UTC time.  <br /></td></tr>
 <tr class="memitem:ae96e4ef9d2b27a437697677b87eba690" id="r_ae96e4ef9d2b27a437697677b87eba690"><td class="memItemLeft" align="right" valign="top"><a id="ae96e4ef9d2b27a437697677b87eba690" name="ae96e4ef9d2b27a437697677b87eba690"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>offsetSeconds</b> (int64_t utc) const</td></tr>
 <tr class="memdesc:ae96e4ef9d2b27a437697677b87eba690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the offset to UTC in seconds (positive is east of UTC) that applies at the given UTC time. <br /></td></tr>
 <tr class="memitem:aeaec07dffc9e3c793db9f5d9fe7c6783" id="r_aeaec07dffc9e3c793db9f5d9fe7c6783"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaec07dffc9e3c793db9f5d9fe7c6783">setTimeZone</a> (const char *tz)</td></tr>
 <tr class="memdesc:aeaec07dffc9e3c793db9f5d9fe7c6783"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a POSIX TZ string.  <br /></td></tr>
+<tr class="memitem:aa4949b88d5bd21644d981bafd4c350ac" id="r_aa4949b88d5bd21644d981bafd4c350ac"><td class="memItemLeft" align="right" valign="top"><a id="aa4949b88d5bd21644d981bafd4c350ac" name="aa4949b88d5bd21644d981bafd4c350ac"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>standardName</b> () const</td></tr>
+<tr class="memdesc:aa4949b88d5bd21644d981bafd4c350ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the standard time, e.g. "CET". <br /></td></tr>
+<tr class="memitem:ab35ab863327c70bb24a713051a1d92cf" id="r_ab35ab863327c70bb24a713051a1d92cf"><td class="memItemLeft" align="right" valign="top"><a id="ab35ab863327c70bb24a713051a1d92cf" name="ab35ab863327c70bb24a713051a1d92cf"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>standardOffsetSeconds</b> () const</td></tr>
+<tr class="memdesc:ab35ab863327c70bb24a713051a1d92cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the standard time in seconds east of UTC. <br /></td></tr>
+<tr class="memitem:acd79dbc7893e1985bdb8635be52ee9d7" id="r_acd79dbc7893e1985bdb8635be52ee9d7"><td class="memItemLeft" align="right" valign="top"><a id="acd79dbc7893e1985bdb8635be52ee9d7" name="acd79dbc7893e1985bdb8635be52ee9d7"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>summerName</b> () const</td></tr>
+<tr class="memdesc:acd79dbc7893e1985bdb8635be52ee9d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the summer time, e.g. "CEST" ("" if none). <br /></td></tr>
+<tr class="memitem:a3cc8b192c4815328cafc103dae08542a" id="r_a3cc8b192c4815328cafc103dae08542a"><td class="memItemLeft" align="right" valign="top"><a id="a3cc8b192c4815328cafc103dae08542a" name="a3cc8b192c4815328cafc103dae08542a"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>summerOffsetSeconds</b> () const</td></tr>
+<tr class="memdesc:a3cc8b192c4815328cafc103dae08542a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the summer time in seconds east of UTC (= standard if none). <br /></td></tr>
 <tr class="memitem:a56cf5abc7ee850f1d0596f19954443ed" id="r_a56cf5abc7ee850f1d0596f19954443ed"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56cf5abc7ee850f1d0596f19954443ed">toLocal</a> (int64_t utc) const</td></tr>
 <tr class="memdesc:a56cf5abc7ee850f1d0596f19954443ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert UTC to local time.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -390,6 +407,57 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns true if the year is a leap year. </p>
+
+</div>
+</div>
+<a id="a8e6636b9de40d071a1c69445c97a8ed9" name="a8e6636b9de40d071a1c69445c97a8ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e6636b9de40d071a1c69445c97a8ed9">&#9670;&#160;</a></span>nextTransition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tiny_ntp::TinyTimeZone::nextTransition </td>
+          <td>(</td>
+          <td class="paramtype">int64_t</td>          <td class="paramname"><span class="paramname"><em>utc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t &amp;</td>          <td class="paramname"><span class="paramname"><em>atUtc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offsetBefore</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t &amp;</td>          <td class="paramname"><span class="paramname"><em>offsetAfter</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The next change between standard and summer time after the given UTC time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">utc</td><td>Seconds since the Unix epoch (UTC). </td></tr>
+    <tr><td class="paramname">atUtc</td><td>Time of the change (UTC seconds). </td></tr>
+    <tr><td class="paramname">offsetBefore</td><td>Offset to UTC in seconds before the change. </td></tr>
+    <tr><td class="paramname">offsetAfter</td><td>Offset to UTC in seconds after the change. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>false if the zone has no summer time. </dd></dl>
 
 </div>
 </div>

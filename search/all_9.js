@@ -8,7 +8,8 @@ var searchData=
   ['isdst_5',['isDst',['../classtiny__ntp_1_1_tiny_time_zone.html#a13aa52b678187e2e8b2cc2b3b5db7666',1,'tiny_ntp::TinyTimeZone']]],
   ['isleap_6',['isLeap',['../classtiny__ntp_1_1_tiny_time_zone.html#a7c5511aab67e51d56b4776f9e1923b18',1,'tiny_ntp::TinyTimeZone']]],
   ['islittleendian_7',['isLittleEndian',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a02bfe8a382c5dc58811b145d8fee1d9a',1,'tiny_ntp::TinyNTPClient']]],
-  ['isprivate_8',['isPrivate',['../classtiny__ntp_1_1_tiny_time_set_message.html#aac9634ea555214a091112d14f31f35bf',1,'tiny_ntp::TinyTimeSetMessage']]],
-  ['isset_9',['isSet',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d',1,'tiny_ntp::TinyClockTimeSource']]],
-  ['isvalid_10',['isValid',['../classtiny__ntp_1_1_tiny_time_zone.html#acc54efbcf0be377926c043c35969d590',1,'tiny_ntp::TinyTimeZone']]]
+  ['isppsactive_8',['isPpsActive',['../classtiny__ntp_1_1_tiny_g_p_s_time_source.html#ad254d3437c6dc48c2533d1fcc1e21406',1,'tiny_ntp::TinyGPSTimeSource']]],
+  ['isprivate_9',['isPrivate',['../classtiny__ntp_1_1_tiny_time_set_message.html#aac9634ea555214a091112d14f31f35bf',1,'tiny_ntp::TinyTimeSetMessage']]],
+  ['isset_10',['isSet',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d',1,'tiny_ntp::TinyClockTimeSource']]],
+  ['isvalid_11',['isValid',['../classtiny__ntp_1_1_tiny_time_zone.html#acc54efbcf0be377926c043c35969d590',1,'tiny_ntp::TinyTimeZone']]]
 ];

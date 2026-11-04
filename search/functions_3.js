@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['daysfromcivil_0',['daysFromCivil',['../classtiny__ntp_1_1_tiny_time_zone.html#a11ed50de28eccc798d20648f0a519c83',1,'tiny_ntp::TinyTimeZone']]],
-  ['daysinmonth_1',['daysInMonth',['../classtiny__ntp_1_1_tiny_time_zone.html#a2e7ccf4763304b6a2a479fe859914683',1,'tiny_ntp::TinyTimeZone']]],
-  ['disabletimesetting_2',['disableTimeSetting',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a0f12fcab8920627cf4d6a9d30caf4d85',1,'tiny_ntp::TinyNTPServer']]]
+  ['calculate_0',['calculate',['../classtiny__ntp_1_1_tiny_h_m_a_c_s_h_a256.html#a724116a1f45b852d307c8eb4104ef58a',1,'tiny_ntp::TinyHMACSHA256']]],
+  ['clear_1',['clear',['../classtiny__ntp_1_1_tiny_clock_time_source.html#ac9f56fb7065c5f25377d8285cfb5baa4',1,'tiny_ntp::TinyClockTimeSource::clear()'],['../classtiny__ntp_1_1_tiny_time_zone.html#a27ce7a3b04998c131e6c1c03d723b40d',1,'tiny_ntp::TinyTimeZone::clear()']]]
 ];

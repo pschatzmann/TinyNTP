@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['yearof_0',['yearOf',['../classtiny__ntp_1_1_tiny_time_zone.html#afdda1f491ae0ad377b46b01d864db04d',1,'tiny_ntp::TinyTimeZone']]]
+  ['verifysetrequest_0',['verifySetRequest',['../classtiny__ntp_1_1_tiny_time_set_message.html#a2a36651295e90add6615be059fd8d147',1,'tiny_ntp::TinyTimeSetMessage']]]
 ];

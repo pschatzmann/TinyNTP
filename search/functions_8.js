@@ -1,11 +1,5 @@
 var searchData=
 [
-  ['isalpha_0',['isAlpha',['../classtiny__ntp_1_1_tiny_time_zone.html#a6ac545f1d676ac3764da9cc41cbe8ce5',1,'tiny_ntp::TinyTimeZone']]],
-  ['isdigit_1',['isDigit',['../classtiny__ntp_1_1_tiny_time_zone.html#a48aa0da31797c787ace529d3ae4767c8',1,'tiny_ntp::TinyTimeZone']]],
-  ['isdst_2',['isDst',['../classtiny__ntp_1_1_tiny_time_zone.html#a13aa52b678187e2e8b2cc2b3b5db7666',1,'tiny_ntp::TinyTimeZone']]],
-  ['isleap_3',['isLeap',['../classtiny__ntp_1_1_tiny_time_zone.html#a7c5511aab67e51d56b4776f9e1923b18',1,'tiny_ntp::TinyTimeZone']]],
-  ['islittleendian_4',['isLittleEndian',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a02bfe8a382c5dc58811b145d8fee1d9a',1,'tiny_ntp::TinyNTPClient']]],
-  ['isprivate_5',['isPrivate',['../classtiny__ntp_1_1_tiny_time_set_message.html#aac9634ea555214a091112d14f31f35bf',1,'tiny_ntp::TinyTimeSetMessage']]],
-  ['isset_6',['isSet',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a558835b63c40c03b5401355ab3bd643d',1,'tiny_ntp::TinyClockTimeSource']]],
-  ['isvalid_7',['isValid',['../classtiny__ntp_1_1_tiny_time_zone.html#acc54efbcf0be377926c043c35969d590',1,'tiny_ntp::TinyTimeZone']]]
+  ['hasdst_0',['hasDst',['../classtiny__ntp_1_1_tiny_time_zone.html#afa133a042d024e58f79647d108488888',1,'tiny_ntp::TinyTimeZone']]],
+  ['hasfix_1',['hasFix',['../classtiny__ntp_1_1_tiny_n_m_e_a_parser.html#a65d8ac1eba4c6b6218cd7fe4769163c2',1,'tiny_ntp::TinyNMEAParser']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['arduino_0',['Installation in Arduino',['../index.html#autotoc_md4',1,'']]]
+  ['acceptclient_0',['acceptClient',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a4967ef08dbf153a6d7fad86f37820ec0',1,'tiny_ntp::TinyNTPServer']]],
+  ['arduino_1',['Installation in Arduino',['../index.html#autotoc_md4',1,'']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['enabletimesetting_0',['enableTimeSetting',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a8f747322bed34cbfb970b68d87b2ece8',1,'tiny_ntp::TinyNTPServer']]],
-  ['end_1',['end',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a190bed1cab727e5d3bfb60a882ab66c8',1,'tiny_ntp::TinyNTPClient::end()'],['../classtiny__ntp_1_1_tiny_n_t_p_server.html#ad59580c8264e612ae92248e42ed0e0ab',1,'tiny_ntp::TinyNTPServer::end()']]],
-  ['equals_2',['equals',['../classtiny__ntp_1_1_tiny_h_m_a_c_s_h_a256.html#ae5e200ebc159e4382c34ad1b97449853',1,'tiny_ntp::TinyHMACSHA256']]]
+  ['daysfromcivil_0',['daysFromCivil',['../classtiny__ntp_1_1_tiny_time_zone.html#a11ed50de28eccc798d20648f0a519c83',1,'tiny_ntp::TinyTimeZone']]],
+  ['daysinmonth_1',['daysInMonth',['../classtiny__ntp_1_1_tiny_time_zone.html#a2e7ccf4763304b6a2a479fe859914683',1,'tiny_ntp::TinyTimeZone']]],
+  ['disabletimesetting_2',['disableTimeSetting',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a0f12fcab8920627cf4d6a9d30caf4d85',1,'tiny_ntp::TinyNTPServer']]],
+  ['dstminutes_3',['dstMinutes',['../classtiny__ntp_1_1_tiny_time_zone.html#ac8ff267a8bbdc91cc82f1ce7c8083bfe',1,'tiny_ntp::TinyTimeZone']]]
 ];

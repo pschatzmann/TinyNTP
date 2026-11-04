@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['setlocalport_0',['setLocalPort',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#ac8e67531ff01dd311404616cf87256bf',1,'tiny_ntp::TinyNTPClient']]],
-  ['setserver_1',['setServer',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a100c5ad09ec104bdaec44b0336e2aecf',1,'tiny_ntp::TinyNTPClient']]],
-  ['setstratum_2',['setStratum',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a1188617184327a1bf9a751d166778582',1,'tiny_ntp::TinyNTPServer']]],
-  ['settime_3',['setTime',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a41fe1ff33fd5789b96d1b5288b8e9363',1,'tiny_ntp::TinyClockTimeSource']]],
-  ['settimems_4',['setTimeMs',['../classtiny__ntp_1_1_tiny_clock_time_source.html#a62814c25fa65d27370d5d67e5fd812da',1,'tiny_ntp::TinyClockTimeSource::setTimeMs()'],['../classtiny__ntp_1_1_tiny_time_source.html#aed4dc70b6149d73a2be5a84e6867f222',1,'tiny_ntp::TinyTimeSource::setTimeMs()']]],
-  ['settimeoffsethours_5',['setTimeOffsetHours',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a40affb8f1abe0e6e3d2184b67ed2ec93',1,'tiny_ntp::TinyNTPClient']]],
-  ['settimeoffsetseconds_6',['setTimeOffsetSeconds',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#aef4b6f4d91d476a806667db6e6704cdc',1,'tiny_ntp::TinyNTPClient']]],
-  ['settimezone_7',['setTimeZone',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#adfb7ad64b115a35664a9eb4d5a7c357a',1,'tiny_ntp::TinyNTPClient::setTimeZone()'],['../classtiny__ntp_1_1_tiny_time_zone.html#aeaec07dffc9e3c793db9f5d9fe7c6783',1,'tiny_ntp::TinyTimeZone::setTimeZone()']]],
-  ['swap32_8',['swap32',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a15ebc23bc257c18967ac607f6298bc6d',1,'tiny_ntp::TinyNTPClient']]]
+  ['readresponse_0',['readResponse',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a49c3d6aab180e2bf9ca7af28b4bf7d84',1,'tiny_ntp::TinyNTPClient']]],
+  ['reply_1',['reply',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#a28f4b066ab0f562e7ba162f043914b92',1,'tiny_ntp::TinyNTPServer']]],
+  ['reset_2',['reset',['../classtiny__ntp_1_1_tiny_s_h_a256.html#acb0cca5925b498a329dce3f952b2b222',1,'tiny_ntp::TinySHA256']]],
+  ['rotr_3',['rotr',['../classtiny__ntp_1_1_tiny_s_h_a256.html#a1789c53a8aae2e1e18b6342b8f42e6c8',1,'tiny_ntp::TinySHA256']]]
 ];

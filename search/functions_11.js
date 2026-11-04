@@ -1,6 +1,11 @@
 var searchData=
 [
-  ['update_0',['update',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a7a7cf9df733411930cba1a4f7c55a4df',1,'tiny_ntp::TinyNTPClient::update()'],['../classtiny__ntp_1_1_tiny_s_h_a256.html#a1916de4126eae1fab4cfe9f3cc499020',1,'tiny_ntp::TinySHA256::update()']]],
-  ['updatewithoutrtc_1',['updateWithoutRTC',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a9ee4071e1c3e9019175a095cb40fb30d',1,'tiny_ntp::TinyNTPClient']]],
-  ['updatewithrtc_2',['updateWithRTC',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#a07a7d8bc8a60e281189a1c7c69e6e875',1,'tiny_ntp::TinyNTPClient']]]
+  ['tinyntpclient_0',['TinyNTPClient',['../classtiny__ntp_1_1_tiny_n_t_p_client.html#aa1c98f9126c61ebace9d22601c5bc4a5',1,'tiny_ntp::TinyNTPClient']]],
+  ['tinysystemtimesource_1',['TinySystemTimeSource',['../classtiny__ntp_1_1_tiny_system_time_source.html#a50c044370fa3ccbfede3b09789b2b0b8',1,'tiny_ntp::TinySystemTimeSource']]],
+  ['tinytimezone_2',['TinyTimeZone',['../classtiny__ntp_1_1_tiny_time_zone.html#a9adc59e4115c5405ef8fd5810719cd3b',1,'tiny_ntp::TinyTimeZone']]],
+  ['tolocal_3',['toLocal',['../classtiny__ntp_1_1_tiny_time_zone.html#a56cf5abc7ee850f1d0596f19954443ed',1,'tiny_ntp::TinyTimeZone']]],
+  ['toshortformat_4',['toShortFormat',['../classtiny__ntp_1_1_tiny_n_t_p_server.html#ab268fcda60e10c2d6f38169fc1590ff5',1,'tiny_ntp::TinyNTPServer']]],
+  ['transform_5',['transform',['../classtiny__ntp_1_1_tiny_s_h_a256.html#adfb8eac36a294137ee44471949a0fe9d',1,'tiny_ntp::TinySHA256']]],
+  ['transition_6',['transition',['../classtiny__ntp_1_1_tiny_time_zone.html#a873a78c724f93625ff971e0a697c5155',1,'tiny_ntp::TinyTimeZone']]],
+  ['type_7',['type',['../classtiny__ntp_1_1_tiny_time_set_message.html#ac9c35f75308549db850b2c061a4c427f',1,'tiny_ntp::TinyTimeSetMessage']]]
 ];

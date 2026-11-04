@@ -77,6 +77,7 @@ $(function() {
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
@@ -100,6 +101,12 @@ Inheritance diagram for tiny_ntp::TinyNTPClient&lt; UDPAPI &gt;:</div>
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a14cc7d0554e6272fc8228525489313e3" id="r_a14cc7d0554e6272fc8228525489313e3"><td class="memItemLeft" align="right" valign="top"><a id="a14cc7d0554e6272fc8228525489313e3" name="a14cc7d0554e6272fc8228525489313e3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>LogFunction</b> = void (*)(const char* message)</td></tr>
+<tr class="memdesc:a14cc7d0554e6272fc8228525489313e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that prints the log messages. <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1c98f9126c61ebace9d22601c5bc4a5" id="r_aa1c98f9126c61ebace9d22601c5bc4a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c98f9126c61ebace9d22601c5bc4a5">TinyNTPClient</a> (const char *server=NTP_HOST_POOL, int port=123, uint32_t timeoutMs=6000)</td></tr>
@@ -109,10 +116,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a190bed1cab727e5d3bfb60a882ab66c8" id="r_a190bed1cab727e5d3bfb60a882ab66c8"><td class="memItemLeft" align="right" valign="top"><a id="a190bed1cab727e5d3bfb60a882ab66c8" name="a190bed1cab727e5d3bfb60a882ab66c8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
 <tr class="memdesc:a190bed1cab727e5d3bfb60a882ab66c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the client state: the time, the time offset and the correction factor are cleared and the UDP socket is closed. The time zone that was set with <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a> is kept. <br /></td></tr>
+<tr class="memitem:aba60ee5cb575e85047b8c9af24bd4f59" id="r_aba60ee5cb575e85047b8c9af24bd4f59"><td class="memItemLeft" align="right" valign="top"><a id="aba60ee5cb575e85047b8c9af24bd4f59" name="aba60ee5cb575e85047b8c9af24bd4f59"></a>
+const <a class="el" href="structtiny__ntp_1_1_tiny_n_t_p_result.html">TinyNTPResult</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getLastResult</b> () const</td></tr>
+<tr class="memdesc:aba60ee5cb575e85047b8c9af24bd4f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">The details of the last answer of the server: stratum, reference id, leap indicator, root delay and dispersion, round trip and the time of the server. valid is false if the last update failed; the other fields then describe the last answer that was received (e.g. a kiss-o'-death). <br /></td></tr>
 <tr class="memitem:acd0abf44d33a7d0fa4ad790cf499a14c" id="r_acd0abf44d33a7d0fa4ad790cf499a14c"><td class="memItemLeft" align="right" valign="top">std::tm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd0abf44d33a7d0fa4ad790cf499a14c">getLocalTm</a> ()</td></tr>
 <tr class="memdesc:acd0abf44d33a7d0fa4ad790cf499a14c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current local time according to <a class="el" href="#adfb7ad64b115a35664a9eb4d5a7c357a" title="Set the time zone with a POSIX TZ string, e.g. &quot;CET-1CEST,M3.5.0,M10.5.0/3&quot; for Europe/Zurich (or the...">setTimeZone()</a>. If no valid time zone was set, this is the same as <a class="el" href="#afafef0bbf882fc8382dbb61bc526b64a" title="Get the current time as a std::tm structure (UTC, plus the time offset if one was set)....">getTm()</a> (UTC).  <br /></td></tr>
 <tr class="memitem:ad747a2a59af1804326dcca2b98879368" id="r_ad747a2a59af1804326dcca2b98879368"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad747a2a59af1804326dcca2b98879368">getMillisCorrectionFactor</a> () const</td></tr>
 <tr class="memdesc:ad747a2a59af1804326dcca2b98879368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="#a6f47e0ce1b8189699db37c2a3b7b5f51" title="Alias for getTimeMs().">millis()</a> correction factor.  <br /></td></tr>
+<tr class="memitem:a40ee23e0ca64907527668ee5a97cedf7" id="r_a40ee23e0ca64907527668ee5a97cedf7"><td class="memItemLeft" align="right" valign="top"><a id="a40ee23e0ca64907527668ee5a97cedf7" name="a40ee23e0ca64907527668ee5a97cedf7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getPort</b> () const</td></tr>
+<tr class="memdesc:a40ee23e0ca64907527668ee5a97cedf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The NTP server port. <br /></td></tr>
+<tr class="memitem:ac064ee61b6e0f6f9507153da6d6ac6ff" id="r_ac064ee61b6e0f6f9507153da6d6ac6ff"><td class="memItemLeft" align="right" valign="top"><a id="ac064ee61b6e0f6f9507153da6d6ac6ff" name="ac064ee61b6e0f6f9507153da6d6ac6ff"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getServer</b> () const</td></tr>
+<tr class="memdesc:ac064ee61b6e0f6f9507153da6d6ac6ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The NTP server hostname or IP address. <br /></td></tr>
 <tr class="memitem:a63e35a7b675740c0039542b5eb7aea77" id="r_a63e35a7b675740c0039542b5eb7aea77"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63e35a7b675740c0039542b5eb7aea77">getTimeMs</a> () override</td></tr>
 <tr class="memdesc:a63e35a7b675740c0039542b5eb7aea77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current time in milliseconds since Unix epoch (UTC, plus the time offset if one was set).  <br /></td></tr>
 <tr class="memitem:a9451e7139d83913199542d3d245caa05" id="r_a9451e7139d83913199542d3d245caa05"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9451e7139d83913199542d3d245caa05">getTimeSec</a> ()</td></tr>
@@ -132,6 +148,15 @@ UDPAPI &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUDP</b> ()
 <tr class="memdesc:a85794d30de1bbc99e8db3d34343a13c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the time has been received from a server. <br /></td></tr>
 <tr class="memitem:ac8e67531ff01dd311404616cf87256bf" id="r_ac8e67531ff01dd311404616cf87256bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8e67531ff01dd311404616cf87256bf">setLocalPort</a> (uint16_t port)</td></tr>
 <tr class="memdesc:ac8e67531ff01dd311404616cf87256bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the local UDP port that is used to send the requests. By default this is the same as the NTP server port (123). Use a different port if the device also runs a <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_server.html" title="A minimal Network Time Protocol (NTP) server (RFC 5905, mode 4) that serves the time of a time source...">TinyNTPServer</a> on port 123.  <br /></td></tr>
+<tr class="memitem:a24e239f38ba16654b671d52d7b00aafb" id="r_a24e239f38ba16654b671d52d7b00aafb"><td class="memItemLeft" align="right" valign="top"><a id="a24e239f38ba16654b671d52d7b00aafb" name="a24e239f38ba16654b671d52d7b00aafb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLogEnabled</b> (bool enabled)</td></tr>
+<tr class="memdesc:a24e239f38ba16654b671d52d7b00aafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch the log messages on (default) or off. <br /></td></tr>
+<tr class="memitem:a871ce17cace958a28fc862c8660a2110" id="r_a871ce17cace958a28fc862c8660a2110"><td class="memItemLeft" align="right" valign="top"><a id="a871ce17cace958a28fc862c8660a2110" name="a871ce17cace958a28fc862c8660a2110"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLogger</b> (<a class="el" href="#a14cc7d0554e6272fc8228525489313e3">LogFunction</a> logger)</td></tr>
+<tr class="memdesc:a871ce17cace958a28fc862c8660a2110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the log messages (timeouts, invalid answers) with the function instead of Serial; nullptr: Serial (default). <br /></td></tr>
+<tr class="memitem:ac91a4ca66f05f617e04a530df3a676a5" id="r_ac91a4ca66f05f617e04a530df3a676a5"><td class="memItemLeft" align="right" valign="top"><a id="ac91a4ca66f05f617e04a530df3a676a5" name="ac91a4ca66f05f617e04a530df3a676a5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setRejectUnsynchronized</b> (bool reject)</td></tr>
+<tr class="memdesc:ac91a4ca66f05f617e04a530df3a676a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Answers of servers that report that they are not synchronised (leap indicator 3 or stratum 16) are ignored (default: true). Answers with stratum 0 (kiss-o'-death, e.g. "RATE") are always ignored. <br /></td></tr>
 <tr class="memitem:a100c5ad09ec104bdaec44b0336e2aecf" id="r_a100c5ad09ec104bdaec44b0336e2aecf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a100c5ad09ec104bdaec44b0336e2aecf">setServer</a> (const char *server, int port=123)</td></tr>
 <tr class="memdesc:a100c5ad09ec104bdaec44b0336e2aecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the NTP server address and port for the next update.  <br /></td></tr>
 <tr class="memitem:a40affb8f1abe0e6e3d2184b67ed2ec93" id="r_a40affb8f1abe0e6e3d2184b67ed2ec93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40affb8f1abe0e6e3d2184b67ed2ec93">setTimeOffsetHours</a> (long hours)</td></tr>
@@ -152,6 +177,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a673da32cce00e5431382b6379cc47fec" id="r_a673da32cce00e5431382b6379cc47fec"><td class="memItemLeft" align="right" valign="top"><a id="a673da32cce00e5431382b6379cc47fec" name="a673da32cce00e5431382b6379cc47fec"></a>
 struct&#160;</td><td class="memItemRight" valign="bottom"><b>__attribute__</b> ((packed)) NTPPacket</td></tr>
 <tr class="memdesc:a673da32cce00e5431382b6379cc47fec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure representing an NTP packet (RFC 5905, 48 bytes). <br /></td></tr>
+<tr class="memitem:a2511826ca94c60c5fdcec8df9036fb6e" id="r_a2511826ca94c60c5fdcec8df9036fb6e"><td class="memItemLeft" align="right" valign="top"><a id="a2511826ca94c60c5fdcec8df9036fb6e" name="a2511826ca94c60c5fdcec8df9036fb6e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>copyServer</b> (const char *server)</td></tr>
 <tr class="memitem:a8ab7e8c24ebccca58a96596e67806159" id="r_a8ab7e8c24ebccca58a96596e67806159"><td class="memItemLeft" align="right" valign="top"><a id="a8ab7e8c24ebccca58a96596e67806159" name="a8ab7e8c24ebccca58a96596e67806159"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getUncorrectedTimeSec</b> ()</td></tr>
 <tr class="memdesc:a8ab7e8c24ebccca58a96596e67806159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get uncorrected time in seconds (without millis correction factor). Used internally during NTP exchange to avoid circular dependency. Returns UTC time without timezone offset. <br /></td></tr>
@@ -168,6 +195,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getUncorrectedTim
 <tr class="memdesc:a6ac528ba86067c549f9d7d4129787757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert NTP fractional timestamp to milliseconds. NTP fractions are in units of 2^-32 seconds, so we need to convert to ms.  <br /></td></tr>
 <tr class="memitem:a49c3d6aab180e2bf9ca7af28b4bf7d84" id="r_a49c3d6aab180e2bf9ca7af28b4bf7d84"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49c3d6aab180e2bf9ca7af28b4bf7d84">readResponse</a> (int packetSize, NTPPacket &amp;response)</td></tr>
 <tr class="memdesc:a49c3d6aab180e2bf9ca7af28b4bf7d84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a received packet, including the bytes that do not fit into an NTP packet (otherwise some UDP classes do not return the next packet).  <br /></td></tr>
+<tr class="memitem:a387db409cece113e5a21cfd4922b5fd2" id="r_a387db409cece113e5a21cfd4922b5fd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a387db409cece113e5a21cfd4922b5fd2">storeResult</a> (const NTPPacket &amp;r, uint32_t roundTripMs)</td></tr>
 <tr class="memitem:a15ebc23bc257c18967ac607f6298bc6d" id="r_a15ebc23bc257c18967ac607f6298bc6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15ebc23bc257c18967ac607f6298bc6d">swap32</a> (uint32_t value)</td></tr>
 <tr class="memitem:a9ee4071e1c3e9019175a095cb40fb30d" id="r_a9ee4071e1c3e9019175a095cb40fb30d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ee4071e1c3e9019175a095cb40fb30d">updateWithoutRTC</a> ()</td></tr>
 <tr class="memdesc:a9ee4071e1c3e9019175a095cb40fb30d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the current time from the NTP server and update the internal time.  <br /></td></tr>
@@ -183,13 +211,17 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a1d07dd42edc9e64d41dadb48a461a765" id="r_a1d07dd42edc9e64d41dadb48a461a765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d07dd42edc9e64d41dadb48a461a765">_hasTime</a> = false</td></tr>
 <tr class="memitem:a4dac642bbbf1f619bb9be3c8606dd8f7" id="r_a4dac642bbbf1f619bb9be3c8606dd8f7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dac642bbbf1f619bb9be3c8606dd8f7">_lastNtpTime</a> = 0</td></tr>
 <tr class="memitem:a31cd869688ffd0e864551cdd0edde0bf" id="r_a31cd869688ffd0e864551cdd0edde0bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31cd869688ffd0e864551cdd0edde0bf">_lastNtpTimeMs</a> = 0</td></tr>
+<tr class="memitem:a9ea01b33a993598c5bd88200f1365660" id="r_a9ea01b33a993598c5bd88200f1365660"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtiny__ntp_1_1_tiny_n_t_p_result.html">TinyNTPResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ea01b33a993598c5bd88200f1365660">_lastResult</a></td></tr>
 <tr class="memitem:ac5133fcf3c628b7bfa2c8f229eac1b77" id="r_ac5133fcf3c628b7bfa2c8f229eac1b77"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5133fcf3c628b7bfa2c8f229eac1b77">_lastUpdateMillis</a> = 0</td></tr>
 <tr class="memitem:a5e5b7b474e3a39866d9ec8707fe8b63c" id="r_a5e5b7b474e3a39866d9ec8707fe8b63c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e5b7b474e3a39866d9ec8707fe8b63c">_localPort</a> = 0</td></tr>
+<tr class="memitem:a2129a620e9473518ea0c8b5c1affb647" id="r_a2129a620e9473518ea0c8b5c1affb647"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2129a620e9473518ea0c8b5c1affb647">_logEnabled</a> = true</td></tr>
+<tr class="memitem:ae57b12f72731ae4678f0d7e35db4d295" id="r_ae57b12f72731ae4678f0d7e35db4d295"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a14cc7d0554e6272fc8228525489313e3">LogFunction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae57b12f72731ae4678f0d7e35db4d295">_logger</a> = nullptr</td></tr>
 <tr class="memitem:a5ef35e19100d85fdff5bfb84666f4e22" id="r_a5ef35e19100d85fdff5bfb84666f4e22"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ef35e19100d85fdff5bfb84666f4e22">_millisCorrectionFactor</a> = 1.0</td></tr>
 <tr class="memitem:acd7de6bbf35877fa1e4e25b807c2e69a" id="r_acd7de6bbf35877fa1e4e25b807c2e69a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd7de6bbf35877fa1e4e25b807c2e69a">_openPort</a> = 0</td></tr>
 <tr class="memitem:aacc542fd5811ff372e56e5cb60f49763" id="r_aacc542fd5811ff372e56e5cb60f49763"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacc542fd5811ff372e56e5cb60f49763">_port</a></td></tr>
+<tr class="memitem:ad7d4eb0fa71ebf37afc6374d4d7c113a" id="r_ad7d4eb0fa71ebf37afc6374d4d7c113a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7d4eb0fa71ebf37afc6374d4d7c113a">_rejectUnsynchronized</a> = true</td></tr>
 <tr class="memitem:a6736fbf86bf23c92ffdd6055035e6160" id="r_a6736fbf86bf23c92ffdd6055035e6160"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6736fbf86bf23c92ffdd6055035e6160">_requestCounter</a> = 0</td></tr>
-<tr class="memitem:a56867948af50b5001f15d1e8e3a3afa1" id="r_a56867948af50b5001f15d1e8e3a3afa1"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56867948af50b5001f15d1e8e3a3afa1">_server</a></td></tr>
+<tr class="memitem:a6ae38d224b846e01bce1b634c3772787" id="r_a6ae38d224b846e01bce1b634c3772787"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ae38d224b846e01bce1b634c3772787">_server</a> [64] = &quot;&quot;</td></tr>
 <tr class="memitem:ae537e8bbd39d51db1eb730a57071b77c" id="r_ae537e8bbd39d51db1eb730a57071b77c"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae537e8bbd39d51db1eb730a57071b77c">_timeOffsetSeconds</a> = 0</td></tr>
 <tr class="memitem:aa353b768a38736fa3963106136755e36" id="r_aa353b768a38736fa3963106136755e36"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa353b768a38736fa3963106136755e36">_timeoutMs</a> = 0</td></tr>
 <tr class="memitem:a8df8bc3cd2c9dcdb161d7d517b34d217" id="r_a8df8bc3cd2c9dcdb161d7d517b34d217"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classtiny__ntp_1_1_tiny_time_zone.html">TinyTimeZone</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8df8bc3cd2c9dcdb161d7d517b34d217">_timeZone</a></td></tr>
@@ -248,7 +280,7 @@ template&lt;typename UDPAPI&gt; </div>
 <p>Construct a new <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html" title="A Network Time Protocol (NTP) client for retrieving the current date/time from an NTP server using an...">TinyNTPClient</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. The text is not copied: it must stay valid as long as the client is used (e.g. a string literal or one of the NTP_HOST_* / NTP_IP_* defines). </td></tr>
+    <tr><td class="paramname">server</td><td>NTP server hostname or IP address (the text is copied). </td></tr>
     <tr><td class="paramname">port</td><td>NTP server port (default: 123). </td></tr>
     <tr><td class="paramname">timeoutMs</td><td>Time to wait for the response of the server in ms. </td></tr>
   </table>
@@ -783,7 +815,7 @@ template&lt;typename UDPAPI&gt; </div>
 <p>Set the NTP server address and port for the next update. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">server</td><td>NTP server hostname or IP address. The text is not copied: it must stay valid as long as the client is used. </td></tr>
+    <tr><td class="paramname">server</td><td>NTP server hostname or IP address (the text is copied). </td></tr>
     <tr><td class="paramname">port</td><td>NTP server port (default: 123). </td></tr>
   </table>
   </dd>
@@ -894,6 +926,38 @@ template&lt;typename UDPAPI&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the string was valid. </dd></dl>
+
+</div>
+</div>
+<a id="a387db409cece113e5a21cfd4922b5fd2" name="a387db409cece113e5a21cfd4922b5fd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a387db409cece113e5a21cfd4922b5fd2">&#9670;&#160;</a></span>storeResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::storeResult </td>
+          <td>(</td>
+          <td class="paramtype">const NTPPacket &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>roundTripMs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Copies the header fields of an answer to _lastResult. </p>
 
 </div>
 </div>
@@ -1191,6 +1255,31 @@ template&lt;typename UDPAPI&gt; </div>
 
 </div>
 </div>
+<a id="a9ea01b33a993598c5bd88200f1365660" name="a9ea01b33a993598c5bd88200f1365660"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ea01b33a993598c5bd88200f1365660">&#9670;&#160;</a></span>_lastResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtiny__ntp_1_1_tiny_n_t_p_result.html">TinyNTPResult</a> <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_lastResult</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Details of the last answer. </p>
+
+</div>
+</div>
 <a id="ac5133fcf3c628b7bfa2c8f229eac1b77" name="ac5133fcf3c628b7bfa2c8f229eac1b77"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac5133fcf3c628b7bfa2c8f229eac1b77">&#9670;&#160;</a></span>_lastUpdateMillis</h2>
 
@@ -1238,6 +1327,56 @@ template&lt;typename UDPAPI&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Local UDP port (0: same as the NTP server port). </p>
+
+</div>
+</div>
+<a id="a2129a620e9473518ea0c8b5c1affb647" name="a2129a620e9473518ea0c8b5c1affb647"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2129a620e9473518ea0c8b5c1affb647">&#9670;&#160;</a></span>_logEnabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_logEnabled = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Log messages are printed. </p>
+
+</div>
+</div>
+<a id="ae57b12f72731ae4678f0d7e35db4d295" name="ae57b12f72731ae4678f0d7e35db4d295"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae57b12f72731ae4678f0d7e35db4d295">&#9670;&#160;</a></span>_logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a14cc7d0554e6272fc8228525489313e3">LogFunction</a> <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_logger = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Function for the log messages (nullptr: Serial). </p>
 
 </div>
 </div>
@@ -1316,6 +1455,31 @@ template&lt;typename UDPAPI&gt; </div>
 
 </div>
 </div>
+<a id="ad7d4eb0fa71ebf37afc6374d4d7c113a" name="ad7d4eb0fa71ebf37afc6374d4d7c113a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7d4eb0fa71ebf37afc6374d4d7c113a">&#9670;&#160;</a></span>_rejectUnsynchronized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename UDPAPI&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_rejectUnsynchronized = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Ignore unsynchronised servers. </p>
+
+</div>
+</div>
 <a id="a6736fbf86bf23c92ffdd6055035e6160" name="a6736fbf86bf23c92ffdd6055035e6160"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6736fbf86bf23c92ffdd6055035e6160">&#9670;&#160;</a></span>_requestCounter</h2>
 
@@ -1341,8 +1505,8 @@ template&lt;typename UDPAPI&gt; </div>
 
 </div>
 </div>
-<a id="a56867948af50b5001f15d1e8e3a3afa1" name="a56867948af50b5001f15d1e8e3a3afa1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56867948af50b5001f15d1e8e3a3afa1">&#9670;&#160;</a></span>_server</h2>
+<a id="a6ae38d224b846e01bce1b634c3772787" name="a6ae38d224b846e01bce1b634c3772787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae38d224b846e01bce1b634c3772787">&#9670;&#160;</a></span>_server</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1353,7 +1517,7 @@ template&lt;typename UDPAPI&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const char* <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_server</td>
+          <td class="memname">char <a class="el" href="classtiny__ntp_1_1_tiny_n_t_p_client.html">tiny_ntp::TinyNTPClient</a>&lt; UDPAPI &gt;::_server[64] = &quot;&quot;</td>
         </tr>
       </table>
   </td>
@@ -1362,7 +1526,7 @@ template&lt;typename UDPAPI&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>NTP server hostname or IP address. </p>
+<p>NTP server hostname or IP address (copied). </p>
 
 </div>
 </div>
