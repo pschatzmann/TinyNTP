@@ -263,4 +263,37 @@ TEST(iana_oracle_21_zones_2025_to_2035) {
   CHECK(rows > 1000);
 }
 
+
+// --- offsets and the next transition ---
+
+TEST(offsets_and_names) {
+  TinyTimeZone z(TZ_EUROPE_ZURICH);
+  CHECK_EQ(z.standardOffsetSeconds(), 3600);
+  CHECK_EQ(z.summerOffsetSeconds(), 7200);
+  CHECK_STR(z.standardName(), "CET");
+  CHECK_STR(z.summerName(), "CEST");
+  CHECK_EQ(z.dstMinutes(1780272000), 60);  // 2026-06-01
+  CHECK_EQ(z.dstMinutes(1793793600), 0);   // 2026-11-04
+  TinyTimeZone india(TZ_ASIA_KOLKATA);
+  CHECK_EQ(india.summerOffsetSeconds(), 19800);
+}
+
+TEST(next_transition) {
+  TinyTimeZone z(TZ_EUROPE_ZURICH);
+  int64_t at;
+  int32_t before, after;
+  CHECK(z.nextTransition(1780272000, at, before, after));  // 2026-06-01
+  CHECK_EQ(at, 1792890000);                                // 2026-10-25 01:00 UTC
+  CHECK_EQ(before, 7200);
+  CHECK_EQ(after, 3600);
+  CHECK(z.nextTransition(1793793600, at, before, after));  // 2026-11-04
+  CHECK_EQ(at, 1806195600);                                // 2027-03-28 01:00 UTC
+  CHECK_EQ(after - before, 3600);
+  TinyTimeZone sydney(TZ_AUSTRALIA_SYDNEY);  // southern hemisphere
+  CHECK(sydney.nextTransition(1780272000, at, before, after));
+  CHECK_EQ(after - before, 3600);  // summer time starts in October
+  TinyTimeZone tokyo(TZ_ASIA_TOKYO);
+  CHECK(!tokyo.nextTransition(1780272000, at, before, after));
+}
+
 TEST_MAIN("timezone")

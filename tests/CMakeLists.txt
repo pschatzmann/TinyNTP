@@ -38,6 +38,8 @@ tinyntp_test(test_timesources)
 tinyntp_test(test_client)
 tinyntp_test(test_server)
 tinyntp_test(test_timesetting)
+tinyntp_test(test_gps)
+tinyntp_test(test_zonetable)
 
 # The namespace: TinyNTP.h uses it, unless NO_TINY_NTP_NAMESPACE is defined
 tinyntp_test(test_namespace_default)

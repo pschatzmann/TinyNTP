@@ -302,4 +302,97 @@ TEST(udp_object_is_accessible) {
   CHECK(true);
 }
 
+
+// --- header of the answers ---
+
+static Bytes answerOf(Server& s) {
+  MockUDP::deliver(ntpRequest(), 0x0a00a8c0, 54321);
+  if (!s.process()) return Bytes();
+  return MockUDP::sent.back().data;
+}
+
+TEST(header_fields_can_be_set) {
+  setup();
+  TinyClockTimeSource clock;
+  clock.setTimeMs(serverMs);
+  Server s;
+  s.begin(clock);
+  s.setLeapIndicator(1);
+  s.setStratum(1);
+  s.setReferenceId("PPS");
+  s.setPrecision(-20);
+  s.setRootDelayMs(500);
+  s.setRootDispersionMs(1000.0 / 256);
+  Bytes r = answerOf(s);
+  CHECK_EQ(r.size(), 48u);
+  CHECK_EQ(r[0] >> 6, 1);
+  CHECK_EQ(r[1], 1);
+  CHECK_EQ(static_cast<int8_t>(r[3]), -20);
+  CHECK_EQ(r[6], 0x80);  // root delay 0x00008000
+  CHECK_EQ(r[10], 1);    // root dispersion 0x00000100
+  CHECK_EQ(r[12], 'P');
+  CHECK_EQ(r[13], 'P');
+  CHECK_EQ(r[14], 'S');
+  CHECK_EQ(r[15], 0);
+  s.setReferenceId("192.0.2.7");
+  r = answerOf(s);
+  CHECK_EQ(r[12], 192);
+  CHECK_EQ(r[15], 7);
+}
+
+TEST(default_header_is_unchanged) {
+  setup();
+  TinyClockTimeSource clock;
+  clock.setTimeMs(serverMs);
+  Server s;
+  s.begin(clock);
+  Bytes r = answerOf(s);
+  CHECK_EQ(r[0] >> 6, 0);
+  CHECK_EQ(static_cast<int8_t>(r[3]), -10);
+  CHECK_EQ(r[10], 0x04);  // root dispersion 0x00000400
+  CHECK_EQ(r[11], 0x00);
+}
+
+// --- access control ---
+
+TEST(only_allowed_subnets_are_answered) {
+  setup();
+  TinyClockTimeSource clock;
+  clock.setTimeMs(serverMs);
+  Server s;
+  s.begin(clock);
+  s.setAllowedSubnets("192.168.0.0/24, 10.0.0.0/8");
+  MockUDP::deliver(ntpRequest(), 0x08080808, 1000);  // 8.8.8.8
+  CHECK(!s.process());
+  CHECK_EQ(s.getDroppedCount(), 1u);
+  MockUDP::deliver(ntpRequest(), 0x0a00a8c0, 1000);  // 192.168.0.10
+  CHECK(s.process());
+  CHECK_STR(s.getLastClient(), "192.168.0.10");
+  MockUDP::deliver(ntpRequest(), 0x0302010a, 1000);  // 10.1.2.3
+  CHECK(s.process());
+  s.setAllowedSubnets("0.0.0.0/0");
+  MockUDP::deliver(ntpRequest(), 0x08080808, 1000);
+  CHECK(s.process());
+  CHECK_EQ(s.getRequestCount(), 3u);
+}
+
+TEST(rate_limit_per_client) {
+  setup();
+  TinyClockTimeSource clock;
+  clock.setTimeMs(serverMs);
+  Server s;
+  s.begin(clock);
+  s.setRateLimit(2);
+  for (int i = 0; i < 3; i++) MockUDP::deliver(ntpRequest(), 0x0a00a8c0, 1000);
+  CHECK(s.process());
+  CHECK(s.process());
+  CHECK(!s.process());
+  CHECK_EQ(s.getDroppedCount(), 1u);
+  MockUDP::deliver(ntpRequest(), 0x0b00a8c0, 1000);  // another client
+  CHECK(s.process());
+  mock::now += 60000;  // next minute
+  MockUDP::deliver(ntpRequest(), 0x0a00a8c0, 1000);
+  CHECK(s.process());
+}
+
 TEST_MAIN("server")

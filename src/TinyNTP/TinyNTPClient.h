@@ -22,6 +22,46 @@
 namespace tiny_ntp {
 
 /**
+ * @struct TinyNTPResult
+ * @brief The details of the last answer of an NTP server (see
+ * TinyNTPClient::getLastResult()).
+ */
+struct TinyNTPResult {
+  /** True if the last update was successful. */
+  bool valid = false;
+  /** Leap indicator of the server: 0 ok, 1/2 leap second, 3 unsynchronised. */
+  uint8_t leapIndicator = 3;
+  /** NTP version of the answer. */
+  uint8_t version = 0;
+  /** Stratum of the server (0: kiss-o'-death, 16: unsynchronised). */
+  uint8_t stratum = 0;
+  /** Precision of the server clock as power of two (e.g. -20 = ~1 us). */
+  int8_t precision = 0;
+  /** Round trip to the primary reference of the server in ms. */
+  double rootDelayMs = 0;
+  /** Maximum error of the server relative to its primary reference in ms. */
+  double rootDispersionMs = 0;
+  /** The reference id as received (network byte order). */
+  uint32_t referenceId = 0;
+  /**
+   * The reference id as text: the 4 characters of a stratum 0/1 server
+   * (e.g. "GPS", or the kiss code "RATE"), the IPv4 address otherwise.
+   */
+  char referenceText[16] = "";
+  /** Time between the request and the response in ms (millis()). */
+  uint32_t roundTripMs = 0;
+  /** Round trip without the processing time of the server in ms. */
+  uint32_t delayMs = 0;
+  /**
+   * The UTC time of the server in ms since 1970 at the moment the answer was
+   * received (corrected by half of the delay).
+   */
+  uint64_t serverTimeMs = 0;
+  /** The value of millis() when the answer was received. */
+  uint32_t receivedMillis = 0;
+};
+
+/**
  * @class TinyNTPClient
  * @brief A Network Time Protocol (NTP) client for retrieving the current
  * date/time from an NTP server using an Arduino UDP API. The time of the
@@ -44,15 +84,15 @@ class TinyNTPClient : public TinyTimeSource {
  public:
   /**
    * @brief Construct a new TinyNTPClient object.
-   * @param server NTP server hostname or IP address. The text is not copied:
-   * it must stay valid as long as the client is used (e.g. a string literal
-   * or one of the NTP_HOST_* / NTP_IP_* defines).
+   * @param server NTP server hostname or IP address (the text is copied).
    * @param port NTP server port (default: 123).
    * @param timeoutMs Time to wait for the response of the server in ms.
    */
   TinyNTPClient(const char* server = NTP_HOST_POOL, int port = 123,
                 uint32_t timeoutMs = 6000)
-      : _server(server), _port(port), _timeoutMs(timeoutMs) {}
+      : _port(port), _timeoutMs(timeoutMs) {
+    copyServer(server);
+  }
 
   /**
    * @brief Initialize the NTP client and perform the first time update (two
@@ -188,14 +228,46 @@ class TinyNTPClient : public TinyTimeSource {
 
   /**
    * @brief Set the NTP server address and port for the next update.
-   * @param server NTP server hostname or IP address. The text is not copied:
-   * it must stay valid as long as the client is used.
+   * @param server NTP server hostname or IP address (the text is copied).
    * @param port NTP server port (default: 123).
    */
   void setServer(const char* server, int port = 123) {
-    _server = server;
+    copyServer(server);
     _port = port;
   }
+
+  /** @brief The NTP server hostname or IP address. */
+  const char* getServer() const { return _server; }
+
+  /** @brief The NTP server port. */
+  int getPort() const { return _port; }
+
+  /**
+   * @brief The details of the last answer of the server: stratum, reference
+   * id, leap indicator, root delay and dispersion, round trip and the time of
+   * the server. valid is false if the last update failed; the other fields
+   * then describe the last answer that was received (e.g. a kiss-o'-death).
+   */
+  const TinyNTPResult& getLastResult() const { return _lastResult; }
+
+  /**
+   * @brief Answers of servers that report that they are not synchronised
+   * (leap indicator 3 or stratum 16) are ignored (default: true). Answers
+   * with stratum 0 (kiss-o'-death, e.g. "RATE") are always ignored.
+   */
+  void setRejectUnsynchronized(bool reject) { _rejectUnsynchronized = reject; }
+
+  /** @brief Function that prints the log messages. */
+  using LogFunction = void (*)(const char* message);
+
+  /**
+   * @brief Print the log messages (timeouts, invalid answers) with the
+   * function instead of Serial; nullptr: Serial (default).
+   */
+  void setLogger(LogFunction logger) { _logger = logger; }
+
+  /** @brief Switch the log messages on (default) or off. */
+  void setLogEnabled(bool enabled) { _logEnabled = enabled; }
 
   /**
    * @brief Set the local UDP port that is used to send the requests. By
@@ -266,8 +338,20 @@ class TinyNTPClient : public TinyTimeSource {
 
   /** Reference to the UDP API (e.g., WiFiUDP, EthernetUDP). */
   UDPAPI _udp;
-  /** NTP server hostname or IP address. */
-  const char* _server;
+  /** NTP server hostname or IP address (copied). */
+  char _server[64] = "";
+  /** Details of the last answer. */
+  TinyNTPResult _lastResult;
+  /** Ignore unsynchronised servers. */
+  bool _rejectUnsynchronized = true;
+  /** Function for the log messages (nullptr: Serial). */
+  LogFunction _logger = nullptr;
+  /** Log messages are printed. */
+  bool _logEnabled = true;
+
+  void copyServer(const char* server) {
+    snprintf(_server, sizeof(_server), "%s", server != nullptr ? server : "");
+  }
   /** NTP server port. */
   int _port;
   /** Local UDP port (0: same as the NTP server port). */
@@ -380,6 +464,31 @@ class TinyNTPClient : public TinyTimeSource {
     return true;
   }
 
+  /** Copies the header fields of an answer to _lastResult. */
+  void storeResult(const NTPPacket& r, uint32_t roundTripMs) {
+    TinyNTPResult& res = _lastResult;
+    res.leapIndicator = r.li_vn_mode >> 6;
+    res.version = (r.li_vn_mode >> 3) & 0x07;
+    res.stratum = r.stratum;
+    res.precision = static_cast<int8_t>(r.precision);
+    res.rootDelayMs = l_ntohl(r.rootDelay) / 65536.0 * 1000.0;
+    res.rootDispersionMs = l_ntohl(r.rootDispersion) / 65536.0 * 1000.0;
+    res.referenceId = r.refId;
+    const uint8_t* id = reinterpret_cast<const uint8_t*>(&r.refId);
+    if (r.stratum <= 1) {
+      int n = 0;
+      for (int i = 0; i < 4; i++) {
+        if (id[i] >= 32 && id[i] < 127) res.referenceText[n++] = static_cast<char>(id[i]);
+      }
+      while (n > 0 && res.referenceText[n - 1] == ' ') n--;
+      res.referenceText[n] = 0;
+    } else {
+      snprintf(res.referenceText, sizeof(res.referenceText), "%u.%u.%u.%u", id[0], id[1], id[2], id[3]);
+    }
+    res.roundTripMs = roundTripMs;
+    res.delayMs = roundTripMs;
+  }
+
   /**
    * @brief Perform the NTP request/response exchange and update the internal
    * time. The request is sent again every ResendIntervalMs until a response
@@ -390,6 +499,7 @@ class TinyNTPClient : public TinyTimeSource {
    * @return true if the update was successful, false otherwise.
    */
   bool ntpExchange(uint32_t txTm_s) {
+    _lastResult.valid = false;
     NTPPacket packet = {};
     // Set LI=3 (clock not synchronized), VN=3 (NTPv3), Mode=3 (client)
     // Binary: 11 011 011 = 0xDB
@@ -445,6 +555,16 @@ class TinyNTPClient : public TinyTimeSource {
       int index = static_cast<int>(originate & 0xFF);
       if ((originate & ~0xFFu) != requestId || index >= sentCount) continue;
       t0_millis = sentMillis[index];
+      storeResult(response, t3_millis - t0_millis);
+      if (response.stratum == 0) {
+        log("NTP: kiss-o'-death %s\n", _lastResult.referenceText);
+        return false;
+      }
+      if (_rejectUnsynchronized &&
+          (_lastResult.leapIndicator == 3 || response.stratum >= 16)) {
+        log("NTP: server is not synchronised\n");
+        return false;
+      }
       received = true;
     }
 
@@ -501,6 +621,10 @@ class TinyNTPClient : public TinyTimeSource {
     _lastNtpTimeMs = newNtpTimeMs;
     _lastUpdateMillis = t3_millis;
     _hasTime = true;
+    _lastResult.delayMs = static_cast<uint32_t>(delayMs);
+    _lastResult.serverTimeMs = newTimeMs;
+    _lastResult.receivedMillis = t3_millis;
+    _lastResult.valid = true;
     return true;
   }
 
@@ -538,7 +662,12 @@ class TinyNTPClient : public TinyTimeSource {
     va_start(args, format);
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
-    Serial.print(buffer);
+    if (!_logEnabled) return;
+    if (_logger != nullptr) {
+      _logger(buffer);
+    } else {
+      Serial.print(buffer);
+    }
   }
 };
 

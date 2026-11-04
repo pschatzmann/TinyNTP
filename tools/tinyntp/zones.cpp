@@ -10,9 +10,11 @@
 #include <sstream>
 
 #include "TinyNTP/TinyTimeZone.h"
-#include "ZoneTable.h"
+#include "TinyNTP/TinyTimeZoneTable.h"
 
 using tiny_ntp::TinyTimeZone;
+using ZoneEntry = tiny_ntp::TinyTimeZoneEntry;
+using tiny_ntp::tinyTimeZoneTable;
 
 namespace {
 
@@ -65,7 +67,7 @@ std::string tzifFooter(const std::string& path) {
 
 bool inTable(const std::string& name, std::string* tz = nullptr) {
   std::string n = lower(name);
-  for (const ZoneEntry& e : zoneTable) {
+  for (const ZoneEntry& e : tinyTimeZoneTable) {
     if (lower(e.name) == n) {
       if (tz) *tz = e.tz;
       return true;
@@ -110,7 +112,7 @@ bool quickMatch(const std::string& tz) {
 std::vector<Zone> findZones(const std::string& text) {
   std::vector<Zone> all, exact, city, part;
   std::string t = lower(trim(text));
-  for (const ZoneEntry& e : zoneTable) {
+  for (const ZoneEntry& e : tinyTimeZoneTable) {
     Zone z{e.name, e.tz};
     all.push_back(z);
     std::string n = lower(z.name);
@@ -203,7 +205,7 @@ LocalZone findLocalZone() {
 
   // 3. nothing found: compare the local time of this computer with the table
   if (r.tz.empty()) {
-    for (const ZoneEntry& e : zoneTable) {
+    for (const ZoneEntry& e : tinyTimeZoneTable) {
       if (quickMatch(e.tz) && compare(e.tz) == 0) {
         r.tz = e.tz;
         r.tzFrom = "comparing the local time with the table";
@@ -219,7 +221,7 @@ LocalZone findLocalZone() {
     if (!r.name.empty() && inTable(r.name, &fromTable) && fromTable != r.tz) {
       r.tableTz = fromTable;  // the table of the library is older (or newer)
     }
-    for (const ZoneEntry& e : zoneTable) {
+    for (const ZoneEntry& e : tinyTimeZoneTable) {
       if (r.tz == e.tz && r.name != e.name) r.sameRules.push_back(e.name);
     }
   }

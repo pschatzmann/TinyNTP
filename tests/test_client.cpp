@@ -549,4 +549,127 @@ TEST(big_values_do_not_overflow) {
   CHECK_EQ(ntp.getTm().tm_year + 1900, 2100);
 }
 
+
+// --- details of the answer (getLastResult()) ---
+
+TEST(last_result_has_the_header_of_the_answer) {
+  FakeServer server(summerMs);
+  server.processingMs = 2;
+  setup(server);
+  MockUDP::responder = [&server](const Bytes& b) {
+    Bytes r = server(b);
+    r[1] = 1;     // stratum 1
+    r[3] = 0xEC;  // precision -20
+    r[4] = 0;     // root delay 0x00008000 = 0.5 s
+    r[5] = 0;
+    r[6] = 0x80;
+    r[7] = 0;
+    r[8] = 0;  // root dispersion 0x00000100 = 1/256 s
+    r[9] = 0;
+    r[10] = 1;
+    r[11] = 0;
+    r[12] = 'G';
+    r[13] = 'P';
+    r[14] = 'S';
+    r[15] = 0;
+    return r;
+  };
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  const TinyNTPResult& r = ntp.getLastResult();
+  CHECK(r.valid);
+  CHECK_EQ(r.stratum, 1);
+  CHECK_EQ(r.precision, -20);
+  CHECK_EQ(r.leapIndicator, 0);
+  CHECK_EQ(r.version, 4);
+  CHECK_NEAR(r.rootDelayMs, 500.0, 1e-6);
+  CHECK_NEAR(r.rootDispersionMs, 1000.0 / 256, 1e-6);
+  CHECK_STR(r.referenceText, "GPS");
+  CHECK(r.roundTripMs >= r.delayMs);
+  CHECK_EQ(r.receivedMillis, static_cast<uint32_t>(millis()));
+  CHECK_EQ(r.serverTimeMs, ntp.getTimeMs());
+}
+
+TEST(last_result_reference_of_stratum_2_is_an_address) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = [&server](const Bytes& b) {
+    Bytes r = server(b);
+    r[12] = 192;
+    r[13] = 0;
+    r[14] = 2;
+    r[15] = 7;
+    return r;
+  };
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(ntp.begin());
+  CHECK_STR(ntp.getLastResult().referenceText, "192.0.2.7");
+}
+
+TEST(kiss_of_death_is_rejected) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = [&server](const Bytes& b) {
+    Bytes r = server(b);
+    r[1] = 0;  // stratum 0: kiss-o'-death
+    r[12] = 'R';
+    r[13] = 'A';
+    r[14] = 'T';
+    r[15] = 'E';
+    return r;
+  };
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(!ntp.begin());
+  CHECK(!ntp);
+  CHECK(!ntp.getLastResult().valid);
+  CHECK_STR(ntp.getLastResult().referenceText, "RATE");
+  CHECK(mock::serialOutput.find("kiss-o'-death RATE") != std::string::npos);
+}
+
+TEST(unsynchronised_server_is_rejected_by_default) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = [&server](const Bytes& b) {
+    Bytes r = server(b);
+    r[0] = 0xE4;  // LI 3
+    return r;
+  };
+  Client ntp("192.0.2.1", 123, 1000);
+  CHECK(!ntp.begin());
+  CHECK_EQ(ntp.getLastResult().leapIndicator, 3);
+  ntp.setRejectUnsynchronized(false);
+  CHECK(ntp.begin());
+}
+
+TEST(server_name_is_copied) {
+  FakeServer server(summerMs);
+  setup(server);
+  char name[32];
+  snprintf(name, sizeof(name), "%s", "time.example.com");
+  Client ntp(name, 123, 1000);
+  snprintf(name, sizeof(name), "%s", "changed");
+  CHECK_STR(ntp.getServer(), "time.example.com");
+  CHECK(ntp.begin());
+  CHECK_EQ(MockUDP::sent[0].host, std::string("time.example.com"));
+}
+
+static std::string logged;
+static void collect(const char* message) { logged += message; }
+
+TEST(log_can_be_redirected_and_switched_off) {
+  FakeServer server(summerMs);
+  setup(server);
+  MockUDP::responder = nullptr;  // no answers: timeout
+  Client ntp("192.0.2.1", 123, 50);
+  logged.clear();
+  ntp.setLogger(collect);
+  CHECK(!ntp.begin());
+  CHECK(logged.find("timed out") != std::string::npos);
+  CHECK(mock::serialOutput.empty());
+  logged.clear();
+  ntp.setLogEnabled(false);
+  CHECK(!ntp.begin());
+  CHECK(logged.empty());
+}
+
 TEST_MAIN("client")

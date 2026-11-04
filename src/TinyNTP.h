@@ -1,8 +1,9 @@
 /**
  * @file TinyNTP.h
  * @brief Include this file to use the library: NTP client and server, time
- * sources, time zones (POSIX TZ strings) and the defines for the NTP servers
- * and the time zones. All classes are in the namespace tiny_ntp. This header
+ * sources (incl. a GPS receiver), time zones (POSIX TZ strings) and the
+ * defines for the NTP servers and the time zones. The table to look up a
+ * time zone by its IANA name is in TinyNTP/TinyTimeZoneTable.h. All classes are in the namespace tiny_ntp. This header
  * uses the namespace (using namespace tiny_ntp;), so that the classes can be
  * used without it. Define NO_TINY_NTP_NAMESPACE before the include to switch
  * this off, e.g. if your code has classes with the same names.
@@ -11,6 +12,7 @@
 #pragma once
 
 #include "TinyNTP/TinyClockTimeSource.h"
+#include "TinyNTP/TinyGPSTimeSource.h"
 #include "TinyNTP/TinyNTPClient.h"
 #include "TinyNTP/TinyNTPServer.h"
 #include "TinyNTP/TinyNTPServers.h"

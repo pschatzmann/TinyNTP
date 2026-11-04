@@ -115,6 +115,60 @@ class TinyTimeZone {
     return isDst(utc) ? _dstName : _stdName;
   }
 
+  /** @brief Offset of the standard time in seconds east of UTC. */
+  int32_t standardOffsetSeconds() const { return _stdOffset; }
+
+  /** @brief Offset of the summer time in seconds east of UTC (= standard if none). */
+  int32_t summerOffsetSeconds() const { return _hasDst ? _dstOffset : _stdOffset; }
+
+  /** @brief Name of the standard time, e.g. "CET". */
+  const char* standardName() const { return _stdName; }
+
+  /** @brief Name of the summer time, e.g. "CEST" ("" if none). */
+  const char* summerName() const { return _dstName; }
+
+  /**
+   * @brief The summer time shift that applies at the given UTC time in
+   * minutes (0 during standard time), e.g. for the DST offset of the
+   * Bluetooth Current Time Service.
+   */
+  int dstMinutes(int64_t utc) const {
+    return isDst(utc) ? static_cast<int>((_dstOffset - _stdOffset) / 60) : 0;
+  }
+
+  /**
+   * @brief The next change between standard and summer time after the given
+   * UTC time.
+   * @param utc Seconds since the Unix epoch (UTC).
+   * @param atUtc Time of the change (UTC seconds).
+   * @param offsetBefore Offset to UTC in seconds before the change.
+   * @param offsetAfter Offset to UTC in seconds after the change.
+   * @return false if the zone has no summer time.
+   */
+  bool nextTransition(int64_t utc, int64_t& atUtc, int32_t& offsetBefore,
+                      int32_t& offsetAfter) const {
+    if (!_hasDst) return false;
+    const int year = yearOf(utc + _stdOffset);
+    bool found = false;
+    for (int y = year; y <= year + 1; y++) {
+      const int64_t start = transition(y, _start) - _stdOffset;  // to summer time
+      const int64_t end = transition(y, _end) - _dstOffset;      // to standard time
+      if (start > utc && (!found || start < atUtc)) {
+        atUtc = start;
+        offsetBefore = _stdOffset;
+        offsetAfter = _dstOffset;
+        found = true;
+      }
+      if (end > utc && (!found || end < atUtc)) {
+        atUtc = end;
+        offsetBefore = _dstOffset;
+        offsetAfter = _stdOffset;
+        found = true;
+      }
+    }
+    return found;
+  }
+
   /**
    * @brief Convert UTC to local time.
    * @param utc Seconds since the Unix epoch (UTC).

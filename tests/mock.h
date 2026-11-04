@@ -28,6 +28,14 @@ inline unsigned long millis() {
   return static_cast<unsigned long>(mock::now + mock::high);
 }
 
+/// micros(): follows millis(), plus mock::microsExtra
+namespace mock {
+inline uint32_t microsExtra = 0;
+}
+inline unsigned long micros() {
+  return static_cast<unsigned long>(static_cast<uint32_t>(mock::now * 1000UL + mock::microsExtra));
+}
+
 struct SerialMock {
   void print(const char* text) { mock::serialOutput += text; }
   void println(const char* text) {
@@ -41,6 +49,9 @@ inline SerialMock Serial;
 struct MockIP {
   uint32_t addr = 0;
   bool operator==(const MockIP& o) const { return addr == o.addr; }
+  /// The bytes of the IPv4 address as IPAddress[]: addr is little endian
+  /// (192.168.0.10 = 0x0a00a8c0)
+  uint8_t operator[](int i) const { return static_cast<uint8_t>(addr >> (8 * i)); }
 };
 
 using Bytes = std::vector<uint8_t>;
